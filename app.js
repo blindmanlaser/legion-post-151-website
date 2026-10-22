@@ -231,7 +231,7 @@
   set("hall-features", (el) => {
     const h = S.hallRental || {};
     el.innerHTML = (h.features || []).map((f) => `<li>${esc(f)}</li>`).join("");
-    $("hall-facts").innerHTML = [["Capacity", h.capacity ? h.capacity + " guests" : ""], ["Rental", h.price]]
+    $("hall-facts").innerHTML = [["Rental", h.price], ["To book", h.booking], ["Capacity", h.capacity ? h.capacity + " guests" : ""]]
       .map(([k, v]) => `<div class="kh"><strong>${k}</strong><br>${v ? esc(v) : "Call for details"}</div>`).join("");
     $("hall-note").textContent = h.note || "";
     $("hall-call").href = tel; $("hall-call").textContent = "Call " + S.phone;

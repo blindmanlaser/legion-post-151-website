@@ -17,12 +17,12 @@ window.SITE = {
   // Times use 24-hour "HH:MM". A close time past midnight (like 01:00) is fine.
   hours: [
     { day: 0, label: "Sunday",    open: "12:00", close: "22:00" },
-    { day: 1, label: "Monday",    open: "10:00", close: "01:00" },
-    { day: 2, label: "Tuesday",   open: "10:00", close: "01:00" },
-    { day: 3, label: "Wednesday", open: "10:00", close: "01:00" },
-    { day: 4, label: "Thursday",  open: "10:00", close: "01:00" },
-    { day: 5, label: "Friday",    open: "10:00", close: "01:00" },
-    { day: 6, label: "Saturday",  open: "10:00", close: "01:00" }
+    { day: 1, label: "Monday",    open: "12:00", close: "22:00" },
+    { day: 2, label: "Tuesday",   open: "12:00", close: "22:00" },
+    { day: 3, label: "Wednesday", open: "12:00", close: "22:00" },
+    { day: 4, label: "Thursday",  open: "12:00", close: "22:00" },
+    { day: 5, label: "Friday",    open: "12:00", close: "22:00" },
+    { day: 6, label: "Saturday",  open: "12:00", close: "22:00" }
   ],
 
   kitchenHours: [
@@ -197,16 +197,18 @@ window.SITE = {
       who: "Spouses, parents, children, grandchildren, great-grandchildren and siblings of Legion members or Legion-eligible veterans." }
   ],
 
-  // Hall rental page (hall-rental.html). Leave price or capacity as "" to show "Call for details".
+  // Hall rental page (hall-rental.html). Leave price, booking or capacity as "" to show "Call for details".
   hallRental: {
-    price: "",
+    price: "$30 per hour (3 hours max)",
+    booking: "$30 due when you book",
     capacity: "",
     features: [
+      "Open to everyone. You don't need to be a member to rent the hall.",
       "Full-service bar. Guests order drinks from the Post bar.",
       "Food catered by the Post kitchen, or bring in the outside caterer of your choice.",
       "Great for birthdays, showers, graduations, reunions, celebrations of life and meetings."
     ],
-    note: "Call or send us a message with your date and the number of guests, and we'll get back to you with availability and pricing."
+    note: "Call or send us a message with your date and the number of guests, and we'll let you know if it's available."
   },
 
   // Photo gallery (gallery.html). Put photos in the images/gallery folder, then add a line:
