@@ -188,6 +188,35 @@
     });
   });
 
+  // Contact form on the Visit page
+  set("contact-form-el", (form) => {
+    const alertBox = $("contact-alert");
+    const show = (msg, ok) => { alertBox.textContent = msg; alertBox.className = "form-alert" + (ok ? " ok" : ""); alertBox.hidden = false; };
+    const phone = S.phone || "the Post";
+    const MESSAGES = {
+      sent: "Thank you! Your message has been sent. Someone from the Post will get back to you soon.",
+      notready: `The message form isn't set up yet. Please call us at ${phone} or message us on Facebook.`,
+      missing: "Please fill in your name, a topic and your message, then try again.",
+      email: "Please check your email address and try again.",
+      failed: `Sorry, something went wrong sending your message. Please try again, or call us at ${phone}.`
+    };
+    const params = new URLSearchParams(location.search);
+    const code = params.get("contact");
+    if (code && MESSAGES[code]) show(MESSAGES[code], code === "sent");
+    const topic = params.get("topic");
+    if (topic) {
+      const opt = [...$("contact-topic").options].find(o => o.value.toLowerCase().includes(topic.toLowerCase()));
+      if (opt) $("contact-topic").value = opt.value;
+    }
+    if (/github\.io$/.test(location.hostname)) {
+      show(`This is a preview copy of the site. The message form will work once the site is live at conneautlegionpost151.org. Until then, please call ${phone}.`);
+    }
+    form.addEventListener("submit", () => {
+      const btn = $("contact-submit");
+      btn.disabled = true; btn.textContent = "Sending…";
+    });
+  });
+
   // Mobile nav
   const toggle = document.querySelector(".nav-toggle"), nav = $("nav");
   if (toggle && nav) toggle.addEventListener("click", () => { const o = nav.classList.toggle("open"); toggle.setAttribute("aria-expanded", o); });

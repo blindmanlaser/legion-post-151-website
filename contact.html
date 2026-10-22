@@ -58,6 +58,42 @@
         </div>
       </div>
     </section>
+
+    <section class="section section-alt" id="contact-form">
+      <div class="wrap">
+        <h2 class="section-title"><span>Send Us a Message</span></h2>
+        <p>Questions about the hall, membership, an event or anything else? Pick a topic and your message goes straight to the right people.</p>
+        <div class="form-alert" id="contact-alert" role="alert" hidden></div>
+        <form class="order-form" id="contact-form-el" action="contact.php" method="post">
+          <fieldset>
+            <div class="row">
+              <label>Your name <span class="req">*</span>
+                <input type="text" name="name" required maxlength="80" autocomplete="name"></label>
+              <label>Topic <span class="req">*</span>
+                <select name="topic" id="contact-topic" required>
+                  <option value="">Choose one</option>
+                  <option>General question</option>
+                  <option>Hall rental</option>
+                  <option>Membership</option>
+                  <option>American Legion Auxiliary</option>
+                  <option>Sons of the American Legion</option>
+                  <option>Hometown Heroes flags</option>
+                </select></label>
+            </div>
+            <div class="row">
+              <label>Email <span class="req">*</span>
+                <input type="email" name="email" required maxlength="120" autocomplete="email"></label>
+              <label>Phone <span class="opt">(optional)</span>
+                <input type="tel" name="phone" maxlength="30" autocomplete="tel"></label>
+            </div>
+            <label>Message <span class="req">*</span>
+              <textarea name="message" rows="6" required maxlength="3000"></textarea></label>
+          </fieldset>
+          <div class="hp" aria-hidden="true"><label>Leave this empty <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+          <button class="btn btn-red btn-big" type="submit" id="contact-submit">Send Message</button>
+        </form>
+      </div>
+    </section>
   </main>
 
   <footer class="site-footer">

@@ -11,7 +11,7 @@ It's a plain static site (HTML, CSS and JavaScript, with no build step), so it c
 - `events.html`: Events & Meetings
 - `hometown-heroes.html`: Hometown Hero tribute flags. Two ways to order: the online form (handled by `order.php`, thank-you page `hometown-heroes-thanks.html`) or the downloadable PDF (`downloads/hometown-hero-flag-order-form.pdf`, fillable)
 - `about.html`: About, officers, Legion family, veterans resources
-- `contact.html`: Visit Us (address, hours, map)
+- `contact.html`: Visit Us (address, hours, map) and the "Send Us a Message" form, handled by `contact.php`. Link to `contact.html?topic=hall#contact-form` (or membership, auxiliary, sons, heroes) to preselect a topic.
 
 The header and footer are repeated in each page, so if you add a page, add it to the nav in every page.
 
@@ -42,6 +42,10 @@ Email accounts are created in cPanel → Email Accounts.
 ### Hometown Hero online orders
 
 `order.php` emails each online order, with the veteran's photo attached, and sends the family a short confirmation. **Set the address that receives orders** in the `$RECIPIENTS` line near the top of `order.php`. Until it's set, the form tells people to use the PDF instead. The form needs PHP, so it only works on the Namecheap hosting, not on GitHub Pages. `.user.ini` raises PHP's upload limit for 10 MB photos.
+
+### Contact form messages
+
+`contact.php` emails each message to the people for the topic the visitor picks. **Set the addresses** in `$ROUTES` near the top of `contact.php`, one list per topic. Any topic left empty goes to `$DEFAULT`. Until `$DEFAULT` has an address, the form asks people to call the Post. Replies go straight to the visitor's email.
 
 ## Preview locally
 
