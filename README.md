@@ -26,7 +26,8 @@ All week-to-week content lives in **`content.js`**:
 - `announcements`: banners at the top of the home page
 - `events`: one-time events, with an optional image from `images/` (past events hide automatically)
 - `meetings`: recurring monthly meetings (the next date is calculated automatically)
-- `officers`, `email`, `facebook`
+- `officers`, `sonsOfficers`, `auxiliaryOfficers`: the three officer lists on the About page
+- `email`, `facebook`
 
 Edit the file on GitHub, commit, and the live site updates within a minute or two.
 

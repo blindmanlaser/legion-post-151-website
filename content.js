@@ -147,6 +147,10 @@ window.SITE = {
       note: "Home Co. 6:00 · Finance 6:15 · Executive 6:30 · Honor Guard 7:00" }
   ],
 
+  // Officers on the About page. One line per officer: { title: "Commander", name: "Jane Doe" },
+  // Leave a list empty to show "Officer list coming soon."
+
+  // American Legion Post 151
   officers: [
     { title: "Commander", name: "Kirk Jennings" },
     { title: "1st Vice Commander", name: "Scott Carpetner" },
@@ -157,5 +161,13 @@ window.SITE = {
     { title: "Member at Large", name: "Romey Bryant" },
     { title: "Member at Large", name: "Adam Dixon" },
     { title: "Member at Large", name: "Rich Luce" },
+  ],
+
+  // Sons of the American Legion
+  sonsOfficers: [
+  ],
+
+  // American Legion Auxiliary
+  auxiliaryOfficers: [
   ]
 };

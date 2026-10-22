@@ -149,9 +149,12 @@
   });
 
   // Officers
-  set("officers", (el) => {
-    el.innerHTML = S.officers.map((o) => `<li><span class="t">${esc(o.title)}</span><span>${esc(o.name)}</span></li>`).join("");
-  });
+  const officerList = (list) => (list && list.length
+    ? list.map((o) => `<li><span class="t">${esc(o.title)}</span><span>${esc(o.name)}</span></li>`).join("")
+    : '<li><span class="t">Officer list coming soon.</span></li>');
+  set("officers", (el) => { el.innerHTML = officerList(S.officers); });
+  set("sons-officers", (el) => { el.innerHTML = officerList(S.sonsOfficers); });
+  set("auxiliary-officers", (el) => { el.innerHTML = officerList(S.auxiliaryOfficers); });
 
   // Mobile nav
   const toggle = document.querySelector(".nav-toggle"), nav = $("nav");
