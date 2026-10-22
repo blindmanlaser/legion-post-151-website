@@ -12,7 +12,7 @@ window.SITE = {
   phone: "440-593-2205",
   email: "", // add the Post's email address here when known
   // Emblems for the Post, Sons and Auxiliary (files in images/emblems). Leave "" to hide one.
-  emblems: { legion: "", sons: "", auxiliary: "" },
+  emblems: { legion: "images/emblems/legion.png", sons: "images/emblems/sons.png", auxiliary: "images/emblems/auxiliary.png" },
   facebook: "https://www.facebook.com/p/American-Legion-Post-151-Conneaut-OH-61566798598965/",
 
   // Building / social room hours. Day 0 = Sunday ... 6 = Saturday.
