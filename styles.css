@@ -41,6 +41,12 @@ a { color: var(--red); }
 .brand small { display: block; font-size: .8rem; opacity: .8; }
 .brand-seal { width: 46px; height: 48px; object-fit: contain; flex: 0 0 auto; }
 .nav { display: flex; gap: 22px; }
+/* Desktop: brand on the first row, all page links on a second row */
+@media (min-width: 1001px) {
+  .header-inner { flex-wrap: wrap; row-gap: 0; padding-top: 8px; }
+  .nav { width: 100%; justify-content: center; gap: 20px; border-top: 1px solid rgba(255,255,255,.12); padding: 4px 0 6px; }
+  .nav a { font-size: .9rem; }
+}
 .nav a { color: var(--white); text-decoration: none; font-family: "Oswald", sans-serif; text-transform: uppercase; font-size: .95rem; letter-spacing: .06em; padding: 6px 0; border-bottom: 2px solid transparent; }
 .nav a:hover { border-color: var(--gold); }
 .nav-toggle { display: none; background: none; border: 2px solid var(--gold); color: var(--white); font: inherit; padding: 4px 12px; border-radius: 6px; cursor: pointer; }
