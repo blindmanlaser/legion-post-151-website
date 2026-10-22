@@ -205,7 +205,8 @@
     if (code && MESSAGES[code]) show(MESSAGES[code], code === "sent");
     const topic = params.get("topic");
     if (topic) {
-      const opt = [...$("contact-topic").options].find(o => o.value.toLowerCase().includes(topic.toLowerCase()));
+      const opts = [...$("contact-topic").options], t = topic.toLowerCase();
+      const opt = opts.find(o => o.dataset.key === t) || opts.find(o => o.value && o.value.toLowerCase().includes(t));
       if (opt) $("contact-topic").value = opt.value;
     }
     if (/github\.io$/.test(location.hostname)) {
@@ -224,6 +225,7 @@
       ${m.dues ? `<p class="dues"><span>${esc(m.dues)}</span> per year</p>` : ""}
       <p><strong>Who can join:</strong> ${esc(m.who)}</p>
       ${m.contact ? `<p class="fine light">Membership contact: ${esc(m.contact)}</p>` : ""}
+      ${m.emblem ? `<a class="btn btn-red btn-small" href="contact.html?topic=${esc(m.emblem)}#contact-form">Ask About Joining</a>` : ""}
     </div>`).join("");
   });
 

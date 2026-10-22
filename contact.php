@@ -11,12 +11,14 @@
 // ============================================================
 $DEFAULT = [];
 $ROUTES = [
-  'General question'             => [],
-  'Hall rental'                  => [],
-  'Membership'                   => [],
-  'American Legion Auxiliary'    => [],
-  'Sons of the American Legion'  => [],
-  'Hometown Heroes flags'        => [],
+  'General question'                                => [],
+  'Hall rental'                                     => [],
+  'Legionnaire membership'                          => [],
+  'Sons membership'                                 => [],
+  'Auxiliary membership'                            => [],
+  'American Legion Auxiliary (other questions)'     => [],
+  'Sons of the American Legion (other questions)'   => [],
+  'Hometown Heroes flags'                           => [],
 ];
 
 date_default_timezone_set('America/New_York');
@@ -44,7 +46,7 @@ if (clean('website', 200) !== '') back('sent');
 $name  = clean('name', 80);
 $email = clean('email', 120);
 $phone = clean('phone', 30);
-$topic = clean('topic', 40);
+$topic = clean('topic', 60);
 $message = mb_substr(trim(str_replace("\r\n", "\n", (string)($_POST['message'] ?? ''))), 0, 3000);
 
 if ($name === '' || $message === '' || !array_key_exists($topic, $ROUTES)) back('missing');

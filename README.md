@@ -16,7 +16,7 @@ It's a plain static site (HTML, CSS and JavaScript, with no build step), so it c
 - `gallery.html`: Photo gallery (photos in `images/gallery/`, listed in `gallery` in content.js)
 - `sentinel.html`: The Sentinel newsletter. Email sign-up (handled by `subscribe.php`) and past issues (PDFs in `downloads/`, listed in `sentinel` in content.js)
 - `in-memoriam.html`: Members who have passed (from `inMemoriam` in content.js)
-- `contact.html`: Visit Us (address, hours, map) and the "Send Us a Message" form, handled by `contact.php`. Link to `contact.html?topic=hall#contact-form` (or membership, auxiliary, sons, heroes) to preselect a topic.
+- `contact.html`: Visit Us (address, hours, map) and the "Send Us a Message" form, handled by `contact.php`. Link to `contact.html?topic=hall#contact-form` to preselect a topic (keys: general, hall, legion, sons, auxiliary, aux-other, sons-other, heroes).
 
 The header and footer are repeated in each page, so if you add a page, add it to the nav in every page.
 
