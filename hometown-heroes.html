@@ -73,14 +73,88 @@
     <section class="section section-navy">
       <div class="wrap how-to">
         <h2 class="section-title light"><span>How to Order</span></h2>
-        <ol class="steps">
-          <li><strong>Download the order form</strong> and fill it out on your computer or print it and fill it in by hand.</li>
-          <li><strong>Include a photo</strong> of the veteran in uniform.</li>
-          <li><strong>Pay $200 per flag</strong> in cash or by check made out to <em>Sons of the American Legion Post 151</em>.</li>
-          <li><strong>Drop it off</strong> at the Post, or mail it to: Conneaut American Legion, Attn: George Sabo, 272 Broad St., Conneaut, OH 44030.</li>
-        </ol>
-        <a class="btn btn-red btn-big" href="downloads/hometown-hero-flag-order-form.pdf" download>Download the Order Form (PDF)</a>
+        <p>There are two ways to order. Either way, the cost is <strong>$200 per flag</strong>, paid in cash or by check made out to <em>Sons of the American Legion Post 151</em>.</p>
+        <div class="order-options">
+          <div class="order-option">
+            <span class="opt-num">Option 1</span>
+            <h3>Order Online</h3>
+            <p>Fill out the form below and upload a photo of the veteran in uniform. Then drop off or mail your payment.</p>
+            <a class="btn btn-red" href="#order-form">Fill Out the Online Form</a>
+          </div>
+          <div class="order-option">
+            <span class="opt-num">Option 2</span>
+            <h3>Download &amp; Mail</h3>
+            <p>Print the form or fill it out on your computer. Bring it to the Post with a photo and payment, or mail it to: Conneaut American Legion, Attn: George Sabo, 272 Broad St., Conneaut, OH 44030.</p>
+            <a class="btn btn-outline" href="downloads/hometown-hero-flag-order-form.pdf" download>Download the Order Form (PDF)</a>
+          </div>
+        </div>
         <p class="fine light">Banner locations can't be guaranteed, but we will try to group families and relatives together. A family contact will be asked to review a proof before printing.</p>
+      </div>
+    </section>
+
+
+    <section class="section" id="order-form">
+      <div class="wrap">
+        <h2 class="section-title"><span>Online Order Form</span></h2>
+        <div class="form-alert" id="order-alert" role="alert" hidden></div>
+        <form class="order-form" id="hh-form" action="order.php" method="post" enctype="multipart/form-data">
+          <fieldset>
+            <legend>Veteran</legend>
+            <label>Veteran name to be displayed on flag <span class="req">*</span>
+              <input type="text" name="veteran_name" required maxlength="80" autocomplete="off"></label>
+            <div class="row">
+              <label>Branch of service <span class="req">*</span>
+                <select name="branch" required>
+                  <option value="">Choose one</option>
+                  <option>U.S. Army</option><option>U.S. Navy</option><option>U.S. Air Force</option>
+                  <option>U.S. Marine Corps</option><option>U.S. Coast Guard</option><option>U.S. Space Force</option>
+                  <option>Army National Guard</option><option>Air National Guard</option><option>Merchant Marine</option>
+                </select></label>
+              <label>Years of service <span class="req">*</span>
+                <input type="text" name="years" required maxlength="40" placeholder="e.g. 1960 – 1965"></label>
+            </div>
+            <div class="radio-group" role="radiogroup" aria-label="Veteran's current status">
+              <span class="group-label">Veteran's current status <span class="req">*</span></span>
+              <label><input type="radio" name="status" value="Active Duty" required> Active Duty</label>
+              <label><input type="radio" name="status" value="Honorably Discharged"> Honorably Discharged</label>
+              <label><input type="radio" name="status" value="Retired"> Retired</label>
+              <label><input type="radio" name="status" value="Deceased"> Deceased</label>
+            </div>
+            <label>Operation or era <span class="opt">(optional)</span>
+              <input type="text" name="operation" maxlength="60" placeholder="WWI, WWII, Korea, Vietnam, peacetime, etc."></label>
+            <label>Photo of the veteran in uniform <span class="req">*</span>
+              <input type="file" name="photo" id="hh-photo" accept="image/jpeg,image/png,image/gif,image/webp,image/heic,image/heif,.heic,.heif" required>
+              <span class="hint">JPG, PNG or HEIC, up to 10 MB. A phone photo of a printed picture is fine.</span></label>
+          </fieldset>
+
+          <fieldset>
+            <legend>Family contact to review the proof before printing</legend>
+            <label>Name <span class="req">*</span>
+              <input type="text" name="contact_name" required maxlength="80" autocomplete="name"></label>
+            <div class="row">
+              <label>Email <span class="req">*</span>
+                <input type="email" name="contact_email" required maxlength="120" autocomplete="email"></label>
+              <label>Phone <span class="req">*</span>
+                <input type="tel" name="contact_phone" required maxlength="30" autocomplete="tel"></label>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Payment</legend>
+            <p class="fine">$200 per flag, cash or check made out to <em>Sons of the American Legion Post 151</em>. Your order is complete once payment is received.</p>
+            <div class="radio-group" role="radiogroup" aria-label="How you will pay">
+              <span class="group-label">How will you get payment to us? <span class="req">*</span></span>
+              <label><input type="radio" name="payment" value="Drop off at the Post" required> I'll drop it off at the Post</label>
+              <label><input type="radio" name="payment" value="Mail a check"> I'll mail a check</label>
+            </div>
+            <label>Anything else we should know? <span class="opt">(optional)</span>
+              <textarea name="notes" rows="3" maxlength="1000"></textarea></label>
+          </fieldset>
+
+          <div class="hp" aria-hidden="true"><label>Leave this empty <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+          <button class="btn btn-red btn-big" type="submit" id="hh-submit">Submit Order</button>
+          <p class="fine">Banner locations can't be guaranteed. We'll try to group families and relatives together.</p>
+        </form>
       </div>
     </section>
 

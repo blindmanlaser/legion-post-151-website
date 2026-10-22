@@ -9,7 +9,7 @@ It's a plain static site (HTML, CSS and JavaScript, with no build step), so it c
 - `index.html`: Home (open/closed status, today's special, what's coming up)
 - `menu.html`: Menu & Daily Specials
 - `events.html`: Events & Meetings
-- `hometown-heroes.html`: Hometown Hero tribute flags, with the downloadable order form (`downloads/hometown-hero-flag-order-form.pdf`, fillable)
+- `hometown-heroes.html`: Hometown Hero tribute flags. Two ways to order: the online form (handled by `order.php`, thank-you page `hometown-heroes-thanks.html`) or the downloadable PDF (`downloads/hometown-hero-flag-order-form.pdf`, fillable)
 - `about.html`: About, officers, Legion family, veterans resources
 - `contact.html`: Visit Us (address, hours, map)
 
@@ -38,6 +38,10 @@ The live site is **conneautlegionpost151.org**, hosted on Namecheap (Stellar sha
 Every push to `main` is uploaded to the hosting account's `public_html/` folder by `.github/workflows/deploy.yml`. It needs three repository secrets (Settings → Secrets and variables → Actions): `FTP_SERVER`, `FTP_USERNAME` and `FTP_PASSWORD`, all from cPanel → FTP Accounts.
 
 Email accounts are created in cPanel → Email Accounts.
+
+### Hometown Hero online orders
+
+`order.php` emails each online order, with the veteran's photo attached, and sends the family a short confirmation. **Set the address that receives orders** in the `$RECIPIENTS` line near the top of `order.php`. Until it's set, the form tells people to use the PDF instead. The form needs PHP, so it only works on the Namecheap hosting, not on GitHub Pages. `.user.ini` raises PHP's upload limit for 10 MB photos.
 
 ## Preview locally
 

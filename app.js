@@ -162,6 +162,32 @@
   set("sons-officers", (el) => { el.innerHTML = officerList(S.sonsOfficers); });
   set("auxiliary-officers", (el) => { el.innerHTML = officerList(S.auxiliaryOfficers); });
 
+  // Hometown Hero online order form
+  set("hh-form", (form) => {
+    const alertBox = $("order-alert");
+    const show = (msg, ok) => { alertBox.textContent = msg; alertBox.className = "form-alert" + (ok ? " ok" : ""); alertBox.hidden = false; };
+    const MESSAGES = {
+      notready: "Online ordering isn't set up yet. Please download the PDF order form for now, or call George Sabo at 440-813-3364.",
+      missing: "Please fill in all the required fields and try again.",
+      email: "Please check the email address and try again.",
+      photo: "Please attach a photo of the veteran in uniform.",
+      phototype: "The photo needs to be a JPG, PNG, GIF, WEBP or HEIC image.",
+      toolarge: "That photo is too large. Please use one under 10 MB.",
+      failed: "Sorry, something went wrong sending your order. Please try again, or use the PDF order form."
+    };
+    const code = new URLSearchParams(location.search).get("order");
+    if (code && MESSAGES[code]) show(MESSAGES[code]);
+    if (/github\.io$/.test(location.hostname)) {
+      show("This is a preview copy of the site. The online form will work once the site is live at conneautlegionpost151.org. Until then, please use the PDF order form.");
+    }
+    form.addEventListener("submit", (e) => {
+      const file = $("hh-photo").files[0];
+      if (file && file.size > 10 * 1024 * 1024) { e.preventDefault(); show(MESSAGES.toolarge); return; }
+      const btn = $("hh-submit");
+      btn.disabled = true; btn.textContent = "Sending…";
+    });
+  });
+
   // Mobile nav
   const toggle = document.querySelector(".nav-toggle"), nav = $("nav");
   if (toggle && nav) toggle.addEventListener("click", () => { const o = nav.classList.toggle("open"); toggle.setAttribute("aria-expanded", o); });
