@@ -11,7 +11,7 @@ window.SITE = {
   address: "272 Broad St, Conneaut, OH 44030",
   phone: "440-593-2205",
   email: "", // add the Post's email address here when known
-  facebook: "", // paste the Post's Facebook page link here
+  facebook: "https://www.facebook.com/p/American-Legion-Post-151-Conneaut-OH-61566798598965/",
 
   // Building / social room hours. Day 0 = Sunday ... 6 = Saturday.
   // Times use 24-hour "HH:MM". A close time past midnight (like 01:00) is fine.

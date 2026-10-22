@@ -46,6 +46,12 @@
   set("address", (el) => { el.innerHTML = esc(S.address).replace(", Conneaut", "<br>Conneaut"); });
   if (S.email) set("email-line", (el) => { el.hidden = false; $("email-link").href = "mailto:" + S.email; $("email-link").textContent = S.email; });
   if (S.facebook) set("fb-line", (el) => { el.hidden = false; $("fb-link").href = S.facebook; });
+  // Facebook button in every page's footer
+  if (S.facebook) {
+    const links = document.querySelector(".footer-links");
+    if (links) links.insertAdjacentHTML("afterend",
+      `<p><a class="fb-btn" href="${esc(S.facebook)}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.78-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99A10 10 0 0 0 22 12z"/></svg>Follow us on Facebook</a></p>`);
+  }
 
   // Open / closed right now. Handles closing times after midnight.
   set("open-status", (el) => {
