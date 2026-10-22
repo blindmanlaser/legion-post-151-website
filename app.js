@@ -290,8 +290,8 @@
       if (S.emblems[el.dataset.emblem]) el.insertAdjacentHTML("afterbegin", emblemImg(el.dataset.emblem, "card-emblem"));
     });
     const set3 = Object.keys(EMBLEM_NAMES).filter((k) => S.emblems[k]);
-    const star = document.querySelector(".footer-star");
-    if (star && set3.length) star.insertAdjacentHTML("afterend", `<p class="footer-emblems">${set3.map((k) => emblemImg(k, "")).join("")}</p>`);
+    const foot = document.querySelector(".site-footer .wrap");
+    if (foot && set3.length) foot.insertAdjacentHTML("afterbegin", `<p class="footer-emblems">${set3.map((k) => emblemImg(k, "")).join("")}</p>`);
   }
 
   // Mobile nav

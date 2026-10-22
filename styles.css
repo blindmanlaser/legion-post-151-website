@@ -39,7 +39,7 @@ a { color: var(--red); }
 .brand { display: flex; align-items: center; gap: 10px; color: var(--white); text-decoration: none; }
 .brand strong { display: block; font-family: "Oswald", sans-serif; font-size: 1.35rem; text-transform: uppercase; }
 .brand small { display: block; font-size: .8rem; opacity: .8; }
-.brand-star { width: 34px; height: 34px; fill: var(--gold); }
+.brand-seal { width: 46px; height: 48px; object-fit: contain; flex: 0 0 auto; }
 .nav { display: flex; gap: 22px; }
 .nav a { color: var(--white); text-decoration: none; font-family: "Oswald", sans-serif; text-transform: uppercase; font-size: .95rem; letter-spacing: .06em; padding: 6px 0; border-bottom: 2px solid transparent; }
 .nav a:hover { border-color: var(--gold); }
@@ -162,7 +162,6 @@ h3 { color: var(--navy); text-transform: uppercase; font-size: 1.25rem; margin: 
 .site-footer { background: var(--navy); color: var(--white); text-align: center; padding: 32px 0; }
 .site-footer p { margin: 4px 0; }
 .site-footer .fine { color: rgba(255,255,255,.7); }
-.footer-star { width: 28px; height: 28px; fill: var(--gold); }
 
 /* Multi-page additions */
 .nav a.active { border-color: var(--gold); color: var(--gold); }
