@@ -286,7 +286,7 @@ window.SITE = {
     spotlightBody: "",
     includeHours: true,
     includeEvents: true,
-    eventDays: "60",
+    eventDays: "14",
     includeSpecials: true,
     kitchenNews: "",
     includeHeroes: true,

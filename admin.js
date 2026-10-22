@@ -37,13 +37,13 @@
       blank: { title: "The Sentinel", date: "", file: "" },
       fields: [["title", "Title"], ["date", "Issue (like November 2026)"], ["file", "PDF", "pdf"]] },
     { key: "sentinelDraft", label: "Write The Sentinel", type: "object", newsletter: true,
-      help: "Write this month's newsletter. Events, specials, hours, meetings and officers fill in on their own from the rest of the site. Leave a box empty to leave that section out. Click Save Changes to keep your draft.",
-      fields: [["issue", "Issue (like November 2026)"], ["preheader", "Inbox preview line (optional)"],
+      help: "Write this week's newsletter. Events, specials, hours, meetings and officers fill in on their own from the rest of the site. Leave a box empty to leave that section out. Click Save Changes to keep your draft.",
+      fields: [["issue", "Issue (like Week of November 2, 2026)"], ["preheader", "Inbox preview line (optional)"],
         ["coverImage", "Cover photo (optional)", "image"], ["coverCaption", "Cover photo caption (optional)"],
         ["commanderMessage", "Message from the Commander (leave a blank line between paragraphs)", "textarea"], ["commanderSign", "Signed (like Kirk Jennings, Commander)"],
         ["spotlightTitle", "Spotlight headline (optional)"], ["spotlightBody", "Spotlight text", "textarea"],
         ["includeHours", "Include hours and meeting dates", "check"], ["includeEvents", "Include upcoming events from the Events tab", "check"],
-        ["eventDays", "How many days ahead to list events (like 60)"],
+        ["eventDays", "How many days ahead to list events (like 14)"],
         ["includeSpecials", "Include the daily specials", "check"], ["kitchenNews", "Canteen & kitchen news: new items, drink specials (optional)", "textarea"],
         ["includeHeroes", "Include the Hometown Hero flags ad", "check"],
         ["auxNews", "Auxiliary Corner (optional)", "textarea"], ["sonsNews", "Sons of the Legion news (optional)", "textarea"],
@@ -202,7 +202,8 @@
         <button type="button" class="btn btn-small btn-ghost" data-nl="preview">Preview</button>
         <button type="button" class="btn btn-small btn-ghost" data-nl="copy">Copy for Mailchimp</button>
         <button type="button" class="btn btn-small btn-ghost" data-nl="download">Download</button>
-        <button type="button" class="btn btn-small btn-red" data-nl="publish">Save &amp; Post on the Website</button></div>
+        <button type="button" class="btn btn-small btn-red" data-nl="publish">Save &amp; Post on the Website</button>
+        <button type="button" class="btn btn-small btn-danger" data-nl="next">Start Next Week's Issue</button></div>
         <p class="fine">"Copy for Mailchimp" copies the finished email so you can paste it into Mailchimp's "Code your own" editor. "Save &amp; Post on the Website" adds this issue to the Sentinel page.</p>`;
     } else {
       if (!sec.fixed) html += `<button type="button" class="btn btn-red btn-small" data-add="1">+ Add new</button>`;
@@ -260,6 +261,15 @@
       a.href = URL.createObjectURL(new Blob([newsletterHtml(true)], { type: "text/html" }));
       a.download = `sentinel-${slug(d.issue || stamp())}.html`;
       a.click();
+    } else if (action === "next") {
+      if (pendingDelete !== d) { pendingDelete = d; return status("Click \"Start Next Week's Issue\" again to clear this week's stories. Your checkboxes and signature stay.", true); }
+      pendingDelete = null;
+      const t = new Date(), mon = new Date(t.getFullYear(), t.getMonth(), t.getDate() + ((8 - t.getDay()) % 7 || 7));
+      ["preheader", "coverImage", "coverCaption", "commanderMessage", "spotlightTitle", "spotlightBody", "kitchenNews", "auxNews", "sonsNews",
+        "communityTitle", "communityBody", "newMembers", "drawings", "taps", "memberNotice"].forEach((k) => { d[k] = ""; });
+      d.issue = "Week of " + mon.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+      markDirty(); render();
+      status("Ready for next week. Click Save Changes to keep the fresh draft.");
     } else if (action === "publish") {
       if (!d.issue) return status("Add the issue name (like November 2026) first.", true);
       const path = `newsletter/issues/sentinel-${slug(d.issue)}.html`;
