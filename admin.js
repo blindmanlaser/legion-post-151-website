@@ -36,6 +36,23 @@
       help: "Newsletter issues on the Sentinel page, newest first.",
       blank: { title: "The Sentinel", date: "", file: "" },
       fields: [["title", "Title"], ["date", "Issue (like November 2026)"], ["file", "PDF", "pdf"]] },
+    { key: "sentinelDraft", label: "Write The Sentinel", type: "object", newsletter: true,
+      help: "Write this month's newsletter. Events, specials, hours, meetings and officers fill in on their own from the rest of the site. Leave a box empty to leave that section out. Click Save Changes to keep your draft.",
+      fields: [["issue", "Issue (like November 2026)"], ["preheader", "Inbox preview line (optional)"],
+        ["coverImage", "Cover photo (optional)", "image"], ["coverCaption", "Cover photo caption (optional)"],
+        ["commanderMessage", "Message from the Commander (leave a blank line between paragraphs)", "textarea"], ["commanderSign", "Signed (like Kirk Jennings, Commander)"],
+        ["spotlightTitle", "Spotlight headline (optional)"], ["spotlightBody", "Spotlight text", "textarea"],
+        ["includeHours", "Include hours and meeting dates", "check"], ["includeEvents", "Include upcoming events from the Events tab", "check"],
+        ["eventDays", "How many days ahead to list events (like 60)"],
+        ["includeSpecials", "Include the daily specials", "check"], ["kitchenNews", "Canteen & kitchen news: new items, drink specials (optional)", "textarea"],
+        ["includeHeroes", "Include the Hometown Hero flags ad", "check"],
+        ["auxNews", "Auxiliary Corner (optional)", "textarea"], ["sonsNews", "Sons of the Legion news (optional)", "textarea"],
+        ["communityTitle", "Community & charity headline (optional)"], ["communityBody", "Community & charity story", "textarea"],
+        ["newMembers", "New members to welcome (optional, like John Smith and Jane Doe.)"],
+        ["drawings", "Drawings & winners (optional, one per line)", "textarea"],
+        ["taps", "Taps (optional, one name per line, like John Smith, U.S. Army, Vietnam)", "textarea"],
+        ["includeOfficers", "Include the officer lists", "check"],
+        ["memberNotice", "Member notice (optional, like dues reminders)", "textarea"]] },
     { key: "hallRental", label: "Hall Rental", type: "object",
       help: "Leave any of these empty to show \"Call for details\".",
       fields: [["price", "Rental price (like $30 per hour)"], ["booking", "Due at booking (like $30 due when you book)"], ["capacity", "Capacity (number of guests)"], ["note", "Note under the details", "textarea"]] },
@@ -167,6 +184,7 @@
         <button type="button" class="btn btn-small" data-pick="${kind}" data-idx="${idx}" data-field="${name}">${v ? "Replace" : "Choose"} ${kind === "pdf" ? "PDF" : "photo"}</button>
         ${v && kind === "image" ? `<button type="button" class="btn btn-small btn-ghost" data-clear="${idx}" data-field="${name}">Remove</button>` : ""}</div>`;
     }
+    if (kind === "check") return `<label class="ed-check"><input type="checkbox" data-idx="${idx}" data-field="${name}" ${v ? "checked" : ""}> ${esc(label)}</label>`;
     const input = kind === "textarea"
       ? `<textarea id="${id}" rows="3" data-idx="${idx}" data-field="${name}">${esc(v)}</textarea>`
       : `<input id="${id}" type="${kind === "date" ? "date" : "text"}" value="${esc(v)}" data-idx="${idx}" data-field="${name}">`;
@@ -180,6 +198,12 @@
     let html = `<p class="fine">${esc(sec.help)}</p>`;
     if (sec.type === "object") {
       html += `<fieldset>${sec.fields.map((f) => fieldHtml(sec, data, -1, f)).join("")}</fieldset>`;
+      if (sec.newsletter) html += `<div class="ed-row-actions">
+        <button type="button" class="btn btn-small btn-ghost" data-nl="preview">Preview</button>
+        <button type="button" class="btn btn-small btn-ghost" data-nl="copy">Copy for Mailchimp</button>
+        <button type="button" class="btn btn-small btn-ghost" data-nl="download">Download</button>
+        <button type="button" class="btn btn-small btn-red" data-nl="publish">Save &amp; Post on the Website</button></div>
+        <p class="fine">"Copy for Mailchimp" copies the finished email so you can paste it into Mailchimp's "Code your own" editor. "Save &amp; Post on the Website" adds this issue to the Sentinel page.</p>`;
     } else {
       if (!sec.fixed) html += `<button type="button" class="btn btn-red btn-small" data-add="1">+ Add new</button>`;
       html += data.map((r, i) => `<fieldset><legend>${esc(sec.title ? sec.title(r) : (r.title || r.name || r.caption || r.date || "New"))}</legend>
@@ -199,7 +223,7 @@
     $("ed-tabs").addEventListener("click", (e) => { const b = e.target.closest("[data-tab]"); if (b) { open = b.dataset.tab; render(); } });
     $("ed-panel").addEventListener("input", (e) => {
       const el = e.target; if (!el.dataset.field) return;
-      rowFor(+el.dataset.idx)[el.dataset.field] = el.value;
+      rowFor(+el.dataset.idx)[el.dataset.field] = el.type === "checkbox" ? el.checked : el.value;
       if (!dirty.has(open)) { markDirty(); $("ed-tabs").querySelector(`[data-tab="${open}"]`).textContent += " •"; }
     });
     $("ed-panel").addEventListener("click", (e) => {
@@ -210,6 +234,7 @@
       else if (b.dataset.move) { const i = +b.dataset.idx, j = i + +b.dataset.move; [list[i], list[j]] = [list[j], list[i]]; }
       else if (b.dataset.pick) { const r = rowFor(+b.dataset.idx); return pickFile(b.dataset.pick, r, b.dataset.field, r.title || r.caption || r.name || r.date); }
       else if (b.dataset.clear !== undefined) { rowFor(+b.dataset.clear)[b.dataset.field] = ""; }
+      else if (b.dataset.nl) return newsletter(b.dataset.nl);
       else return;
       markDirty(); render();
     });
@@ -217,6 +242,34 @@
     $("ed-signout").addEventListener("click", () => { try { localStorage.removeItem(KEY_NAME); sessionStorage.removeItem(KEY_NAME); } catch (e) {} location.reload(); });
     window.addEventListener("beforeunload", (e) => { if (dirty.size) { e.preventDefault(); e.returnValue = ""; } });
   }
+  // ---------- The Sentinel ----------
+  const siteBase = new URL(".", location.href).href;
+  function newsletterHtml(forEmail, forPreview) {
+    const img = (p) => (forPreview && uploads.get(p) ? uploads.get(p).preview : /^https?:/.test(p) ? p : siteBase + p);
+    return window.buildSentinel(site, site.sentinelDraft, img, forEmail);
+  }
+  async function newsletter(action) {
+    const d = site.sentinelDraft;
+    if (action === "preview") {
+      window.open(URL.createObjectURL(new Blob([newsletterHtml(true, true)], { type: "text/html" })), "_blank");
+    } else if (action === "copy") {
+      try { await navigator.clipboard.writeText(newsletterHtml(true)); status("Copied! In Mailchimp, choose \"Code your own\", paste, and send. (Save first if you added new photos, so they're online.)"); }
+      catch (e) { status("Your browser blocked copying. Use Download instead, then open the file and paste its contents into Mailchimp.", true); }
+    } else if (action === "download") {
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(new Blob([newsletterHtml(true)], { type: "text/html" }));
+      a.download = `sentinel-${slug(d.issue || stamp())}.html`;
+      a.click();
+    } else if (action === "publish") {
+      if (!d.issue) return status("Add the issue name (like November 2026) first.", true);
+      const path = `newsletter/issues/sentinel-${slug(d.issue)}.html`;
+      uploads.set(path, { bytes: new TextEncoder().encode(newsletterHtml(false)) });
+      if (!site.sentinel.some((n) => n.file === path)) site.sentinel.unshift({ title: "The Sentinel", date: d.issue, file: path });
+      dirty.add("sentinel"); dirty.add("sentinelDraft");
+      await save();
+    }
+  }
+
   // A plain inline "are you sure" instead of a browser pop-up.
   let pendingDelete = null;
   function confirmDelete(row) {

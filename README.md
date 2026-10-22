@@ -61,6 +61,10 @@ Email accounts are created in cPanel → Email Accounts.
 
 `subscribe.php` adds each sign-up to `sentinel-subscribers.csv` in the hosting account's home folder (one level above `public_html`, so it can't be opened from the web and site uploads never touch it). Download it from cPanel → File Manager and import it into whatever you use to send the newsletter. Duplicates are skipped. Optionally set `$NOTIFY` to get an email for each new sign-up.
 
+### Writing The Sentinel in the editor
+
+The editor's **Write The Sentinel** tab (draft kept in `sentinelDraft` in content.js, layout built by `newsletter.js`) fills in events, specials, hours, meetings and officers from the site, plus whatever you write. **Copy for Mailchimp** copies the finished email; **Save & Post on the Website** saves it as `newsletter/issues/sentinel-<issue>.html` and lists it on the Sentinel page.
+
 ### The Sentinel email template
 
 `newsletter/sentinel-template.html` is an email-ready newsletter layout (tables and inline styles, so Gmail and Outlook show it correctly). Each section is marked with `SECTION:` / `END` comments, so you can delete sections or copy them to add more. Paste the file into Mailchimp's "Code your own" editor (or a similar service) to send it. Print it to PDF to post an issue on the Sentinel page.

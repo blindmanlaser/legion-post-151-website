@@ -274,6 +274,33 @@ window.SITE = {
   sentinel: [
   ],
 
+  // Draft of the next Sentinel, written in the site editor's "Write The Sentinel" tab.
+  sentinelDraft: {
+    issue: "",
+    preheader: "",
+    coverImage: "",
+    coverCaption: "",
+    commanderMessage: "",
+    commanderSign: "Kirk Jennings, Commander, Cowle Post 151",
+    spotlightTitle: "",
+    spotlightBody: "",
+    includeHours: true,
+    includeEvents: true,
+    eventDays: "60",
+    includeSpecials: true,
+    kitchenNews: "",
+    includeHeroes: true,
+    auxNews: "",
+    sonsNews: "",
+    communityTitle: "",
+    communityBody: "",
+    newMembers: "",
+    drawings: "",
+    taps: "",
+    includeOfficers: true,
+    memberNotice: ""
+  },
+
   // In Memoriam (in-memoriam.html). Members who have passed, newest first:
   // { name: "John Smith", branch: "U.S. Army", service: "Vietnam", date: "October 2026" },
   // branch, service and date are optional.

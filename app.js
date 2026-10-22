@@ -251,7 +251,7 @@
   set("sentinel-issues", (el) => {
     const list = S.sentinel || [];
     el.innerHTML = list.length
-      ? list.map((n) => `<li><a href="${esc(n.file)}" target="_blank" rel="noopener"><strong>${esc(n.title || "The Sentinel")}</strong> ${esc(n.date)}</a> <span class="fine">PDF</span></li>`).join("")
+      ? list.map((n) => `<li><a href="${esc(n.file)}" target="_blank" rel="noopener"><strong>${esc(n.title || "The Sentinel")}</strong> ${esc(n.date)}</a>${/\.pdf$/i.test(n.file) ? ' <span class="fine">PDF</span>' : ""}</li>`).join("")
       : '<li class="placeholder">The first new issue is coming soon. Sign up above to get it by email.</li>';
   });
 
