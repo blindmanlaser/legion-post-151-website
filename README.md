@@ -10,7 +10,12 @@ It's a plain static site (HTML, CSS and JavaScript, with no build step), so it c
 - `menu.html`: Menu & Daily Specials
 - `events.html`: Events & Meetings
 - `hometown-heroes.html`: Hometown Hero tribute flags. Two ways to order: the online form (handled by `order.php`, thank-you page `hometown-heroes-thanks.html`) or the downloadable PDF (`downloads/hometown-hero-flag-order-form.pdf`, fillable)
+- `hall-rental.html`: Hall rental (details from `hallRental` in content.js; "Check a Date" opens the contact form on the Hall rental topic)
+- `join.html`: Membership, eligibility and yearly dues (from `membership` in content.js)
 - `about.html`: About, officers, Legion family, veterans resources
+- `gallery.html`: Photo gallery (photos in `images/gallery/`, listed in `gallery` in content.js)
+- `sentinel.html`: The Sentinel newsletter. Email sign-up (handled by `subscribe.php`) and past issues (PDFs in `downloads/`, listed in `sentinel` in content.js)
+- `in-memoriam.html`: Members who have passed (from `inMemoriam` in content.js)
 - `contact.html`: Visit Us (address, hours, map) and the "Send Us a Message" form, handled by `contact.php`. Link to `contact.html?topic=hall#contact-form` (or membership, auxiliary, sons, heroes) to preselect a topic.
 
 The header and footer are repeated in each page, so if you add a page, add it to the nav in every page.
@@ -27,6 +32,7 @@ All week-to-week content lives in **`content.js`**:
 - `events`: one-time events, with an optional image from `images/` (past events hide automatically)
 - `meetings`: recurring monthly meetings (the next date is calculated automatically)
 - `officers`, `sonsOfficers`, `auxiliaryOfficers`: the three officer lists on the About page
+- `membership`, `hallRental`, `gallery`, `sentinel`, `inMemoriam`: the pages above
 - `email`, `facebook`
 
 Edit the file on GitHub, commit, and the live site updates within a minute or two.
@@ -46,6 +52,10 @@ Email accounts are created in cPanel → Email Accounts.
 ### Contact form messages
 
 `contact.php` emails each message to the people for the topic the visitor picks. **Set the addresses** in `$ROUTES` near the top of `contact.php`, one list per topic. Any topic left empty goes to `$DEFAULT`. Until `$DEFAULT` has an address, the form asks people to call the Post. Replies go straight to the visitor's email.
+
+### Sentinel sign-ups
+
+`subscribe.php` adds each sign-up to `sentinel-subscribers.csv` in the hosting account's home folder (one level above `public_html`, so it can't be opened from the web and site uploads never touch it). Download it from cPanel → File Manager and import it into whatever you use to send the newsletter. Duplicates are skipped. Optionally set `$NOTIFY` to get an email for each new sign-up.
 
 ## Preview locally
 

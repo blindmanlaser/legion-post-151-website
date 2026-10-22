@@ -185,5 +185,43 @@ window.SITE = {
     { title: "2nd Vice President", name: "Sandi Seegert" },
     { title: "Treasurer / Membership", name: "Tina Betts" },
     { title: "Secretary", name: "Mary Halman" }
+  ],
+
+  // Membership page (join.html). Dues are per year.
+  membership: [
+    { group: "The American Legion", dues: "$40", contact: "Dave Cox, Adjutant",
+      who: "Veterans who served at least one day of active federal duty in the U.S. Armed Forces since December 7, 1941, and were honorably discharged or are still serving." },
+    { group: "Sons of the American Legion", dues: "$35", contact: "George Sabo, Adjutant",
+      who: "Sons, grandsons, great-grandsons, adopted sons and stepsons of Legion members, or of veterans who would have been eligible for the Legion." },
+    { group: "American Legion Auxiliary", dues: "$35", contact: "Tina Betts, Treasurer / Membership",
+      who: "Spouses, parents, children, grandchildren, great-grandchildren and siblings of Legion members or Legion-eligible veterans." }
+  ],
+
+  // Hall rental page (hall-rental.html). Leave price or capacity as "" to show "Call for details".
+  hallRental: {
+    price: "",
+    capacity: "",
+    features: [
+      "Full-service bar. Guests order drinks from the Post bar.",
+      "Food catered by the Post kitchen, or bring in the outside caterer of your choice.",
+      "Great for birthdays, showers, graduations, reunions, celebrations of life and meetings."
+    ],
+    note: "Call or send us a message with your date and the number of guests, and we'll get back to you with availability and pricing."
+  },
+
+  // Photo gallery (gallery.html). Put photos in the images/gallery folder, then add a line:
+  // { file: "images/gallery/fish-fry.jpg", caption: "Fish fry, Lent 2026" },
+  gallery: [
+  ],
+
+  // The Sentinel newsletter (sentinel.html). Put PDFs in the downloads folder, newest first:
+  // { title: "The Sentinel", date: "November 2026", file: "downloads/sentinel-2026-11.pdf" },
+  sentinel: [
+  ],
+
+  // In Memoriam (in-memoriam.html). Members who have passed, newest first:
+  // { name: "John Smith", branch: "U.S. Army", service: "Vietnam", date: "October 2026" },
+  // branch, service and date are optional.
+  inMemoriam: [
   ]
 };

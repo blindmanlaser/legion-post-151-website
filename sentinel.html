@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Sentinel · American Legion Post 151</title>
+  <meta name="description" content="The Sentinel, the newsletter of American Legion Cowle Post 151, Conneaut, Ohio. Sign up by email or read past issues.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23b22234' d='M12 2l2.9 6.9 7.1.6-5.4 4.7 1.6 7L12 17.5 5.8 21.2l1.6-7L2 9.5l7.1-.6z'/%3E%3C/svg%3E">
+</head>
+<body>
+  <div class="stripe-bar" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="index.html">
+        <svg class="brand-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.6 7L12 17.5 5.8 21.2l1.6-7L2 9.5l7.1-.6z"/></svg>
+        <span><strong>Post 151</strong><small>American Legion · Conneaut, OH</small></span>
+      </a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="nav">Menu</button>
+      <nav id="nav" class="nav">
+        <a href="index.html">Home</a>
+        <a href="menu.html">Menu &amp; Specials</a>
+        <a href="events.html">Events</a>
+        <a href="hall-rental.html">Hall Rental</a>
+        <a href="join.html">Join</a>
+        <a href="hometown-heroes.html">Hometown Heroes</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Visit</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-banner">
+      <div class="hero-stars" aria-hidden="true"></div>
+      <div class="wrap hero-inner">
+        <p class="eyebrow">Post 151 Newsletter</p>
+        <h1>The Sentinel</h1>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <h2 class="section-title"><span>Get The Sentinel by Email</span></h2>
+        <p class="about-intro">News from the Post, the Auxiliary and the Sons, upcoming events, and member notices. Sign up and we'll email each issue to you.</p>
+        <div class="form-alert" id="sub-alert" role="alert" hidden></div>
+        <form class="order-form" id="sub-form" action="subscribe.php" method="post">
+          <fieldset>
+            <div class="row">
+              <label>Your name <span class="req">*</span>
+                <input type="text" name="name" required maxlength="80" autocomplete="name"></label>
+              <label>Email <span class="req">*</span>
+                <input type="email" name="email" required maxlength="120" autocomplete="email"></label>
+            </div>
+          </fieldset>
+          <div class="hp" aria-hidden="true"><label>Leave this empty <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+          <button class="btn btn-red btn-big" type="submit" id="sub-submit">Sign Me Up</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="wrap">
+        <h2 class="section-title"><span>Past Issues</span></h2>
+        <ul class="issue-list" id="sentinel-issues"></ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <svg class="footer-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.6 7L12 17.5 5.8 21.2l1.6-7L2 9.5l7.1-.6z"/></svg>
+      <p><strong>American Legion Cowle Post 151</strong> · <span id="footer-address"></span></p>
+      <p class="footer-links"><a href="index.html">Home</a> · <a href="menu.html">Menu &amp; Specials</a> · <a href="events.html">Events</a> · <a href="hall-rental.html">Hall Rental</a> · <a href="join.html">Join</a> · <a href="hometown-heroes.html">Hometown Heroes</a> · <a href="about.html">About</a> · <a href="contact.html">Visit</a> · <a href="gallery.html">Gallery</a> · <a href="sentinel.html">The Sentinel</a> · <a href="in-memoriam.html">In Memoriam</a></p>
+      <p class="fine">Honoring all who served. &copy; <span id="year"></span></p>
+    </div>
+  </footer>
+  <div class="stripe-bar" aria-hidden="true"></div>
+
+  <script src="content.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

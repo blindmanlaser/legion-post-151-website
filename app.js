@@ -217,6 +217,69 @@
     });
   });
 
+  // Membership page
+  set("join-cards", (el) => {
+    el.innerHTML = (S.membership || []).map((m) => `<div class="join-card">
+      <h3>${esc(m.group)}</h3>
+      ${m.dues ? `<p class="dues"><span>${esc(m.dues)}</span> per year</p>` : ""}
+      <p><strong>Who can join:</strong> ${esc(m.who)}</p>
+      ${m.contact ? `<p class="fine light">Membership contact: ${esc(m.contact)}</p>` : ""}
+    </div>`).join("");
+  });
+
+  // Hall rental page
+  set("hall-features", (el) => {
+    const h = S.hallRental || {};
+    el.innerHTML = (h.features || []).map((f) => `<li>${esc(f)}</li>`).join("");
+    $("hall-facts").innerHTML = [["Capacity", h.capacity ? h.capacity + " guests" : ""], ["Rental", h.price]]
+      .map(([k, v]) => `<div class="kh"><strong>${k}</strong><br>${v ? esc(v) : "Call for details"}</div>`).join("");
+    $("hall-note").textContent = h.note || "";
+    $("hall-call").href = tel; $("hall-call").textContent = "Call " + S.phone;
+  });
+
+  // Photo gallery
+  set("gallery", (el) => {
+    const g = S.gallery || [];
+    el.innerHTML = g.length
+      ? g.map((p) => `<figure><a href="${esc(p.file)}" target="_blank" rel="noopener"><img src="${esc(p.file)}" alt="${esc(p.caption)}" loading="lazy"></a>${p.caption ? `<figcaption>${esc(p.caption)}</figcaption>` : ""}</figure>`).join("")
+      : '<p class="placeholder">Photos coming soon. Check our Facebook page for the latest pictures.</p>';
+  });
+
+  // The Sentinel: past issues
+  set("sentinel-issues", (el) => {
+    const list = S.sentinel || [];
+    el.innerHTML = list.length
+      ? list.map((n) => `<li><a href="${esc(n.file)}" target="_blank" rel="noopener"><strong>${esc(n.title || "The Sentinel")}</strong> ${esc(n.date)}</a> <span class="fine">PDF</span></li>`).join("")
+      : '<li class="placeholder">The first new issue is coming soon. Sign up above to get it by email.</li>';
+  });
+
+  // In Memoriam
+  set("memoriam", (el) => {
+    const list = S.inMemoriam || [];
+    el.innerHTML = list.length
+      ? list.map((p) => `<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.6 7L12 17.5 5.8 21.2l1.6-7L2 9.5l7.1-.6z"/></svg>
+        <div><strong>${esc(p.name)}</strong>${[p.branch, p.service].filter(Boolean).length ? `<span>${esc([p.branch, p.service].filter(Boolean).join(" · "))}</span>` : ""}${p.date ? `<span class="fine">${esc(p.date)}</span>` : ""}</div></li>`).join("")
+      : '<li class="placeholder">Our honor roll is being gathered and will be posted soon.</li>';
+  });
+
+  // Sentinel sign-up form
+  set("sub-form", (form) => {
+    const alertBox = $("sub-alert");
+    const show = (msg, ok) => { alertBox.textContent = msg; alertBox.className = "form-alert" + (ok ? " ok" : ""); alertBox.hidden = false; };
+    const MESSAGES = {
+      sent: "You're signed up! The Sentinel will come to your inbox.",
+      missing: "Please fill in your name and email, then try again.",
+      email: "Please check your email address and try again.",
+      failed: `Sorry, something went wrong. Please try again, or call us at ${S.phone}.`
+    };
+    const code = new URLSearchParams(location.search).get("signup");
+    if (code && MESSAGES[code]) show(MESSAGES[code], code === "sent");
+    if (/github\.io$/.test(location.hostname)) {
+      show("This is a preview copy of the site. Sign-up will work once the site is live at conneautlegionpost151.org.");
+    }
+    form.addEventListener("submit", () => { const b = $("sub-submit"); b.disabled = true; b.textContent = "Signing up…"; });
+  });
+
   // Mobile nav
   const toggle = document.querySelector(".nav-toggle"), nav = $("nav");
   if (toggle && nav) toggle.addEventListener("click", () => { const o = nav.classList.toggle("open"); toggle.setAttribute("aria-expanded", o); });
