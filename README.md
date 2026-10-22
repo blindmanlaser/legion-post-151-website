@@ -10,6 +10,7 @@ It's a plain static site (HTML, CSS and JavaScript, with no build step), so it c
 - `menu.html`: Menu & Daily Specials
 - `events.html`: Events & Meetings
 - `hometown-heroes.html`: Hometown Hero tribute flags. Two ways to order: the online form (handled by `order.php`, thank-you page `hometown-heroes-thanks.html`) or the downloadable PDF (`downloads/hometown-hero-flag-order-form.pdf`, fillable)
+- `banner-map.html`: Hero Banner Map. Every Hometown Hero banner on its pole, with a name search, directions and a share link for each banner (`banner-map.html?hero=john-smith`). Data from `heroBanners` in content.js; the map uses Leaflet (in `vendor/leaflet/`) with free OpenStreetMap tiles, so there's no API key or bill
 - `hall-rental.html`: Hall rental (details from `hallRental` in content.js; "Check a Date" opens the contact form on the Hall rental topic)
 - `join.html`: Membership, eligibility and yearly dues (from `membership` in content.js)
 - `about.html`: About, officers, Legion family, veterans resources
@@ -32,6 +33,7 @@ All week-to-week content lives in **`content.js`**:
 - `events`: one-time events, with an optional image from `images/` (past events hide automatically)
 - `meetings`: recurring monthly meetings (the next date is calculated automatically)
 - `officers`, `sonsOfficers`, `auxiliaryOfficers`: the three officer lists on the About page
+- `heroBanners`: banners on the Hero Banner Map. `spot` is the pole's "latitude, longitude"
 - `membership`, `hallRental`, `gallery`, `sentinel`, `inMemoriam`: the pages above
 - `email`, `facebook`
 
@@ -39,7 +41,7 @@ Edit the file on GitHub, commit, and the live site updates within a minute or tw
 
 ### Site editor (no coding)
 
-`admin.html` (not linked from the site, and hidden from search engines) is a point-and-click editor for the daily specials, announcements, events, In Memoriam, photo gallery, Sentinel PDFs, hall rental details and membership dues. It signs in with a GitHub fine-grained token that only has **Contents: Read and write** on this repository (the sign-in page has the steps). Each save is one commit to `content.js` plus any uploaded photos or PDFs, so it goes live the same way as an edit on GitHub. Photos are shrunk to 1600 px before upload. Only the parts you changed are rewritten; comments and everything else in `content.js` stay as they are.
+`admin.html` (not linked from the site, and hidden from search engines) is a point-and-click editor for the daily specials, announcements, events, banner map, In Memoriam, photo gallery, Sentinel PDFs, hall rental details and membership dues. It signs in with a GitHub fine-grained token that only has **Contents: Read and write** on this repository (the sign-in page has the steps). Each save is one commit to `content.js` plus any uploaded photos or PDFs, so it goes live the same way as an edit on GitHub. Photos are shrunk to 1600 px before upload. Only the parts you changed are rewritten; comments and everything else in `content.js` stay as they are.
 
 ## Hosting
 
@@ -48,6 +50,10 @@ The live site is **conneautlegionpost151.org**, hosted on Namecheap (Stellar sha
 Every push to `main` is uploaded to the hosting account's `public_html/` folder by `.github/workflows/deploy.yml`. It needs three repository secrets (Settings → Secrets and variables → Actions): `FTP_SERVER`, `FTP_USERNAME` and `FTP_PASSWORD`, all from cPanel → FTP Accounts.
 
 Email accounts are created in cPanel → Email Accounts.
+
+### Mapping the Hometown Hero banners
+
+Open the editor on a phone, go to **Banner Map**, and walk the route. At each pole tap **+ Add new**, type the name on the banner and tap **Use my location** (the browser asks once for location permission). Save every few banners. A spot can also be pasted from Google Maps (right-click the pole, click the numbers to copy them), or filled in from a banner photo taken with location turned on. **Check on map** opens the spot on OpenStreetMap to confirm it. Rows marked `sample: true` are made-up pins; the page shows a "samples" notice until they're deleted.
 
 ### Hometown Hero online orders
 
