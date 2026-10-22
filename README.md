@@ -30,9 +30,13 @@ All week-to-week content lives in **`content.js`**:
 
 Edit the file on GitHub, commit, and the live site updates within a minute or two.
 
-## Hosting with GitHub Pages
+## Hosting
 
-Settings → Pages → Source: "Deploy from a branch" → `main` / root.
+The live site is **conneautlegionpost151.org**, hosted on Namecheap (Stellar shared hosting). The domain, hosting and email accounts are all in the same Namecheap account.
+
+Every push to `main` is uploaded to the hosting account's `public_html/` folder by `.github/workflows/deploy.yml`. It needs three repository secrets (Settings → Secrets and variables → Actions): `FTP_SERVER`, `FTP_USERNAME` and `FTP_PASSWORD`, all from cPanel → FTP Accounts.
+
+Email accounts are created in cPanel → Email Accounts.
 
 ## Preview locally
 
