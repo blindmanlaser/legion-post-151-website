@@ -36,12 +36,12 @@ window.SITE = {
   // Daily specials, one per weekday. Leave "item" empty to show "Ask your bartender".
   specials: [
     { day: 0, item: "Kitchen Closed", price: "", note: "The bar is open noon – 10 pm." },
-    { day: 1, item: "Burger Monday", price: "", note: "Featuring a special themed burger. Ask what this week's is!" },
+    { day: 1, item: "Burger Monday", price: "", note: "Featuring a special themed burger." },
     { day: 2, item: "Taco Tuesday", price: "", note: "" },
     { day: 3, item: "Wing Night", price: "$0.60 wings", note: "" },
     { day: 4, item: "Pizza & Stromboli Night", price: "", note: "4 – 7 pm, until sold out" },
-    { day: 5, item: "Dinner Special", price: "", note: "See the media board for this week's dinner." },
-    { day: 6, item: "Dinner Special", price: "", note: "See the media board for this week's dinner." }
+    { day: 5, item: "Dinner Special", price: "", note: "" },
+    { day: 6, item: "Dinner Special", price: "", note: "" }
   ],
 
   // Menu sections. Items look like:
