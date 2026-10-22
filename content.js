@@ -134,7 +134,7 @@ window.SITE = {
   events: [
     { date: "2026-10-31", time: "8:00 – 11:00 pm", title: "Halloween Night with Big in Japan",
       host: "Live music from Cleveland party band Big in Japan",
-      image: "images/big-in-japan-halloween.jpg",
+      image: "images/big-in-japan-halloween-band.jpg",
       body: "Big in Japan is bringing the party Halloween night! Come in costume. There will be prizes for the best costumes. See you there!" },
     { date: "2026-11-14", time: "1:00 pm", title: "Paint & Sip Fundraiser",
       host: "Hosted by the American Legion Auxiliary Unit 151",
