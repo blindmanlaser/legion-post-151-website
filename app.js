@@ -264,6 +264,73 @@
       : '<li class="placeholder">Our honor roll is being gathered and will be posted soon.</li>';
   });
 
+  // Hometown Hero banner map: search by name, click a name to fly to its pole
+  set("banner-map", (el) => {
+    if (!window.L) { el.innerHTML = '<p class="placeholder">The map couldn\'t load. Please refresh the page.</p>'; return; }
+    const SUFFIX = /^(jr|sr|ii|iii|iv)\.?$/i;
+    const lastName = (n) => { const w = String(n).trim().split(/\s+/).filter((x) => !SUFFIX.test(x)); return (w[w.length - 1] || "").toLowerCase(); };
+    const slugOf = (n) => String(n).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+    const all = (S.heroBanners || []).map((b) => {
+      const [lat, lng] = String(b.spot || "").split(",").map(Number);
+      return { ...b, lat, lng };
+    }).filter((b) => b.name && isFinite(b.lat) && isFinite(b.lng))
+      .sort((a, b) => lastName(a.name).localeCompare(lastName(b.name)) || a.name.localeCompare(b.name));
+    const used = {};
+    all.forEach((b) => { const id = slugOf(b.name); used[id] = (used[id] || 0) + 1; b.id = used[id] > 1 ? `${id}-${used[id]}` : id; });
+    if (all.some((b) => b.sample)) $("bm-sample").hidden = false;
+
+    const map = L.map(el, { scrollWheelZoom: false }).setView([41.9476, -80.5542], 14);
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 19, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+    const pin = L.divIcon({ className: "bm-pin", html: '<svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.6 7L12 17.5 5.8 21.2l1.6-7L2 9.5l7.1-.6z"/></svg>', iconSize: [30, 30], iconAnchor: [15, 15], popupAnchor: [0, -12] });
+    const details = (b) => [b.branch, b.years, b.era].filter(Boolean).join(" · ");
+    const popup = (b) => `<div class="bm-pop">${b.photo ? `<img src="${esc(b.photo)}" alt="Banner for ${esc(b.name)}">` : ""}
+      <strong>${esc(b.name)}</strong>${details(b) ? `<span>${esc(details(b))}</span>` : ""}${b.where ? `<span class="fine">${esc(b.where)}</span>` : ""}
+      <span class="bm-pop-links"><a href="https://www.google.com/maps/dir/?api=1&destination=${b.lat},${b.lng}" target="_blank" rel="noopener">Directions</a>
+      <a href="?hero=${esc(b.id)}" data-share="${esc(b.id)}">Share link</a></span></div>`;
+    all.forEach((b) => { b.marker = L.marker([b.lat, b.lng], { icon: pin, title: b.name, alt: b.name }).bindPopup(popup(b)).addTo(map); });
+    if (all.length) map.fitBounds(L.latLngBounds(all.map((b) => [b.lat, b.lng])), { padding: [30, 30], maxZoom: 16 });
+    // Two-finger / click-to-zoom so the page still scrolls past the map
+    map.once("focus click", () => map.scrollWheelZoom.enable());
+
+    const show = (b) => {
+      map.setView([b.lat, b.lng], Math.max(map.getZoom(), 17));
+      b.marker.openPopup();
+      if (window.innerWidth <= 760) el.scrollIntoView({ behavior: "smooth", block: "center" });
+    };
+    const q = $("bm-q"), list = $("bm-list"), count = $("bm-count");
+    const render = () => {
+      const terms = q.value.toLowerCase().trim().split(/\s+/).filter(Boolean);
+      const hits = all.filter((b) => { const hay = [b.name, b.branch, b.era, b.where].join(" ").toLowerCase(); return terms.every((t) => hay.includes(t)); });
+      all.forEach((b) => { const on = hits.includes(b); if (on !== map.hasLayer(b.marker)) on ? b.marker.addTo(map) : b.marker.remove(); });
+      list.innerHTML = hits.map((b) => `<li><button type="button" data-id="${esc(b.id)}"><strong>${esc(b.name)}</strong>${details(b) ? `<span>${esc(details(b))}</span>` : ""}${b.where ? `<span class="fine">${esc(b.where)}</span>` : ""}</button></li>`).join("")
+        || `<li class="placeholder">${all.length ? "No banner found with that name. Try just the last name." : "Banner locations are coming soon."}</li>`;
+      count.textContent = all.length ? (terms.length ? `${hits.length} of ${all.length} banners` : `${all.length} banners`) : "";
+      if (terms.length && hits.length) map.fitBounds(L.latLngBounds(hits.map((b) => [b.lat, b.lng])), { padding: [30, 30], maxZoom: 17 });
+    };
+    q.addEventListener("input", render);
+    list.addEventListener("click", (e) => { const btn = e.target.closest("[data-id]"); if (btn) show(all.find((b) => b.id === btn.dataset.id)); });
+    el.addEventListener("click", (e) => {
+      const a = e.target.closest("[data-share]"); if (!a) return;
+      e.preventDefault();
+      const url = new URL(location.href); url.search = "?hero=" + a.dataset.share; url.hash = "";
+      if (navigator.share) navigator.share({ title: document.title, url: url.href }).catch(() => {});
+      else if (navigator.clipboard) navigator.clipboard.writeText(url.href).then(() => { a.textContent = "Link copied"; });
+    });
+    $("bm-near").addEventListener("click", () => {
+      if (!navigator.geolocation) return;
+      navigator.geolocation.getCurrentPosition((p) => {
+        L.circleMarker([p.coords.latitude, p.coords.longitude], { radius: 8, color: "#0a2240", fillColor: "#3b82f6", fillOpacity: 1 }).addTo(map).bindTooltip("You are here");
+        map.setView([p.coords.latitude, p.coords.longitude], 17);
+      }, () => { count.textContent = "Your location isn't available. Check that location is allowed for this site."; });
+    });
+    render();
+    const want = new URLSearchParams(location.search).get("hero");
+    const hit = want && all.find((b) => b.id === want);
+    if (hit) { q.value = hit.name; render(); show(hit); }
+  });
+
   // Sentinel sign-up form
   set("sub-form", (form) => {
     const alertBox = $("sub-alert");

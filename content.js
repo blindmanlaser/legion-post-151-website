@@ -226,6 +226,20 @@ window.SITE = {
     note: "Call or send us a message with your date and the number of guests, and we'll let you know if it's available."
   },
 
+  // Hometown Hero banner map (banner-map.html). One line per banner on a pole:
+  // { name: "John Smith", branch: "U.S. Army", years: "1965 – 1968", era: "Vietnam",
+  //   where: "Broad St, in front of the Post", spot: "41.94681, -80.55430", photo: "images/heroes/john-smith.jpg" },
+  // spot is the pole's latitude, longitude (right-click the spot in Google Maps to copy it,
+  // or use "Use my location" in the site editor while standing at the pole).
+  // sample: true marks made-up pins; delete those once the real banners are in.
+  heroBanners: [
+    { name: "John Smith", branch: "U.S. Army", years: "1965 – 1968", era: "Vietnam", where: "Broad St, in front of the Post", spot: "41.94681, -80.55430", sample: true },
+    { name: "Thomas Smith", branch: "U.S. Navy", years: "1942 – 1946", era: "WWII", where: "Broad St, in front of the Post", spot: "41.94695, -80.55432", sample: true },
+    { name: "Jane Doe", branch: "U.S. Air Force", years: "1990 – 2010", era: "Desert Storm", where: "Broad St at Main St", spot: "41.94790, -80.55405", sample: true },
+    { name: "Robert Johnson", branch: "U.S. Marine Corps", years: "1950 – 1953", era: "Korea", where: "Main St, east of Broad St", spot: "41.94780, -80.55120", sample: true },
+    { name: "Mary Williams", branch: "U.S. Coast Guard", years: "1978 – 1982", where: "Main St, west of Broad St", spot: "41.94755, -80.55760", sample: true }
+  ],
+
   // Photo gallery (gallery.html). Put photos in the images/gallery folder, then add a line:
   // { file: "images/gallery/fish-fry.jpg", caption: "Fish fry, Lent 2026" },
   gallery: [

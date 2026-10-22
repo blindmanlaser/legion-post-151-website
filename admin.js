@@ -28,6 +28,12 @@
       help: "Members who have passed, newest first.",
       blank: { name: "", branch: "", service: "", date: "" },
       fields: [["name", "Name"], ["branch", "Branch (optional)"], ["service", "Era or service (optional, like Vietnam)"], ["date", "Date of passing (optional, like October 2026)"]] },
+    { key: "heroBanners", label: "Banner Map", type: "list",
+      help: "Hometown Hero banners on the Banner Map page. Standing at a pole with your phone? Add a banner, type the name and tap \"Use my location\". You can also paste a spot copied from Google Maps (right-click the spot and click the numbers), or add a photo of the banner taken with location turned on. Save every few banners.",
+      title: (r) => (r.name || "New banner") + (r.sample ? " (sample, delete me)" : ""),
+      blank: { name: "", branch: "", years: "", era: "", spot: "", where: "", photo: "" },
+      fields: [["name", "Name on the banner"], ["branch", "Branch (optional)"], ["years", "Years of service (optional, like 1965 – 1968)"], ["era", "Era (optional, like Vietnam)"],
+        ["spot", "Pole location", "spot"], ["where", "Street or landmark (optional, like Broad St at Main St)"], ["photo", "Photo of the banner (optional)", "image"]] },
     { key: "gallery", label: "Photo Gallery", type: "list",
       help: "Photos for the Gallery page. Big phone photos are shrunk automatically before upload.",
       blank: { file: "", caption: "" },
@@ -156,6 +162,10 @@
           bytes = new Uint8Array(await file.arrayBuffer());
           path = `downloads/${slug(nameHint || file.name.replace(/\.pdf$/i, ""))}-${stamp()}.pdf`;
         } else {
+          if ("spot" in row && !row.spot) {
+            const spot = await photoSpot(file);
+            if (spot) { row.spot = spot; status("The pole location was filled in from the photo. Click Check on map to make sure it's right."); }
+          }
           bytes = await shrinkImage(file);
           path = `images/${field === "file" ? "gallery/" : ""}${slug(nameHint || file.name.replace(/\.\w+$/, ""))}-${stamp()}.jpg`;
         }
@@ -168,6 +178,48 @@
       }
     };
     input.click();
+  }
+
+  // Phone GPS for the banner map: fills "lat, lng" while standing at the pole
+  function locate(row, field, btn) {
+    if (!navigator.geolocation) return status("This device can't share its location. Paste the spot from Google Maps instead.", true);
+    btn.disabled = true; btn.textContent = "Finding you…";
+    navigator.geolocation.getCurrentPosition((p) => {
+      row[field] = `${p.coords.latitude.toFixed(5)}, ${p.coords.longitude.toFixed(5)}`;
+      delete row.sample;
+      status(`Location set, accurate to about ${Math.round(p.coords.accuracy * 3.28)} feet. Click Save Changes when you're done.`);
+      markDirty(); render();
+    }, () => {
+      btn.disabled = false; btn.textContent = "Use my location";
+      status("Your location isn't available. Allow location for this site in your phone's browser settings, then try again.", true);
+    }, { enableHighAccuracy: true, timeout: 20000, maximumAge: 0 });
+  }
+
+  // Reads the GPS spot saved in a phone photo (JPG with location on), or null
+  async function photoSpot(file) {
+    try {
+      const v = new DataView(await file.slice(0, 256 * 1024).arrayBuffer());
+      if (v.getUint16(0) !== 0xffd8) return null;
+      for (let o = 2; o + 10 < v.byteLength; o += 2 + v.getUint16(o + 2)) {
+        if (v.getUint16(o) === 0xffe1 && v.getUint32(o + 4) === 0x45786966) {
+          const t = o + 10, le = v.getUint16(t) === 0x4949;
+          const u16 = (p) => v.getUint16(p, le), u32 = (p) => v.getUint32(p, le);
+          const ifd = (p) => { const out = {}; for (let i = 0, n = u16(p); i < n; i++) out[u16(p + 2 + i * 12)] = p + 2 + i * 12; return out; };
+          const gpsPtr = ifd(t + u32(t + 4))[0x8825];
+          if (!gpsPtr) return null;
+          const g = ifd(t + u32(gpsPtr + 8));
+          const coord = (tag, ref) => {
+            if (!g[tag] || !g[ref]) return NaN;
+            const p = t + u32(g[tag] + 8), part = (k) => u32(p + k * 8) / u32(p + k * 8 + 4);
+            const d = part(0) + part(1) / 60 + part(2) / 3600;
+            return /[SW]/.test(String.fromCharCode(v.getUint8(g[ref] + 8))) ? -d : d;
+          };
+          const lat = coord(2, 1), lng = coord(4, 3);
+          return isFinite(lat) && isFinite(lng) && (lat || lng) ? `${lat.toFixed(5)}, ${lng.toFixed(5)}` : null;
+        }
+      }
+    } catch (e) {}
+    return null;
   }
 
   // ---------- UI ----------
@@ -183,6 +235,12 @@
       return `<div class="ed-file"><span class="group-label">${esc(label)}</span>${preview}
         <button type="button" class="btn btn-small" data-pick="${kind}" data-idx="${idx}" data-field="${name}">${v ? "Replace" : "Choose"} ${kind === "pdf" ? "PDF" : "photo"}</button>
         ${v && kind === "image" ? `<button type="button" class="btn btn-small btn-ghost" data-clear="${idx}" data-field="${name}">Remove</button>` : ""}</div>`;
+    }
+    if (kind === "spot") {
+      const [lat, lng] = String(v).split(",").map((x) => x.trim());
+      return `<label for="${id}">${esc(label)}<input id="${id}" type="text" inputmode="decimal" value="${esc(v)}" placeholder="like 41.94681, -80.55430" data-idx="${idx}" data-field="${name}"></label>
+        <div class="ed-row-actions ed-spot"><button type="button" class="btn btn-small btn-red" data-locate="${idx}" data-field="${name}">Use my location</button>
+        ${v ? `<a class="btn btn-small btn-ghost" href="https://www.openstreetmap.org/?mlat=${encodeURIComponent(lat)}&mlon=${encodeURIComponent(lng)}#map=19/${encodeURIComponent(lat)}/${encodeURIComponent(lng)}" target="_blank" rel="noopener">Check on map</a>` : ""}</div>`;
     }
     if (kind === "check") return `<label class="ed-check"><input type="checkbox" data-idx="${idx}" data-field="${name}" ${v ? "checked" : ""}> ${esc(label)}</label>`;
     const input = kind === "textarea"
@@ -224,7 +282,9 @@
     $("ed-tabs").addEventListener("click", (e) => { const b = e.target.closest("[data-tab]"); if (b) { open = b.dataset.tab; render(); } });
     $("ed-panel").addEventListener("input", (e) => {
       const el = e.target; if (!el.dataset.field) return;
-      rowFor(+el.dataset.idx)[el.dataset.field] = el.type === "checkbox" ? el.checked : el.value;
+      const r = rowFor(+el.dataset.idx);
+      r[el.dataset.field] = el.type === "checkbox" ? el.checked : el.value;
+      delete r.sample; // an edited sample row is a real one now
       if (!dirty.has(open)) { markDirty(); $("ed-tabs").querySelector(`[data-tab="${open}"]`).textContent += " •"; }
     });
     $("ed-panel").addEventListener("click", (e) => {
@@ -234,6 +294,7 @@
       else if (b.dataset.del !== undefined) { if (!confirmDelete(list[+b.dataset.del])) return; list.splice(+b.dataset.del, 1); }
       else if (b.dataset.move) { const i = +b.dataset.idx, j = i + +b.dataset.move; [list[i], list[j]] = [list[j], list[i]]; }
       else if (b.dataset.pick) { const r = rowFor(+b.dataset.idx); return pickFile(b.dataset.pick, r, b.dataset.field, r.title || r.caption || r.name || r.date); }
+      else if (b.dataset.locate !== undefined) return locate(rowFor(+b.dataset.locate), b.dataset.field, b);
       else if (b.dataset.clear !== undefined) { rowFor(+b.dataset.clear)[b.dataset.field] = ""; }
       else if (b.dataset.nl) return newsletter(b.dataset.nl);
       else return;

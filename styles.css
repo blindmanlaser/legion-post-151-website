@@ -355,3 +355,32 @@ h3 { color: var(--navy); text-transform: uppercase; font-size: 1.25rem; margin: 
 .card-emblem { display: block; width: 110px; height: 110px; object-fit: contain; margin: 0 0 12px; }
 .footer-emblems { display: flex; justify-content: center; gap: 18px; margin: 8px 0 12px; }
 .footer-emblems img { width: 76px; height: 76px; object-fit: contain; }
+
+/* Hometown Hero banner map */
+.bm-search { max-width: 760px; margin-bottom: 16px; }
+.bm-search label { font-weight: 600; display: block; margin-bottom: 6px; }
+.bm-search-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.bm-search-row input { flex: 1 1 240px; font: inherit; padding: 10px 14px; border: 2px solid var(--navy); border-radius: 6px; background: var(--white); }
+.bm-search-row .btn { border: 0; cursor: pointer; }
+.bm-search .fine { margin: 6px 0 0; }
+.bm-layout { display: grid; grid-template-columns: 300px 1fr; gap: 16px; margin-bottom: 16px; }
+.bm-map { height: 560px; border-radius: var(--radius); border: 1px solid var(--line); z-index: 0; }
+.bm-list { list-style: none; padding: 0; margin: 0; max-height: 560px; overflow-y: auto; background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); }
+.bm-list li { border-bottom: 1px solid var(--line); }
+.bm-list li.placeholder { padding: 14px 16px; }
+.bm-list button { display: block; width: 100%; text-align: left; background: none; border: 0; font: inherit; color: inherit; padding: 10px 16px; cursor: pointer; }
+.bm-list button:hover, .bm-list button:focus-visible { background: var(--cream); }
+.bm-list strong, .bm-pop strong { display: block; color: var(--navy); }
+.bm-list span, .bm-pop span { display: block; font-size: .9rem; }
+.bm-pin { color: var(--red); filter: drop-shadow(0 1px 2px rgba(0,0,0,.5)); }
+.bm-pin svg { width: 30px; height: 30px; fill: var(--red); stroke: var(--white); stroke-width: 1.5; }
+.bm-pop { font-family: "Source Sans 3", system-ui, sans-serif; font-size: 1rem; min-width: 180px; }
+.bm-pop img { display: block; width: 200px; max-width: 100%; border-radius: 6px; margin-bottom: 8px; }
+.bm-pop strong { font-size: 1.1rem; }
+.bm-pop-links { margin-top: 6px; display: flex !important; gap: 14px; font-weight: 600; }
+@media (max-width: 760px) {
+  .bm-layout { grid-template-columns: 1fr; }
+  .bm-map { height: 420px; order: -1; }
+  .bm-list { max-height: none; }
+}
+.ed-spot { margin: -6px 0 14px; }
