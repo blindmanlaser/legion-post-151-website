@@ -126,7 +126,7 @@ window.SITE = {
   // Announcements show at the top of the Home and Events pages. Newest first.
   // "link" is optional and adds a "Learn more" link.
   announcements: [
-    { title: "Hometown Hero Flags", body: "Honor a Conneaut veteran with a tribute flag displayed Memorial Day through Veterans Day 2027.", link: "hometown-heroes.html" }
+    { title: "Hometown Hero Flags", body: "Honor a Conneaut veteran with a tribute flag displayed Memorial Day through Veterans Day.", link: "hometown-heroes.html" }
   ],
 
   // One-time events. Dates are "YYYY-MM-DD". Past events hide automatically.
