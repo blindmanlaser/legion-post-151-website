@@ -270,7 +270,7 @@ h3 { color: var(--navy); text-transform: uppercase; font-size: 1.25rem; margin: 
 .order-form fieldset { border: 1px solid var(--line); border-radius: var(--radius); background: var(--white); padding: 20px; margin: 0 0 20px; }
 .order-form legend { font-family: "Oswald", sans-serif; text-transform: uppercase; color: var(--navy); font-size: 1.1rem; padding: 0 8px; }
 .order-form label { display: block; font-weight: 600; margin-bottom: 14px; }
-.order-form input[type=text], .order-form input[type=email], .order-form input[type=tel], .order-form select, .order-form textarea, .order-form input[type=file] {
+.order-form input[type=text], .order-form input[type=date], .order-form input[type=password], .order-form input[type=email], .order-form input[type=tel], .order-form select, .order-form textarea, .order-form input[type=file] {
   display: block; width: 100%; margin-top: 6px; font: inherit; font-weight: 400; padding: 10px 12px; border: 1px solid #b9b2a0; border-radius: 6px; background: #fff; color: var(--ink); }
 .order-form input:focus, .order-form select:focus, .order-form textarea:focus { outline: 2px solid var(--navy); outline-offset: 1px; }
 .order-form .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
@@ -322,3 +322,26 @@ h3 { color: var(--navy); text-transform: uppercase; font-size: 1.25rem; margin: 
 .memoriam svg { flex: 0 0 22px; width: 22px; height: 22px; fill: var(--gold); margin-top: 2px; }
 .memoriam strong { display: block; color: var(--navy); font-size: 1.1rem; }
 .memoriam span { display: block; }
+
+/* Site editor (admin.html) */
+.btn-small { padding: 6px 14px; font-size: .85rem; }
+.btn-ghost { background: none; border: 1px solid var(--line); color: var(--navy); cursor: pointer; }
+.btn-danger { background: none; border: 1px solid var(--red); color: var(--red); cursor: pointer; }
+.editor button.btn { cursor: pointer; border: 0; }
+.editor button.btn-ghost, .editor button.btn-danger { border: 1px solid var(--line); }
+.editor button.btn-danger { border-color: var(--red); }
+.editor button:disabled { opacity: .45; cursor: default; }
+.ed-check { display: flex !important; align-items: center; gap: 8px; font-weight: 400 !important; }
+.ed-help { max-width: 760px; margin-top: 8px; }
+.ed-help summary { cursor: pointer; font-weight: 600; color: var(--navy); margin-bottom: 8px; }
+.ed-bar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; position: sticky; top: 64px; background: var(--cream); padding: 8px 0; z-index: 5; }
+.ed-bar .section-title { margin: 0; }
+.ed-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.ed-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 16px 0 20px; }
+.ed-tabs button { font: inherit; font-weight: 600; background: var(--white); border: 1px solid var(--line); color: var(--navy); border-radius: 999px; padding: 6px 14px; cursor: pointer; }
+.ed-tabs button.active { background: var(--navy); color: var(--white); border-color: var(--navy); }
+.ed-panel .btn-red.btn-small { margin-bottom: 16px; }
+.ed-file { margin-bottom: 14px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.ed-file .group-label { flex-basis: 100%; font-weight: 600; }
+.ed-thumb { width: 120px; height: 90px; object-fit: cover; border-radius: 6px; border: 1px solid var(--line); }
+.ed-row-actions { display: flex; gap: 8px; flex-wrap: wrap; }

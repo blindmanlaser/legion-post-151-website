@@ -37,6 +37,10 @@ All week-to-week content lives in **`content.js`**:
 
 Edit the file on GitHub, commit, and the live site updates within a minute or two.
 
+### Site editor (no coding)
+
+`admin.html` (not linked from the site, and hidden from search engines) is a point-and-click editor for the daily specials, announcements, events, In Memoriam, photo gallery, Sentinel PDFs, hall rental details and membership dues. It signs in with a GitHub fine-grained token that only has **Contents: Read and write** on this repository (the sign-in page has the steps). Each save is one commit to `content.js` plus any uploaded photos or PDFs, so it goes live the same way as an edit on GitHub. Photos are shrunk to 1600 px before upload. Only the parts you changed are rewritten; comments and everything else in `content.js` stay as they are.
+
 ## Hosting
 
 The live site is **conneautlegionpost151.org**, hosted on Namecheap (Stellar shared hosting). The domain, hosting and email accounts are all in the same Namecheap account.
