@@ -148,10 +148,14 @@ window.SITE = {
   ],
 
   officers: [
-    { title: "Commander", name: "Larry Latva" },
-    { title: "1st Vice Commander", name: "Romey Bryant" },
-    { title: "2nd Vice Commander", name: "Gerald Kirchner" },
-    { title: "Finance Officer", name: "Ron Brundage" },
-    { title: "Chaplain", name: "Andy Chiodo" }
+    { title: "Commander", name: "Kirk Jennings" },
+    { title: "1st Vice Commander", name: "Scott Carpetner" },
+    { title: "2nd Vice Commander", name: "Rick Heinly" },
+    { title: "Finance Officer", name: "Brenda Dorkins" },
+    { title: "Adjutant", name: "Dave Cox" },
+    { title: "Member at Large", name: "Mike Keller" },
+    { title: "Member at Large", name: "Romey Bryant" },
+    { title: "Member at Large", name: "Adam Dixon" },
+    { title: "Member at Large", name: "Rich Luce" },
   ]
 };
