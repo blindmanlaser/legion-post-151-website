@@ -167,6 +167,8 @@ window.SITE = {
     { title: "2nd Vice Commander", name: "Rick Heinly" },
     { title: "Finance Officer", name: "Brenda Dorkins" },
     { title: "Adjutant", name: "Dave Cox" },
+    { title: "Chaplain", name: "Kevin Jury" },
+    { title: "Sergeant-at-Arms", name: "Kevin Jury" },
     { title: "Member at Large", name: "Mike Keller" },
     { title: "Member at Large", name: "Romey Bryant" },
     { title: "Member at Large", name: "Adam Dixon" },
