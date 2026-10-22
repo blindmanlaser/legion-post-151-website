@@ -11,6 +11,8 @@ window.SITE = {
   address: "272 Broad St, Conneaut, OH 44030",
   phone: "440-593-2205",
   email: "", // add the Post's email address here when known
+  // Emblems for the Post, Sons and Auxiliary (files in images/emblems). Leave "" to hide one.
+  emblems: { legion: "", sons: "", auxiliary: "" },
   facebook: "https://www.facebook.com/p/American-Legion-Post-151-Conneaut-OH-61566798598965/",
 
   // Building / social room hours. Day 0 = Sunday ... 6 = Saturday.
@@ -189,11 +191,11 @@ window.SITE = {
 
   // Membership page (join.html). Dues are per year.
   membership: [
-    { group: "The American Legion", dues: "$40", contact: "Dave Cox, Adjutant",
+    { group: "The American Legion", emblem: "legion", dues: "$40", contact: "Dave Cox, Adjutant",
       who: "Veterans who served at least one day of active federal duty in the U.S. Armed Forces since December 7, 1941, and were honorably discharged or are still serving." },
-    { group: "Sons of the American Legion", dues: "$35", contact: "George Sabo, Adjutant",
+    { group: "Sons of the American Legion", emblem: "sons", dues: "$35", contact: "George Sabo, Adjutant",
       who: "Sons, grandsons, great-grandsons, adopted sons and stepsons of Legion members, or of veterans who would have been eligible for the Legion." },
-    { group: "American Legion Auxiliary", dues: "$35", contact: "Tina Betts, Treasurer / Membership",
+    { group: "American Legion Auxiliary", emblem: "auxiliary", dues: "$35", contact: "Tina Betts, Treasurer / Membership",
       who: "Spouses, parents, children, grandchildren, great-grandchildren and siblings of Legion members or Legion-eligible veterans." }
   ],
 

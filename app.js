@@ -219,7 +219,7 @@
 
   // Membership page
   set("join-cards", (el) => {
-    el.innerHTML = (S.membership || []).map((m) => `<div class="join-card">
+    el.innerHTML = (S.membership || []).map((m) => `<div class="join-card"${m.emblem ? ` data-emblem="${esc(m.emblem)}"` : ""}>
       <h3>${esc(m.group)}</h3>
       ${m.dues ? `<p class="dues"><span>${esc(m.dues)}</span> per year</p>` : ""}
       <p><strong>Who can join:</strong> ${esc(m.who)}</p>
@@ -279,6 +279,18 @@
     }
     form.addEventListener("submit", () => { const b = $("sub-submit"); b.disabled = true; b.textContent = "Signing up…"; });
   });
+
+  // Post, Sons and Auxiliary emblems: on cards marked data-emblem, and in every footer
+  const EMBLEM_NAMES = { legion: "The American Legion", sons: "Sons of the American Legion", auxiliary: "American Legion Auxiliary" };
+  const emblemImg = (k, cls) => `<img class="${cls}" src="${esc(S.emblems[k])}" alt="${EMBLEM_NAMES[k]} emblem">`;
+  if (S.emblems) {
+    document.querySelectorAll("[data-emblem]").forEach((el) => {
+      if (S.emblems[el.dataset.emblem]) el.insertAdjacentHTML("afterbegin", emblemImg(el.dataset.emblem, "card-emblem"));
+    });
+    const set3 = Object.keys(EMBLEM_NAMES).filter((k) => S.emblems[k]);
+    const star = document.querySelector(".footer-star");
+    if (star && set3.length) star.insertAdjacentHTML("afterend", `<p class="footer-emblems">${set3.map((k) => emblemImg(k, "")).join("")}</p>`);
+  }
 
   // Mobile nav
   const toggle = document.querySelector(".nav-toggle"), nav = $("nav");
