@@ -176,5 +176,10 @@ window.SITE = {
 
   // American Legion Auxiliary
   auxiliaryOfficers: [
+    { title: "President", name: "Renee Unruh" },
+    { title: "1st Vice President", name: "Nicole Unruh" },
+    { title: "2nd Vice President", name: "Sandi Seegert" },
+    { title: "Treasurer / Membership", name: "Tina Betts" },
+    { title: "Secretary", name: "Mary Halman" }
   ]
 };
