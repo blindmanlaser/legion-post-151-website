@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Visit Us · American Legion Post 151</title>
+  <meta name="description" content="Address, phone, hours and directions for American Legion Post 151, 272 Broad St, Conneaut, Ohio.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23b22234' d='M12 2l2.9 6.9 7.1.6-5.4 4.7 1.6 7L12 17.5 5.8 21.2l1.6-7L2 9.5l7.1-.6z'/%3E%3C/svg%3E">
+</head>
+<body>
+  <div class="stripe-bar" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="index.html">
+        <svg class="brand-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.6 7L12 17.5 5.8 21.2l1.6-7L2 9.5l7.1-.6z"/></svg>
+        <span><strong>Post 151</strong><small>American Legion · Conneaut, OH</small></span>
+      </a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="nav">Menu</button>
+      <nav id="nav" class="nav">
+        <a href="index.html">Home</a>
+        <a href="menu.html">Menu &amp; Specials</a>
+        <a href="events.html">Events</a>
+        <a href="hometown-heroes.html">Hometown Heroes</a>
+        <a href="about.html">About</a>
+        <a href="contact.html" class="active" aria-current="page">Visit</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-banner">
+      <div class="hero-stars" aria-hidden="true"></div>
+      <div class="wrap hero-inner">
+        <p class="eyebrow">272 Broad Street</p>
+        <h1>Visit Us</h1>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap visit-grid">
+        <div>
+          <p class="address" id="address"></p>
+          <p><a id="phone-link" href="#"></a></p>
+          <p id="email-line" hidden><a id="email-link" href="#"></a></p>
+          <p id="fb-line" hidden><a id="fb-link" href="#" target="_blank" rel="noopener">Follow us on Facebook</a></p>
+          <div class="hero-status status-light" id="open-status"></div>
+          <h3>Hours</h3>
+          <table class="hours" id="hours-table"></table>
+        </div>
+        <div class="map-wrap">
+          <iframe title="Map to Post 151" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps?q=272+Broad+St,+Conneaut,+OH+44030&output=embed"></iframe>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <svg class="footer-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.6 7L12 17.5 5.8 21.2l1.6-7L2 9.5l7.1-.6z"/></svg>
+      <p><strong>American Legion Cowle Post 151</strong> · <span id="footer-address"></span></p>
+      <p class="footer-links"><a href="index.html">Home</a> · <a href="menu.html">Menu &amp; Specials</a> · <a href="events.html">Events</a> · <a href="hometown-heroes.html">Hometown Heroes</a> · <a href="about.html">About</a> · <a href="contact.html">Visit</a></p>
+      <p class="fine">Honoring all who served. &copy; <span id="year"></span></p>
+    </div>
+  </footer>
+  <div class="stripe-bar" aria-hidden="true"></div>
+
+  <script src="content.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

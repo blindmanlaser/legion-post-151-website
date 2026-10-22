@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Menu & Daily Specials · American Legion Post 151</title>
+  <meta name="description" content="Kitchen menu, hours and daily specials at American Legion Post 151 in Conneaut, Ohio.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23b22234' d='M12 2l2.9 6.9 7.1.6-5.4 4.7 1.6 7L12 17.5 5.8 21.2l1.6-7L2 9.5l7.1-.6z'/%3E%3C/svg%3E">
+</head>
+<body>
+  <div class="stripe-bar" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="index.html">
+        <svg class="brand-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.6 7L12 17.5 5.8 21.2l1.6-7L2 9.5l7.1-.6z"/></svg>
+        <span><strong>Post 151</strong><small>American Legion · Conneaut, OH</small></span>
+      </a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="nav">Menu</button>
+      <nav id="nav" class="nav">
+        <a href="index.html">Home</a>
+        <a href="menu.html" class="active" aria-current="page">Menu &amp; Specials</a>
+        <a href="events.html">Events</a>
+        <a href="hometown-heroes.html">Hometown Heroes</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Visit</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-banner">
+      <div class="hero-stars" aria-hidden="true"></div>
+      <div class="wrap hero-inner">
+        <p class="eyebrow">From the Post 151 Kitchen</p>
+        <h1>Menu &amp; Specials</h1>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <h2 class="section-title"><span>Daily Specials</span></h2>
+        <div class="today-card" id="today-special"></div>
+        <ul class="week-specials" id="week-specials"></ul>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="wrap">
+        <h2 class="section-title"><span>Kitchen Hours</span></h2>
+        <div class="kitchen-hours" id="kitchen-hours"></div>
+        <h2 class="section-title"><span>Menu</span></h2>
+        <p class="menu-note" id="menu-note"></p>
+        <div class="menu-grid" id="menu-grid"></div>
+        <p class="fine menu-footer" id="menu-footer"></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <svg class="footer-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.6 7L12 17.5 5.8 21.2l1.6-7L2 9.5l7.1-.6z"/></svg>
+      <p><strong>American Legion Cowle Post 151</strong> · <span id="footer-address"></span></p>
+      <p class="footer-links"><a href="index.html">Home</a> · <a href="menu.html">Menu &amp; Specials</a> · <a href="events.html">Events</a> · <a href="hometown-heroes.html">Hometown Heroes</a> · <a href="about.html">About</a> · <a href="contact.html">Visit</a></p>
+      <p class="fine">Honoring all who served. &copy; <span id="year"></span></p>
+    </div>
+  </footer>
+  <div class="stripe-bar" aria-hidden="true"></div>
+
+  <script src="content.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
