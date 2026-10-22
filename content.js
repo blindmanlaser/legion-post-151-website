@@ -134,11 +134,15 @@ window.SITE = {
   // One-time events. Dates are "YYYY-MM-DD". Past events hide automatically.
   // "image" (optional) is a file in the images folder.
   events: [
-    { date: "2026-10-31", time: "8:00 – 11:00 pm", title: "Halloween Night with Big in Japan",
+    { date: "2026-10-31",
+      time: "8:00 – 11:00 pm",
+      title: "Halloween Night with Big in Japan",
       host: "Live music from Cleveland party band Big in Japan",
       image: "images/big-in-japan-halloween-band.jpg",
       body: "Big in Japan is bringing the party Halloween night! Come in costume. There will be prizes for the best costumes. See you there!" },
-    { date: "2026-11-14", time: "1:00 pm", title: "Paint & Sip Fundraiser",
+    { date: "2026-11-14",
+      time: "1:00 pm",
+      title: "Paint & Sip Fundraiser",
       host: "Hosted by the American Legion Auxiliary Unit 151",
       image: "images/paint-and-sip.jpg",
       body: "Paint your own 12-inch round \"Hello Winter\" door hanger with step-by-step instruction from Chris Davis. All materials included, and beginners are welcome. BYOB, light appetizers provided. $45 per person. 100% of proceeds benefit Operation Toys for Freedom.",
@@ -191,11 +195,20 @@ window.SITE = {
 
   // Membership page (join.html). Dues are per year.
   membership: [
-    { group: "The American Legion", emblem: "legion", dues: "$40", contact: "Dave Cox, Adjutant",
+    { group: "The American Legion",
+      emblem: "legion",
+      dues: "$40",
+      contact: "Adjutant",
       who: "Veterans who served at least one day of active federal duty in the U.S. Armed Forces since December 7, 1941, and were honorably discharged or are still serving." },
-    { group: "Sons of the American Legion", emblem: "sons", dues: "$35", contact: "George Sabo, Adjutant",
+    { group: "Sons of the American Legion",
+      emblem: "sons",
+      dues: "$35",
+      contact: "Adjutant",
       who: "Sons, grandsons, great-grandsons, adopted sons and stepsons of Legion members, or of veterans who would have been eligible for the Legion." },
-    { group: "American Legion Auxiliary", emblem: "auxiliary", dues: "$35", contact: "Tina Betts, Treasurer / Membership",
+    { group: "American Legion Auxiliary",
+      emblem: "auxiliary",
+      dues: "$40",
+      contact: "Treasurer / Membership",
       who: "Spouses, parents, children, grandchildren, great-grandchildren and siblings of Legion members or Legion-eligible veterans." }
   ],
 
