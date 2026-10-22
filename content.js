@@ -165,6 +165,13 @@ window.SITE = {
 
   // Sons of the American Legion
   sonsOfficers: [
+    { title: "Commander", name: "Mike Miller" },
+    { title: "1st Vice Commander", name: "Corky Erdman" },
+    { title: "2nd Vice Commander", name: "Fred Kapen" },
+    { title: "Adjutant", name: "George Sabo" },
+    { title: "Sergeant-at-Arms", name: "Nick Colby" },
+    { title: "Historian", name: "Dennis Rought Sr." },
+    { title: "Chaplain", name: "Dennis Rought Jr." }
   ],
 
   // American Legion Auxiliary
