@@ -2,7 +2,9 @@
 // plus the live site content (events, specials, hours, meetings, officers).
 // Same layout as newsletter/sentinel-template.html: tables and inline styles so email programs show it right.
 // Empty fields leave their section out.
-window.buildSentinel = function (S, d, img, forEmail) {
+// wide: 960 px for reading on the website; email copies stay 640 px, the width email programs and phones handle best.
+window.buildSentinel = function (S, d, img, forEmail, wide) {
+  const W = wide ? 960 : 640, EV = wide ? 420 : 300;
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const paras = (t, size = 15) => String(t || "").split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean)
     .map((p) => `<p style="font-size:${size}px; line-height:1.6; margin:10px 0 0;">${esc(p).replace(/\n/g, "<br>")}</p>`).join("");
@@ -27,7 +29,7 @@ window.buildSentinel = function (S, d, img, forEmail) {
     <div style="font-size:13px; color:#c8d1e0; padding-top:12px;">&#9733; &nbsp;${esc(d.issue || "")} &nbsp;&middot;&nbsp; For God and Country &nbsp;&#9733;</div>
   </td></tr>`, stripe("#ffffff", 4), stripe("#b22234", 8));
 
-  if (d.coverImage) out.push(row(`<img src="${img(d.coverImage)}" width="592" alt="${esc(d.coverCaption || "Cover photo")}" style="display:block; width:100%; max-width:592px; height:auto; border:0; border-radius:6px;">
+  if (d.coverImage) out.push(row(`<img src="${img(d.coverImage)}" width="${W - 48}" alt="${esc(d.coverCaption || "Cover photo")}" style="display:block; width:100%; max-width:${W - 48}px; height:auto;${wide ? " max-height:560px; object-fit:cover;" : ""} border:0; border-radius:6px;">
     ${d.coverCaption ? `<div style="font-size:12px; color:#6b7280; padding-top:6px; font-style:italic;">${esc(d.coverCaption)}</div>` : ""}`, "24px 24px 0"));
 
   if (d.commanderMessage) out.push(row(`${heading("A Message from the Commander")}
@@ -69,7 +71,7 @@ window.buildSentinel = function (S, d, img, forEmail) {
         <div style="font-size:14px; color:#b22234; font-weight:bold; padding-top:2px;">${DAYS[e.dt.getDay()]}${e.time ? ", " + esc(e.time) : ""}${e.host ? " &middot; " + esc(e.host) : ""}</div>
         ${e.body ? `<p style="font-size:15px; line-height:1.6; margin:6px 0 0;">${esc(e.body)}</p>` : ""}
         ${e.tickets ? `<p style="font-size:15px; line-height:1.6; margin:6px 0 0;"><strong>${esc(e.tickets)}</strong></p>` : ""}
-        ${e.image ? `<img src="${img(e.image)}" width="300" alt="${esc(e.title)}" style="display:block; width:100%; max-width:300px; height:auto; border:0; border-radius:4px; margin-top:10px;">` : ""}
+        ${e.image ? `<img src="${img(e.image)}" width="${EV}" alt="${esc(e.title)}" style="display:block; width:100%; max-width:${EV}px; height:auto; border:0; border-radius:4px; margin-top:10px;">` : ""}
       </td></tr></table>`, "18px 24px 0")).join(""));
   }
 
@@ -137,7 +139,7 @@ window.buildSentinel = function (S, d, img, forEmail) {
 <body style="margin:0; padding:0; background:#e9e4d6;">
 <div style="display:none; max-height:0; overflow:hidden;">${esc(d.preheader || "")}</div>
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#e9e4d6;"><tr><td align="center" style="padding:20px 10px;">
-<table role="presentation" width="640" cellpadding="0" cellspacing="0" border="0" style="width:100%; max-width:640px; background:#ffffff; font-family:Arial, Helvetica, sans-serif; color:#1d2433;">
+<table role="presentation" width="${W}" cellpadding="0" cellspacing="0" border="0" style="width:100%; max-width:${W}px; background:#ffffff; font-family:Arial, Helvetica, sans-serif; color:#1d2433;">
 ${out.join("\n")}
 </table></td></tr></table></body></html>`;
 };

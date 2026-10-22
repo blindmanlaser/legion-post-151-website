@@ -245,14 +245,14 @@
   }
   // ---------- The Sentinel ----------
   const siteBase = new URL(".", location.href).href;
-  function newsletterHtml(forEmail, forPreview) {
+  function newsletterHtml(forEmail, forPreview, wide) {
     const img = (p) => (forPreview && uploads.get(p) ? uploads.get(p).preview : /^https?:/.test(p) ? p : siteBase + p);
-    return window.buildSentinel(site, site.sentinelDraft, img, forEmail);
+    return window.buildSentinel(site, site.sentinelDraft, img, forEmail, wide);
   }
   async function newsletter(action) {
     const d = site.sentinelDraft;
     if (action === "preview") {
-      window.open(URL.createObjectURL(new Blob([newsletterHtml(true, true)], { type: "text/html" })), "_blank");
+      window.open(URL.createObjectURL(new Blob([newsletterHtml(true, true, true)], { type: "text/html" })), "_blank");
     } else if (action === "copy") {
       try { await navigator.clipboard.writeText(newsletterHtml(true)); status("Copied! In Mailchimp, choose \"Code your own\", paste, and send. (Save first if you added new photos, so they're online.)"); }
       catch (e) { status("Your browser blocked copying. Use Download instead, then open the file and paste its contents into Mailchimp.", true); }
@@ -273,7 +273,7 @@
     } else if (action === "publish") {
       if (!d.issue) return status("Add the issue name (like November 2026) first.", true);
       const path = `newsletter/issues/sentinel-${slug(d.issue)}.html`;
-      uploads.set(path, { bytes: new TextEncoder().encode(newsletterHtml(false)) });
+      uploads.set(path, { bytes: new TextEncoder().encode(newsletterHtml(false, false, true)) });
       if (!site.sentinel.some((n) => n.file === path)) site.sentinel.unshift({ title: "The Sentinel", date: d.issue, file: path });
       dirty.add("sentinel"); dirty.add("sentinelDraft");
       await save();
