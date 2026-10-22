@@ -241,7 +241,7 @@
   set("gallery", (el) => {
     const g = S.gallery || [];
     el.innerHTML = g.length
-      ? g.map((p) => `<figure><a href="${esc(p.file)}" target="_blank" rel="noopener"><img src="${esc(p.file)}" alt="${esc(p.caption)}" loading="lazy"></a>${p.caption ? `<figcaption>${esc(p.caption)}</figcaption>` : ""}</figure>`).join("")
+      ? g.map((p) => `<figure><a href="${esc(p.file)}" target="_blank" rel="noopener"><img src="${esc(p.file)}" alt="${esc(p.caption || "Photo from American Legion Post 151")}" loading="lazy"></a>${p.caption ? `<figcaption>${esc(p.caption)}</figcaption>` : ""}</figure>`).join("")
       : '<p class="placeholder">Photos coming soon. Check our Facebook page for the latest pictures.</p>';
   });
 
