@@ -347,6 +347,12 @@ window.SITE = {
     memberNotice: ""
   },
 
+  // Post history (post-history.html), oldest first. A row with no year is an intro paragraph at the top.
+  // { year: "1919", title: "Post chartered", body: "Text. Leave a blank line between paragraphs.", image: "" },
+  history: [
+    { body: "American Legion Cowle Post 151 has served veterans and their families in Conneaut, Ohio for generations. The American Legion was chartered by Congress in 1919 as a patriotic veterans organization devoted to mutual helpfulness, and Post 151 has carried that mission on in our community ever since." }
+  ],
+
   // In Memoriam (in-memoriam.html). Members who have passed, newest first:
   // { name: "John Smith", branch: "U.S. Army", service: "Vietnam", date: "October 2026" },
   // branch, service and date are optional.

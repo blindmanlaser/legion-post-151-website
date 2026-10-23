@@ -35,6 +35,12 @@
       title: (r) => [r.title, r.name].filter(Boolean).join(" · ") || "New officer",
       blank: { title: "", name: "" },
       fields: [["title", "Position (like Commander)"], ["name", "Name"]] })),
+    { key: "history", label: "Post History", type: "list", sortBy: "year",
+      help: "The Post History page. Each row is one moment in the Post's story, listed by year when you save. Leave the year empty for an introduction paragraph at the top.",
+      title: (r) => [r.year, r.title].filter(Boolean).join(" · ") || "Introduction",
+      blank: { year: "", title: "", body: "", image: "" },
+      fields: [["year", "Year (like 1946, or leave empty for the intro)"], ["title", "Headline (optional)"],
+        ["body", "Story (leave a blank line between paragraphs)", "textarea"], ["image", "Photo (optional)", "image"]] },
     { key: "heroBanners", label: "Banner Map", type: "list",
       help: "Hometown Hero banners on the Banner Map page. Standing at a pole with your phone? Add a banner, type the name and tap \"Use my location\". You can also paste a spot copied from Google Maps (right-click the spot and click the numbers), or add a photo of the banner taken with location turned on. Save every few banners.",
       title: (r) => (r.name || "New banner") + (r.sample ? " (sample, delete me)" : ""),
@@ -369,7 +375,7 @@
         for (const key of dirty) {
           const sec = SECTIONS.find((s) => s.key === key);
           let v = site[key];
-          if (sec.sortBy) v = [...v].sort((a, b) => String(a[sec.sortBy]).localeCompare(String(b[sec.sortBy])));
+          if (sec.sortBy) v = [...v].sort((a, b) => String(a[sec.sortBy] ?? "").localeCompare(String(b[sec.sortBy] ?? "")));
           const span = valueSpan(src, key);
           if (!span) throw new Error(`Couldn't find "${key}" in content.js`);
           src = src.slice(0, span[0]) + serialize(tidy(key, v)) + src.slice(span[1]);

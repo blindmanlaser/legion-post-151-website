@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /admin.html
+Disallow: /hometown-heroes-thanks.html
+
+Sitemap: https://conneautlegionpost151.org/sitemap.xml
