@@ -9,16 +9,16 @@
 //  A topic left empty goes to $DEFAULT. Until $DEFAULT has an address,
 //  the form asks people to call the Post instead.
 // ============================================================
-$DEFAULT = [];
+$DEFAULT = ['info@conneautlegionpost151.org'];
 $ROUTES = [
-  'General question'                                => [],
-  'Hall rental'                                     => [],
-  'Legionnaire membership'                          => [],
-  'Sons membership'                                 => [],
-  'Auxiliary membership'                            => [],
-  'American Legion Auxiliary (other questions)'     => [],
-  'Sons of the American Legion (other questions)'   => [],
-  'Hometown Heroes flags'                           => [],
+  'General question'                                => ['info@conneautlegionpost151.org'],
+  'Hall rental'                                     => ['hall-manager@conneautlegionpost151.org'],
+  'Legionnaire membership'                          => ['adjutant@conneautlegionpost151.org'],
+  'Sons membership'                                 => ['sal-adjutant@conneautlegionpost151.org'],
+  'Auxiliary membership'                            => ['aux-membership@conneautlegionpost151.org'],
+  'American Legion Auxiliary (other questions)'     => ['aux-president@conneautlegionpost151.org'],
+  'Sons of the American Legion (other questions)'   => ['sal-commander@conneautlegionpost151.org'],
+  'Hometown Heroes flags'                           => ['hero-banners@conneautlegionpost151.org'],
 ];
 
 date_default_timezone_set('America/New_York');

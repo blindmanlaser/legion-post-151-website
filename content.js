@@ -10,7 +10,7 @@ window.SITE = {
   city: "Conneaut, Ohio",
   address: "272 Broad St, Conneaut, OH 44030",
   phone: "440-593-2205",
-  email: "", // add the Post's email address here when known
+  email: "info@conneautlegionpost151.org",
   // Emblems for the Post, Sons and Auxiliary (files in images/emblems). Leave "" to hide one.
   emblems: { legion: "images/emblems/legion.png", sons: "images/emblems/sons.png", auxiliary: "images/emblems/auxiliary.png" },
   facebook: "https://www.facebook.com/p/American-Legion-Post-151-Conneaut-OH-61566798598965/",
