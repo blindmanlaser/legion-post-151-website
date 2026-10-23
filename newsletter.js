@@ -87,7 +87,7 @@ window.buildSentinel = function (S, d, img, forEmail, wide) {
   if (d.includeHeroes) out.push(row(`<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f7f4ec; border-top:4px solid #0a2240;"><tr>
     <td width="170" valign="top" style="padding:16px 0 16px 16px; width:170px;"><img src="${img("images/hometown-hero-flags.jpg")}" width="150" alt="Hometown Hero flags" style="display:block; width:150px; height:auto; border:0; border-radius:4px;"></td>
     <td valign="top" style="padding:16px 18px;"><div style="font-size:18px; font-weight:bold; color:#0a2240;">Hometown Hero Flags</div>
-    <p style="font-size:15px; line-height:1.6; margin:6px 0 0;">Honor a veteran with a tribute flag displayed in Conneaut from Memorial Day through Veterans Day. $200 per flag. Order online at our website, or call George Sabo at 440-813-3364.</p></td>
+    <p style="font-size:15px; line-height:1.6; margin:6px 0 0;">Honor a veteran with a tribute flag displayed in Conneaut from Memorial Day through Veterans Day. $200 per flag. Order online at our website, or email hero-banners@conneautlegionpost151.org.</p></td>
   </tr></table>`, "30px 24px 0"));
 
   if (d.auxNews || d.sonsNews) {

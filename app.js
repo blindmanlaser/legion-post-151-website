@@ -167,7 +167,7 @@
     const alertBox = $("order-alert");
     const show = (msg, ok) => { alertBox.textContent = msg; alertBox.className = "form-alert" + (ok ? " ok" : ""); alertBox.hidden = false; };
     const MESSAGES = {
-      notready: "Online ordering isn't set up yet. Please download the PDF order form for now, or call George Sabo at 440-813-3364.",
+      notready: "Online ordering isn't set up yet. Please download the PDF order form for now, or email hero-banners@conneautlegionpost151.org.",
       missing: "Please fill in all the required fields and try again.",
       email: "Please check the email address and try again.",
       photo: "Please attach a photo of the veteran in uniform.",
