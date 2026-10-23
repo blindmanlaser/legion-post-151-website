@@ -28,6 +28,13 @@
       help: "Members who have passed, newest first.",
       blank: { name: "", branch: "", service: "", date: "" },
       fields: [["name", "Name"], ["branch", "Branch (optional)"], ["service", "Era or service (optional, like Vietnam)"], ["date", "Date of passing (optional, like October 2026)"]] },
+    ...[["officers", "Legion Officers", "American Legion Post 151"], ["sonsOfficers", "Sons Officers", "Sons of the American Legion"],
+      ["auxiliaryOfficers", "Auxiliary Officers", "American Legion Auxiliary"]].map(([key, label, group]) => ({
+      key, label, type: "list",
+      help: `${group} officers on the About page, in the order shown. When someone new takes a position, just type over the name. To list a position with nobody in it yet, type Vacant.`,
+      title: (r) => [r.title, r.name].filter(Boolean).join(" · ") || "New officer",
+      blank: { title: "", name: "" },
+      fields: [["title", "Position (like Commander)"], ["name", "Name"]] })),
     { key: "heroBanners", label: "Banner Map", type: "list",
       help: "Hometown Hero banners on the Banner Map page. Standing at a pole with your phone? Add a banner, type the name and tap \"Use my location\". You can also paste a spot copied from Google Maps (right-click the spot and click the numbers), or add a photo of the banner taken with location turned on. Save every few banners.",
       title: (r) => (r.name || "New banner") + (r.sample ? " (sample, delete me)" : ""),
