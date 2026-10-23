@@ -317,7 +317,6 @@ window.SITE = {
   // The Sentinel newsletter (sentinel.html). Put PDFs in the downloads folder, newest first:
   // { title: "The Sentinel", date: "November 2026", file: "downloads/sentinel-2026-11.pdf" },
   sentinel: [
-    { title: "The Sentinel", date: "November 2, 2026", file: "newsletter/issues/sentinel-november-2-2026.html" }
   ],
 
   // Draft of the next Sentinel, written in the site editor's "Write The Sentinel" tab.
