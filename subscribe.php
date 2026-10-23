@@ -9,7 +9,7 @@
 //  SETTINGS (optional): email address(es) to tell about each new sign-up.
 //  Example: $NOTIFY = ['sentinel@conneautlegionpost151.org'];
 // ============================================================
-$NOTIFY = [];
+$NOTIFY = ['sentinel@conneautlegionpost151.org'];
 
 date_default_timezone_set('America/New_York');
 $LIST = dirname(__DIR__) . '/sentinel-subscribers.csv';

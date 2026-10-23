@@ -8,7 +8,7 @@
 //  Example: $RECIPIENTS = ['heroes@conneautlegionpost151.org'];
 //  Until an address is added, the form tells people to use the PDF instead.
 // ============================================================
-$RECIPIENTS = [];
+$RECIPIENTS = ['hero-banners@conneautlegionpost151.org'];
 
 date_default_timezone_set('America/New_York');
 $MAX_PHOTO_BYTES = 10 * 1024 * 1024;
