@@ -218,6 +218,47 @@
     });
   });
 
+  // Funeral honors request form
+  set("honors-form-el", (form) => {
+    const alertBox = $("honors-alert");
+    const show = (msg, ok) => { alertBox.textContent = msg; alertBox.className = "form-alert" + (ok ? " ok" : ""); alertBox.hidden = false; };
+    const MESSAGES = {
+      sent: "Thank you. Your request has been sent to the Honor Guard, and someone from the Post will contact you to confirm. For a service in the next two days, please also call the Post.",
+      missing: "Please fill in every required box, then try again.",
+      email: "Please check your email address and try again.",
+      failed: `Sorry, something went wrong sending your request. Please call the Post at ${S.phone}.`
+    };
+    const code = new URLSearchParams(location.search).get("honors");
+    if (code && MESSAGES[code]) show(MESSAGES[code], code === "sent");
+    if (/github\.io$/.test(location.hostname)) show(`This is a preview copy of the site. Please call the Post at ${S.phone} to request funeral honors.`);
+    form.addEventListener("submit", () => { const btn = $("honors-submit"); btn.disabled = true; btn.textContent = "Sending…"; });
+  });
+
+  // Post history timeline. Rows without a year are intro paragraphs at the top.
+  set("history", (el) => {
+    const list = S.history || [];
+    el.innerHTML = list.length ? list.map((h) => `<li class="${h.year ? "" : "intro"}">
+        ${h.year ? `<span class="year">${esc(h.year)}</span>` : ""}
+        <div>${h.title ? `<h3>${esc(h.title)}</h3>` : ""}${String(h.body || "").split(/\n\s*\n/).map((p) => `<p>${esc(p)}</p>`).join("")}
+        ${h.image ? `<img src="${esc(h.image)}" alt="${esc(h.title || h.year)}" loading="lazy">` : ""}</div></li>`).join("")
+      : '<li class="intro"><div><p>Our history page is being written. Check back soon.</p></div></li>';
+  });
+
+  // Business details in the format search engines read (Home and Visit pages)
+  if ($("open-status") || $("contact-form-el")) {
+    const ld = {
+      "@context": "https://schema.org", "@type": "LocalBusiness", name: S.name,
+      url: location.origin + "/", telephone: S.phone, email: S.email || undefined,
+      logo: location.origin + "/images/emblems/legion.png", image: location.origin + "/images/og-image.jpg",
+      address: { "@type": "PostalAddress", streetAddress: S.address.split(",")[0], addressLocality: "Conneaut", addressRegion: "OH", postalCode: "44030", addressCountry: "US" },
+      openingHoursSpecification: S.hours.filter((h) => h.open).map((h) => ({ "@type": "OpeningHoursSpecification", dayOfWeek: h.label, opens: h.open, closes: h.close })),
+      sameAs: S.facebook ? [S.facebook] : undefined
+    };
+    const tag = document.createElement("script");
+    tag.type = "application/ld+json"; tag.textContent = JSON.stringify(ld);
+    document.head.appendChild(tag);
+  }
+
   // Membership page
   set("join-cards", (el) => {
     el.innerHTML = (S.membership || []).map((m) => `<div class="join-card"${m.emblem ? ` data-emblem="${esc(m.emblem)}"` : ""}>
