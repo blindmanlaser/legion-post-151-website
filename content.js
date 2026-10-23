@@ -165,14 +165,14 @@ window.SITE = {
     { title: "Commander", name: "Kirk Jennings" },
     { title: "1st Vice Commander", name: "Scott Carpetner" },
     { title: "2nd Vice Commander", name: "Rick Heinly" },
-    { title: "Finance Officer", name: "Brenda Dorkins" },
+    { title: "Finance Officer", name: "Brenda Durkins" },
     { title: "Adjutant", name: "Dave Cox" },
     { title: "Chaplain", name: "Kevin Jury" },
     { title: "Sergeant-at-Arms", name: "Kevin Jury" },
     { title: "Member at Large", name: "Mike Keller" },
     { title: "Member at Large", name: "Romey Bryant" },
     { title: "Member at Large", name: "Adam Dixon" },
-    { title: "Member at Large", name: "Rich Luce" },
+    { title: "Member at Large", name: "Rich Luce" }
   ],
 
   // Sons of the American Legion
