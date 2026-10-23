@@ -139,11 +139,11 @@ $confirm = implode("\r\n", [
   '',
   'Next steps:',
   '1. Send your $200 payment (cash or check made out to Sons of the American Legion Post 151).',
-  '   Drop it off at the Post, or mail it to: Conneaut American Legion, Attn: George Sabo,',
+  '   Drop it off at the Post, or mail it to: Conneaut American Legion, Attn: Hometown Hero Banners,',
   '   272 Broad St., Conneaut, OH 44030.',
   '2. We will contact you to review a proof of the flag before printing.',
   '',
-  'Questions? Contact George Sabo at 440-813-3364.',
+  'Questions? Email hero-banners@conneautlegionpost151.org.',
   '',
   'American Legion Cowle Post 151',
 ]);

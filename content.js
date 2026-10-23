@@ -146,7 +146,7 @@ window.SITE = {
       host: "Hosted by the American Legion Auxiliary Unit 151",
       image: "images/paint-and-sip.jpg",
       body: "Paint your own 12-inch round \"Hello Winter\" door hanger with step-by-step instruction from Chris Davis. All materials included, and beginners are welcome. BYOB, light appetizers provided. $45 per person. 100% of proceeds benefit Operation Toys for Freedom.",
-      tickets: "Tickets behind the bar, or text/call Nicole at 440-813-6601. Limited seating." }
+      tickets: "Tickets behind the bar, or email aux-president@conneautlegionpost151.org. Limited seating." }
   ],
 
   // Recurring meetings. week = which Tuesday etc. of the month (1-4), weekday 0-6.
