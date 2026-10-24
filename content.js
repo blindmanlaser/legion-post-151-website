@@ -18,13 +18,13 @@ window.SITE = {
   // Building / social room hours. Day 0 = Sunday ... 6 = Saturday.
   // Times use 24-hour "HH:MM". A close time past midnight (like 01:00) is fine.
   hours: [
-    { day: 0, label: "Sunday",    open: "12:00", close: "22:00" },
+    { day: 0, label: "Sunday",    open: "12:00", close: "21:00" },
     { day: 1, label: "Monday",    open: "12:00", close: "22:00" },
     { day: 2, label: "Tuesday",   open: "12:00", close: "22:00" },
     { day: 3, label: "Wednesday", open: "12:00", close: "22:00" },
     { day: 4, label: "Thursday",  open: "12:00", close: "22:00" },
-    { day: 5, label: "Friday",    open: "12:00", close: "22:00" },
-    { day: 6, label: "Saturday",  open: "12:00", close: "22:00" }
+    { day: 5, label: "Friday",    open: "12:00", close: "24:00" },
+    { day: 6, label: "Saturday",  open: "12:00", close: "24:00" }
   ],
 
   kitchenHours: [
