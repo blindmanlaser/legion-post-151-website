@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Perform at the Post · American Legion Post 151</title>
+  <meta name="description" content="Bands, DJs, comedians and other entertainers: tell American Legion Post 151 in Conneaut, Ohio about your act and ask about playing at the Post.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="American Legion Post 151">
+  <meta property="og:title" content="Perform at the Post · American Legion Post 151">
+  <meta property="og:description" content="Bands, DJs, comedians and other entertainers: tell American Legion Post 151 in Conneaut, Ohio about your act and ask about playing at the Post.">
+  <meta property="og:url" content="https://conneautlegionpost151.org/perform.html">
+  <meta property="og:image" content="https://conneautlegionpost151.org/images/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://conneautlegionpost151.org/perform.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23b22234' d='M12 2l2.9 6.9 7.1.6-5.4 4.7 1.6 7L12 17.5 5.8 21.2l1.6-7L2 9.5l7.1-.6z'/%3E%3C/svg%3E">
+</head>
+<body>
+  <div class="stripe-bar" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="index.html">
+        <img class="brand-seal" src="images/emblems/legion.png" alt="" width="46" height="48">
+        <span><strong>Post 151</strong><small>American Legion · Conneaut, OH</small></span>
+      </a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="nav">Menu</button>
+      <nav id="nav" class="nav">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="events.html">Events</a>
+        <a href="funeral-honors.html">Funeral Honors</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="hall-rental.html">Hall Rental</a>
+        <a href="banner-map.html">Hero Banner Map</a>
+        <a href="hometown-heroes.html">Hometown Heroes</a>
+        <a href="in-memoriam.html">In Memoriam</a>
+        <a href="join.html">Join</a>
+        <a href="menu.html">Menu &amp; Specials</a>
+        <a href="post-history.html">Post History</a>
+        <a href="sentinel.html">The Sentinel</a>
+        <a href="veterans-resources.html">Veterans Resources</a>
+        <a href="contact.html">Visit</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-banner">
+      <div class="hero-stars" aria-hidden="true"></div>
+      <div class="wrap hero-inner">
+        <p class="eyebrow">Bands, DJs &amp; Entertainers</p>
+        <h1>Perform at the Post</h1>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap hall-grid">
+        <div>
+          <h2 class="section-title"><span>Bring Your Act to Post 151</span></h2>
+          <p>We host live music, DJs, karaoke, trivia and special events for our members and the Conneaut community. If you'd like to play at the Post, tell us about your act below and include a link where we can see or hear you.</p>
+          <p>Our entertainment committee reviews every submission and will reach out about dates that fit.</p>
+        </div>
+        <div class="hall-card">
+          <h3>What helps us decide</h3>
+          <ol class="steps">
+            <li>A link to video, music or your Facebook page.</li>
+            <li>The kind of crowd you play for and your style.</li>
+            <li>Your usual rate and what you bring (sound, lights).</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="perform-form">
+      <div class="wrap">
+        <h2 class="section-title"><span>Tell Us About Your Act</span></h2>
+        <div class="form-alert" id="perform-alert" role="alert" hidden></div>
+        <form class="order-form" id="perform-form-el" action="perform.php" method="post">
+          <fieldset>
+            <legend>Your Act</legend>
+            <div class="row">
+              <label>Act or band name <span class="req">*</span>
+                <input type="text" name="act" required maxlength="100"></label>
+              <label>Type of act <span class="req">*</span>
+                <select name="type" required>
+                  <option value="">Choose one</option>
+                  <option>Band</option><option>Solo / duo</option><option>DJ</option><option>Karaoke</option><option>Trivia host</option><option>Comedy</option><option>Other</option>
+                </select></label>
+            </div>
+            <div class="row">
+              <label>Style or genre <span class="opt">(like classic rock, country)</span>
+                <input type="text" name="genre" maxlength="100"></label>
+              <label>Hometown <span class="opt">(optional)</span>
+                <input type="text" name="hometown" maxlength="80"></label>
+            </div>
+            <label>Where can we see or hear you? <span class="req">*</span>
+              <input type="text" name="links" required maxlength="300" placeholder="Facebook, YouTube, website or music links"></label>
+          </fieldset>
+          <fieldset>
+            <legend>Booking Details</legend>
+            <div class="row">
+              <label>Dates or months you're interested in <span class="opt">(optional)</span>
+                <input type="text" name="dates" maxlength="150" placeholder="like Fridays in January"></label>
+              <label>Usual rate <span class="opt">(optional)</span>
+                <input type="text" name="rate" maxlength="80" placeholder="like $300 for 3 hours"></label>
+            </div>
+            <label>What you bring and what you need <span class="opt">(optional)</span>
+              <textarea name="needs" rows="3" maxlength="1000" placeholder="like our own PA and lights, need two outlets and a 10x12 space"></textarea></label>
+          </fieldset>
+          <fieldset>
+            <legend>Contact</legend>
+            <div class="row">
+              <label>Your name <span class="req">*</span>
+                <input type="text" name="name" required maxlength="80" autocomplete="name"></label>
+              <label>Phone <span class="req">*</span>
+                <input type="tel" name="phone" required maxlength="30" autocomplete="tel"></label>
+            </div>
+            <label>Email <span class="req">*</span>
+              <input type="email" name="email" required maxlength="120" autocomplete="email"></label>
+            <label>Anything else? <span class="opt">(optional)</span>
+              <textarea name="notes" rows="4" maxlength="2000"></textarea></label>
+          </fieldset>
+          <div class="hp" aria-hidden="true"><label>Leave this empty <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+          <button class="btn btn-red btn-big" type="submit" id="perform-submit">Send</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p><strong>American Legion Cowle Post 151</strong> · <span id="footer-address"></span></p>
+      <p class="footer-links"><a href="index.html">Home</a> · <a href="about.html">About</a> · <a href="events.html">Events</a> · <a href="funeral-honors.html">Funeral Honors</a> · <a href="gallery.html">Gallery</a> · <a href="hall-rental.html">Hall Rental</a> · <a href="banner-map.html">Hero Banner Map</a> · <a href="hometown-heroes.html">Hometown Heroes</a> · <a href="in-memoriam.html">In Memoriam</a> · <a href="join.html">Join</a> · <a href="menu.html">Menu &amp; Specials</a> · <a href="perform.html">Perform at the Post</a> · <a href="post-history.html">Post History</a> · <a href="sentinel.html">The Sentinel</a> · <a href="veterans-resources.html">Veterans Resources</a> · <a href="contact.html">Visit</a></p>
+      <p class="fine">Honoring all who served. &copy; <span id="year"></span></p>
+    </div>
+  </footer>
+  <div class="stripe-bar" aria-hidden="true"></div>
+
+  <script src="content.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

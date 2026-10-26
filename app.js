@@ -234,6 +234,22 @@
     form.addEventListener("submit", () => { const btn = $("honors-submit"); btn.disabled = true; btn.textContent = "Sending…"; });
   });
 
+  // Perform at the Post (entertainer booking) form
+  set("perform-form-el", (form) => {
+    const alertBox = $("perform-alert");
+    const show = (msg, ok) => { alertBox.textContent = msg; alertBox.className = "form-alert" + (ok ? " ok" : ""); alertBox.hidden = false; };
+    const MESSAGES = {
+      sent: (S.formEmails || {}).performThanks || "Thank you! Your information has been sent to our entertainment committee, and someone will be in touch.",
+      missing: "Please fill in every required box, then try again.",
+      email: "Please check your email address and try again.",
+      failed: `Sorry, something went wrong. Please try again, or call the Post at ${S.phone}.`
+    };
+    const code = new URLSearchParams(location.search).get("perform");
+    if (code && MESSAGES[code]) show(MESSAGES[code], code === "sent");
+    if (/github\.io$/.test(location.hostname)) show(`This is a preview copy of the site. Please call the Post at ${S.phone}.`);
+    form.addEventListener("submit", () => { const btn = $("perform-submit"); btn.disabled = true; btn.textContent = "Sending…"; });
+  });
+
   // Post history timeline. Rows without a year are intro paragraphs at the top.
   set("history", (el) => {
     const list = S.history || [];
