@@ -334,7 +334,7 @@ window.SITE = {
   },
 
   // Emails the forms send back to the person, and the thank-you messages shown on screen.
-  // Edit these in the site editor (Form Emails tab). {name}, {veteran}, {date} and {topic} fill in automatically.
+  // Edit these in the site editor (Form Emails tab). {name}, {veteran}, {date}, {topic} and {act} fill in automatically.
   // Leave an email's text empty to stop sending it. (Read by the .php forms too, so keep this exact layout.)
   formEmails: {
     orderSubject: "Your Hometown Hero Flag Order",
@@ -345,7 +345,10 @@ window.SITE = {
     honorsBody: "Hello {name},\n\nWe are sorry for your loss. Your request for Funeral Honors for {veteran} on {date} has been sent to the Post 151 Honor Guard, and someone will contact you to confirm.\n\nIf the service is in the next two days, please also call the Post at 440-593-2205.\n\nWith gratitude for {veteran}'s service,\nAmerican Legion Cowle Post 151",
     contactThanks: "Thank you! Your message has been sent. Someone from the Post will get back to you soon.",
     honorsThanks: "Thank you. Your request has been sent to the Honor Guard, and someone from the Post will contact you to confirm. For a service in the next two days, please also call the Post.",
-    sentinelThanks: "You're signed up! The Sentinel will come to your inbox."
+    sentinelThanks: "You're signed up! The Sentinel will come to your inbox.",
+    performSubject: "Thanks for your interest in playing at Post 151",
+    performBody: "Hello {name},\n\nThank you for telling us about {act}. Our entertainment committee will review it and contact you about dates that fit.\n\nAmerican Legion Cowle Post 151\n272 Broad St, Conneaut, OH 44030",
+    performThanks: "Thank you! Your information has been sent to our entertainment committee, and someone will be in touch."
   },
 
   // Post history (post-history.html), oldest first. A row with no year is an intro paragraph at the top.
