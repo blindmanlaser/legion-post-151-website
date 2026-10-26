@@ -194,7 +194,7 @@
     const show = (msg, ok) => { alertBox.textContent = msg; alertBox.className = "form-alert" + (ok ? " ok" : ""); alertBox.hidden = false; };
     const phone = S.phone || "the Post";
     const MESSAGES = {
-      sent: "Thank you! Your message has been sent. Someone from the Post will get back to you soon.",
+      sent: (S.formEmails || {}).contactThanks || "Thank you! Your message has been sent. Someone from the Post will get back to you soon.",
       notready: `The message form isn't set up yet. Please call us at ${phone} or message us on Facebook.`,
       missing: "Please fill in your name, a topic and your message, then try again.",
       email: "Please check your email address and try again.",
@@ -223,7 +223,7 @@
     const alertBox = $("honors-alert");
     const show = (msg, ok) => { alertBox.textContent = msg; alertBox.className = "form-alert" + (ok ? " ok" : ""); alertBox.hidden = false; };
     const MESSAGES = {
-      sent: "Thank you. Your request has been sent to the Honor Guard, and someone from the Post will contact you to confirm. For a service in the next two days, please also call the Post.",
+      sent: (S.formEmails || {}).honorsThanks || "Thank you. Your request has been sent to the Honor Guard, and someone from the Post will contact you to confirm. For a service in the next two days, please also call the Post.",
       missing: "Please fill in every required box, then try again.",
       email: "Please check your email address and try again.",
       failed: `Sorry, something went wrong sending your request. Please call the Post at ${S.phone}.`
@@ -377,7 +377,7 @@
     const alertBox = $("sub-alert");
     const show = (msg, ok) => { alertBox.textContent = msg; alertBox.className = "form-alert" + (ok ? " ok" : ""); alertBox.hidden = false; };
     const MESSAGES = {
-      sent: "You're signed up! The Sentinel will come to your inbox.",
+      sent: (S.formEmails || {}).sentinelThanks || "You're signed up! The Sentinel will come to your inbox.",
       missing: "Please fill in your name and email, then try again.",
       email: "Please check your email address and try again.",
       failed: `Sorry, something went wrong. Please try again, or call us at ${S.phone}.`
