@@ -72,6 +72,13 @@
         ["taps", "Taps (optional, one name per line, like John Smith, U.S. Army, Vietnam)", "textarea"],
         ["includeOfficers", "Include the officer lists", "check"],
         ["memberNotice", "Member notice (optional, like dues reminders)", "textarea"]] },
+    { key: "formEmails", label: "Form Emails", type: "object",
+      help: "The emails the website sends back to people who fill out a form, and the thank-you messages they see on screen. {name} becomes the person's name, {veteran} the veteran's name, {date} the service date and {topic} the contact topic. Leave an email's text empty to stop sending that email.",
+      fields: [["orderSubject", "Hometown Hero order: email subject"], ["orderBody", "Hometown Hero order: email text", "textarea"],
+        ["contactSubject", "Send Us a Message: email subject"], ["contactBody", "Send Us a Message: email text", "textarea"],
+        ["honorsSubject", "Funeral honors: email subject"], ["honorsBody", "Funeral honors: email text", "textarea"],
+        ["contactThanks", "Send Us a Message: on-screen thank you", "textarea"], ["honorsThanks", "Funeral honors: on-screen thank you", "textarea"],
+        ["sentinelThanks", "Sentinel sign-up: on-screen thank you", "textarea"]] },
     { key: "hallRental", label: "Hall Rental", type: "object",
       help: "Leave any of these empty to show \"Call for details\".",
       fields: [["price", "Rental price (like $30 per hour)"], ["booking", "Due at booking (like $30 due when you book)"], ["capacity", "Capacity (number of guests)"], ["note", "Note under the details", "textarea"]] },
@@ -257,7 +264,7 @@
     }
     if (kind === "check") return `<label class="ed-check"><input type="checkbox" data-idx="${idx}" data-field="${name}" ${v ? "checked" : ""}> ${esc(label)}</label>`;
     const input = kind === "textarea"
-      ? `<textarea id="${id}" rows="3" data-idx="${idx}" data-field="${name}">${esc(v)}</textarea>`
+      ? `<textarea id="${id}" rows="${/Body$/.test(name) ? 10 : 3}" data-idx="${idx}" data-field="${name}">${esc(v)}</textarea>`
       : `<input id="${id}" type="${kind === "date" ? "date" : "text"}" value="${esc(v)}" data-idx="${idx}" data-field="${name}">`;
     return `<label for="${id}">${esc(label)}${input}</label>`;
   }

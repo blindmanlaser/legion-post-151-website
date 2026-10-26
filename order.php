@@ -130,28 +130,9 @@ $body = "--$boundary\r\n"
 $sent = mail(implode(', ', $RECIPIENTS), $subject, $body, $headers, '-f' . $from);
 if (!$sent) back('failed');
 
-// Short confirmation to the family contact (no attachment).
-$confirm = implode("\r\n", [
-  'Hello ' . $f['contact_name'] . ',',
-  '',
-  'Thank you for ordering a Hometown Hero flag for ' . $f['veteran_name'] . '.',
-  'American Legion Post 151 has received your order.',
-  '',
-  'Next steps:',
-  '1. Send your $200 payment (cash or check made out to Sons of the American Legion Post 151).',
-  '   Drop it off at the Post, or mail it to: Conneaut American Legion, Attn: Hometown Hero Banners,',
-  '   272 Broad St., Conneaut, OH 44030.',
-  '2. We will contact you to review a proof of the flag before printing.',
-  '',
-  'Questions? Email hero-banners@conneautlegionpost151.org.',
-  '',
-  'American Legion Cowle Post 151',
-]);
-@mail($f['contact_email'], '=?UTF-8?B?' . base64_encode('Your Hometown Hero flag order') . '?=', $confirm, implode("\r\n", [
-  'From: American Legion Post 151 <' . $from . '>',
-  'Reply-To: ' . $RECIPIENTS[0],
-  'MIME-Version: 1.0',
-  'Content-Type: text/plain; charset=UTF-8',
-]), '-f' . $from);
+// Short confirmation to the family contact (no attachment). Wording is in the editor's Form Emails tab.
+require __DIR__ . '/form-emails.php';
+send_confirmation($f['contact_email'], 'order', ['name' => $f['contact_name'], 'veteran' => $f['veteran_name']], $from, $RECIPIENTS[0],
+  'Your Hometown Hero flag order', "Hello {name},\n\nThank you for ordering a Hometown Hero flag for {veteran}. American Legion Post 151 has received your order, and we will contact you to review a proof before printing.\n\nAmerican Legion Cowle Post 151");
 
 header('Location: hometown-heroes-thanks.html', true, 303);

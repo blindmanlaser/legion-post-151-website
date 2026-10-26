@@ -86,4 +86,9 @@ $sent = mail(
   ]),
   '-f' . $from
 );
-back($sent ? 'sent' : 'failed');
+if (!$sent) back('failed');
+
+// Confirmation back to the sender. Wording is in the editor's Form Emails tab.
+require __DIR__ . '/form-emails.php';
+send_confirmation($email, 'contact', ['name' => $name, 'topic' => $topic], $from, $to[0]);
+back('sent');
