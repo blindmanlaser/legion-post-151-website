@@ -151,7 +151,7 @@ window.SITE = {
 
   // Recurring meetings. week = which Tuesday etc. of the month (1-4), weekday 0-6.
   meetings: [
-    { group: "Sons of the American Legion (SAL)", week: 2, weekday: 2, time: "8:30 pm" },
+    { group: "Sons of the American Legion (SAL)", week: 2, weekday: 3, time: "7:00 pm" },
     { group: "American Legion Auxiliary",         week: 3, weekday: 2, time: "7:00 pm" },
     { group: "Legion General Meeting",            week: 4, weekday: 2, time: "7:30 pm",
       note: "Home Co. 6:00 · Finance 6:15 · Executive 6:30 · Honor Guard 7:00" }
