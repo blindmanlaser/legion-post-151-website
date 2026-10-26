@@ -337,12 +337,12 @@ window.SITE = {
   // Edit these in the site editor (Form Emails tab). {name}, {veteran}, {date} and {topic} fill in automatically.
   // Leave an email's text empty to stop sending it. (Read by the .php forms too, so keep this exact layout.)
   formEmails: {
-    orderSubject: "Your Hometown Hero flag order",
-    orderBody: "Hello {name},\n\nThank you for ordering a Hometown Hero flag for {veteran}. American Legion Post 151 has received your order.\n\nNext steps:\n1. Send your $200 payment (cash or check made out to Sons of the American Legion Post 151). Drop it off at the Post, or mail it to: Conneaut American Legion, Attn: Hometown Hero Banners, 272 Broad St., Conneaut, OH 44030.\n2. We will contact you to review a proof of the flag before printing.\n\nQuestions? Email hero-banners@conneautlegionpost151.org.\n\nAmerican Legion Cowle Post 151",
+    orderSubject: "Your Hometown Hero Flag Order",
+    orderBody: "Hello {name},\n\nThank you for ordering a Hometown Hero Flag for {veteran}. American Legion Post 151 has received your order.\n\nNext steps:\n1. Send your $200 payment (cash or check made out to Sons of the American Legion Post 151). Drop it off at the Post, or mail it to: Conneaut American Legion, Attn: Hometown Hero Banners, 272 Broad St., Conneaut, OH 44030.\n2. We will contact you to review a proof of the flag before printing.\n\nQuestions? Email hero-banners@conneautlegionpost151.org.\n\nAmerican Legion Cowle Post 151",
     contactSubject: "We got your message",
     contactBody: "Hello {name},\n\nThank you for contacting American Legion Post 151. Your message about \"{topic}\" has been passed to the right people, and someone will get back to you soon.\n\nIf it's urgent, please call the Post at 440-593-2205.\n\nAmerican Legion Cowle Post 151\n272 Broad St, Conneaut, OH 44030",
-    honorsSubject: "Funeral honors request received",
-    honorsBody: "Hello {name},\n\nWe are sorry for your loss. Your request for funeral honors for {veteran} on {date} has been sent to the Post 151 Honor Guard, and someone will contact you to confirm.\n\nIf the service is in the next two days, please also call the Post at 440-593-2205.\n\nWith gratitude for {veteran}'s service,\nAmerican Legion Cowle Post 151",
+    honorsSubject: "Funeral Honors Request Received",
+    honorsBody: "Hello {name},\n\nWe are sorry for your loss. Your request for Funeral Honors for {veteran} on {date} has been sent to the Post 151 Honor Guard, and someone will contact you to confirm.\n\nIf the service is in the next two days, please also call the Post at 440-593-2205.\n\nWith gratitude for {veteran}'s service,\nAmerican Legion Cowle Post 151",
     contactThanks: "Thank you! Your message has been sent. Someone from the Post will get back to you soon.",
     honorsThanks: "Thank you. Your request has been sent to the Honor Guard, and someone from the Post will contact you to confirm. For a service in the next two days, please also call the Post.",
     sentinelThanks: "You're signed up! The Sentinel will come to your inbox."
