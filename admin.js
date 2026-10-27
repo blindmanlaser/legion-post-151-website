@@ -47,6 +47,9 @@
       blank: { name: "", branch: "", years: "", era: "", spot: "", where: "", photo: "" },
       fields: [["name", "Name on the banner"], ["branch", "Branch (optional)"], ["years", "Years of service (optional, like 1965 – 1968)"], ["era", "Era (optional, like Vietnam)"],
         ["spot", "Pole location", "spot"], ["where", "Street or landmark (optional, like Broad St at Main St)"], ["photo", "Photo of the banner (optional)", "image"]] },
+    { key: "bannerSeason", label: "Banner Season", type: "object", season: true,
+      help: "When the Hometown Hero banners come down for the winter, check the box and save. The map hides and the Banner Map page shows your message and a list of this year's heroes. In spring, uncheck it when the first banners go back up.",
+      fields: [["down", "The banners are down for the winter", "check"], ["message", "Message on the Banner Map page while they're down (leave a blank line between paragraphs)", "textarea"]] },
     { key: "gallery", label: "Photo Gallery", type: "list",
       help: "Photos for the Gallery page. Big phone photos are shrunk automatically before upload.",
       blank: { file: "", caption: "" },
@@ -278,6 +281,8 @@
     let html = `<p class="fine">${esc(sec.help)}</p>`;
     if (sec.type === "object") {
       html += `<fieldset>${sec.fields.map((f) => fieldHtml(sec, data, -1, f)).join("")}</fieldset>`;
+      if (sec.season) html += `<div class="ed-row-actions"><button type="button" class="btn btn-small btn-danger" data-season="clear">Start a New Season: Clear All Pole Locations</button></div>
+        <p class="fine">Most banners hang in new spots each year. In spring, click this to clear every pole location on the Banner Map tab, keeping the names, details and photos. Then set each banner's new spot as it goes up. Banners without a spot yet show as "Location coming soon".</p>`;
       if (sec.newsletter) html += `<div class="ed-row-actions">
         <button type="button" class="btn btn-small btn-ghost" data-nl="preview">Preview</button>
         <button type="button" class="btn btn-small btn-ghost" data-nl="copy">Copy for Mailchimp</button>
@@ -319,6 +324,7 @@
       else if (b.dataset.locate !== undefined) return locate(rowFor(+b.dataset.locate), b.dataset.field, b);
       else if (b.dataset.clear !== undefined) { rowFor(+b.dataset.clear)[b.dataset.field] = ""; }
       else if (b.dataset.nl) return newsletter(b.dataset.nl);
+      else if (b.dataset.season) return newSeason();
       else return;
       markDirty(); render();
     });
@@ -361,6 +367,16 @@
       dirty.add("sentinel"); dirty.add("sentinelDraft");
       await save();
     }
+  }
+
+  // Spring re-hang: wipe every banner's pole spot so old locations never show on the new map
+  function newSeason() {
+    const banners = site.heroBanners;
+    if (pendingDelete !== banners) { pendingDelete = banners; return status("Click \"Start a New Season\" again to clear all " + banners.length + " pole locations. Names, details and photos stay.", true); }
+    pendingDelete = null;
+    banners.forEach((b) => { b.spot = ""; b.where = ""; });
+    dirty.add("heroBanners"); markDirty(); render();
+    status("Pole locations cleared. Click Save Changes, then set each banner's new spot on the Banner Map tab as it goes up.");
   }
 
   // A plain inline "are you sure" instead of a browser pop-up.

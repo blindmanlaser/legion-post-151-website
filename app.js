@@ -321,50 +321,84 @@
       : '<li class="placeholder">Our honor roll is being gathered and will be posted soon.</li>';
   });
 
-  // Hometown Hero banner map: search by name, click a name to fly to its pole
+  // Hometown Hero banner map: search by name, click a name to fly to its pole.
+  // In winter (bannerSeason.down) the map hides and the heroes show as an honor roll.
   set("banner-map", (el) => {
-    if (!window.L) { el.innerHTML = '<p class="placeholder">The map couldn\'t load. Please refresh the page.</p>'; return; }
     const SUFFIX = /^(jr|sr|ii|iii|iv)\.?$/i;
     const lastName = (n) => { const w = String(n).trim().split(/\s+/).filter((x) => !SUFFIX.test(x)); return (w[w.length - 1] || "").toLowerCase(); };
     const slugOf = (n) => String(n).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+    const season = S.bannerSeason || {};
     const all = (S.heroBanners || []).map((b) => {
       const [lat, lng] = String(b.spot || "").split(",").map(Number);
-      return { ...b, lat, lng };
-    }).filter((b) => b.name && isFinite(b.lat) && isFinite(b.lng))
+      return { ...b, lat, lng, placed: !!b.spot && isFinite(lat) && isFinite(lng) };
+    }).filter((b) => b.name)
       .sort((a, b) => lastName(a.name).localeCompare(lastName(b.name)) || a.name.localeCompare(b.name));
     const used = {};
     all.forEach((b) => { const id = slugOf(b.name); used[id] = (used[id] || 0) + 1; b.id = used[id] > 1 ? `${id}-${used[id]}` : id; });
-    if (all.some((b) => b.sample)) $("bm-sample").hidden = false;
+    if (all.some((b) => b.sample) && !season.down) $("bm-sample").hidden = false;
+    const details = (b) => [b.branch, b.years, b.era].filter(Boolean).join(" · ");
+    const q = $("bm-q"), count = $("bm-count");
+    const matches = (b, terms) => { const hay = [b.name, b.branch, b.era, b.where].join(" ").toLowerCase(); return terms.every((t) => hay.includes(t)); };
+    const termsOf = () => q.value.toLowerCase().trim().split(/\s+/).filter(Boolean);
+    const want = new URLSearchParams(location.search).get("hero");
 
+    if (season.down) {
+      const box = $("bm-winter");
+      box.innerHTML = (season.message || "Our Hometown Hero banners are down for the winter. They go back up for Memorial Day.")
+        .split(/\n\s*\n/).map((p) => `<p>${esc(p.trim())}</p>`).join("");
+      box.hidden = false;
+      $("bm-lead").textContent = "Our Hometown Hero banners fly on poles around Conneaut from Memorial Day through Veterans Day. These are the heroes we honored this year.";
+      $("bm-layout").hidden = true;
+      $("bm-near").hidden = true;
+      $("bm-q").placeholder = "Search our heroes by name";
+      const roll = $("bm-roll"), real = all.filter((b) => !b.sample);
+      roll.hidden = false;
+      const render = () => {
+        const terms = termsOf(), hits = real.filter((b) => matches(b, terms));
+        roll.innerHTML = hits.map((b) => `<li>${b.photo ? `<img src="${esc(b.photo)}" alt="Banner for ${esc(b.name)}" loading="lazy">` : ""}
+          <strong>${esc(b.name)}</strong>${details(b) ? `<span>${esc(details(b))}</span>` : ""}</li>`).join("")
+          || `<li class="placeholder">${real.length ? "No hero found with that name. Try just the last name." : "Our honor roll of heroes is coming soon."}</li>`;
+        count.textContent = real.length ? (terms.length ? `${hits.length} of ${real.length} heroes` : `${real.length} heroes honored this year`) : "";
+      };
+      q.addEventListener("input", render);
+      const hit = want && real.find((b) => b.id === want);
+      if (hit) q.value = hit.name;
+      render();
+      return;
+    }
+
+    if (!window.L) { el.innerHTML = '<p class="placeholder">The map couldn\'t load. Please refresh the page.</p>'; return; }
     const map = L.map(el, { scrollWheelZoom: false }).setView([41.9476, -80.5542], 14);
     L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
       maxZoom: 19, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
     const pin = L.divIcon({ className: "bm-pin", html: '<svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.6 7L12 17.5 5.8 21.2l1.6-7L2 9.5l7.1-.6z"/></svg>', iconSize: [30, 30], iconAnchor: [15, 15], popupAnchor: [0, -12] });
-    const details = (b) => [b.branch, b.years, b.era].filter(Boolean).join(" · ");
     const popup = (b) => `<div class="bm-pop">${b.photo ? `<img src="${esc(b.photo)}" alt="Banner for ${esc(b.name)}">` : ""}
       <strong>${esc(b.name)}</strong>${details(b) ? `<span>${esc(details(b))}</span>` : ""}${b.where ? `<span class="fine">${esc(b.where)}</span>` : ""}
       <span class="bm-pop-links"><a href="https://www.google.com/maps/dir/?api=1&destination=${b.lat},${b.lng}" target="_blank" rel="noopener">Directions</a>
       <a href="?hero=${esc(b.id)}" data-share="${esc(b.id)}">Share link</a></span></div>`;
-    all.forEach((b) => { b.marker = L.marker([b.lat, b.lng], { icon: pin, title: b.name, alt: b.name }).bindPopup(popup(b)).addTo(map); });
-    if (all.length) map.fitBounds(L.latLngBounds(all.map((b) => [b.lat, b.lng])), { padding: [30, 30], maxZoom: 16 });
+    const placed = all.filter((b) => b.placed);
+    placed.forEach((b) => { b.marker = L.marker([b.lat, b.lng], { icon: pin, title: b.name, alt: b.name }).bindPopup(popup(b)).addTo(map); });
+    if (placed.length) map.fitBounds(L.latLngBounds(placed.map((b) => [b.lat, b.lng])), { padding: [30, 30], maxZoom: 16 });
     // Two-finger / click-to-zoom so the page still scrolls past the map
     map.once("focus click", () => map.scrollWheelZoom.enable());
 
     const show = (b) => {
+      if (!b.placed) return;
       map.setView([b.lat, b.lng], Math.max(map.getZoom(), 17));
       b.marker.openPopup();
       if (window.innerWidth <= 760) el.scrollIntoView({ behavior: "smooth", block: "center" });
     };
-    const q = $("bm-q"), list = $("bm-list"), count = $("bm-count");
+    const list = $("bm-list");
     const render = () => {
-      const terms = q.value.toLowerCase().trim().split(/\s+/).filter(Boolean);
-      const hits = all.filter((b) => { const hay = [b.name, b.branch, b.era, b.where].join(" ").toLowerCase(); return terms.every((t) => hay.includes(t)); });
-      all.forEach((b) => { const on = hits.includes(b); if (on !== map.hasLayer(b.marker)) on ? b.marker.addTo(map) : b.marker.remove(); });
-      list.innerHTML = hits.map((b) => `<li><button type="button" data-id="${esc(b.id)}"><strong>${esc(b.name)}</strong>${details(b) ? `<span>${esc(details(b))}</span>` : ""}${b.where ? `<span class="fine">${esc(b.where)}</span>` : ""}</button></li>`).join("")
+      const terms = termsOf();
+      const hits = all.filter((b) => matches(b, terms));
+      placed.forEach((b) => { const on = hits.includes(b); if (on !== map.hasLayer(b.marker)) on ? b.marker.addTo(map) : b.marker.remove(); });
+      list.innerHTML = hits.map((b) => `<li><button type="button" data-id="${esc(b.id)}"><strong>${esc(b.name)}</strong>${details(b) ? `<span>${esc(details(b))}</span>` : ""}${!b.placed ? '<span class="fine">Location coming soon</span>' : b.where ? `<span class="fine">${esc(b.where)}</span>` : ""}</button></li>`).join("")
         || `<li class="placeholder">${all.length ? "No banner found with that name. Try just the last name." : "Banner locations are coming soon."}</li>`;
       count.textContent = all.length ? (terms.length ? `${hits.length} of ${all.length} banners` : `${all.length} banners`) : "";
-      if (terms.length && hits.length) map.fitBounds(L.latLngBounds(hits.map((b) => [b.lat, b.lng])), { padding: [30, 30], maxZoom: 17 });
+      const onMap = hits.filter((b) => b.placed);
+      if (terms.length && onMap.length) map.fitBounds(L.latLngBounds(onMap.map((b) => [b.lat, b.lng])), { padding: [30, 30], maxZoom: 17 });
     };
     q.addEventListener("input", render);
     list.addEventListener("click", (e) => { const btn = e.target.closest("[data-id]"); if (btn) show(all.find((b) => b.id === btn.dataset.id)); });
@@ -383,7 +417,6 @@
       }, () => { count.textContent = "Your location isn't available. Check that location is allowed for this site."; });
     });
     render();
-    const want = new URLSearchParams(location.search).get("hero");
     const hit = want && all.find((b) => b.id === want);
     if (hit) { q.value = hit.name; render(); show(hit); }
   });

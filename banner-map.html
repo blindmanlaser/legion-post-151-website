@@ -58,12 +58,13 @@
       <div class="wrap hero-inner">
         <p class="eyebrow">Hometown Heroes</p>
         <h1>Find a Hero's Banner</h1>
-        <p class="lead">Our Hometown Hero banners fly on poles around Conneaut from Memorial Day through Veterans Day. Search for your loved one's name to see where their banner hangs.</p>
+        <p class="lead" id="bm-lead">Our Hometown Hero banners fly on poles around Conneaut from Memorial Day through Veterans Day. Search for your loved one's name to see where their banner hangs.</p>
       </div>
     </section>
 
     <section class="section">
       <div class="wrap">
+        <div class="bm-winter" id="bm-winter" hidden></div>
         <div class="form-alert" id="bm-sample" hidden>These pins are samples to show how the map works. The real banner locations are coming soon.</div>
         <div class="bm-search">
           <label for="bm-q">Search by name</label>
@@ -73,10 +74,11 @@
           </div>
           <p class="fine" id="bm-count" aria-live="polite"></p>
         </div>
-        <div class="bm-layout">
+        <div class="bm-layout" id="bm-layout">
           <ul class="bm-list" id="bm-list"></ul>
           <div class="bm-map" id="banner-map" role="region" aria-label="Map of banner locations"></div>
         </div>
+        <ul class="bm-roll" id="bm-roll" hidden></ul>
         <p class="fine">Don't see your hero? Banners are added as they go up each spring. <a href="hometown-heroes.html">Order a banner</a> or <a href="contact.html?topic=heroes#contact-form">let us know</a> if one is missing or in the wrong spot.</p>
       </div>
     </section>
