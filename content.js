@@ -249,6 +249,13 @@ window.SITE = {
       photo: "images/richard-dick-gross-2026-10-22.jpg" }
   ],
 
+  // Banner season. down: true while the banners are off the poles for the winter: the map hides
+  // and the Banner Map page shows the message and an honor roll of this year's heroes instead.
+  bannerSeason: {
+    down: false,
+    message: "Our Hometown Hero banners are down for the winter. They go back up for Memorial Day, and the map will fill back in as each one goes up.\n\nYou can still search below for this year's heroes. Want to honor someone next year? Order a banner on the Hometown Heroes page."
+  },
+
   // Photo gallery (gallery.html). Put photos in the images/gallery folder, then add a line:
   // { file: "images/gallery/fish-fry.jpg", caption: "Fish fry, Lent 2026" },
   gallery: [
