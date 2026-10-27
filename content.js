@@ -246,21 +246,7 @@ window.SITE = {
       era: "Korea",
       where: "Broad St, on the Pole by the Park",
       spot: "41.959279, -80.553711",
-      photo: "images/richard-dick-gross-2026-10-22.jpg" },
-    { name: "Thomas Smith",
-      branch: "U.S. Navy",
-      years: "1942 – 1946",
-      era: "WWII",
-      where: "Broad St, in front of the Post",
-      spot: "41.94695, -80.55432",
-      sample: true },
-    { name: "Jane Doe",
-      branch: "U.S. Air Force",
-      years: "1990 – 2010",
-      era: "Desert Storm",
-      where: "Broad St at Main St",
-      spot: "41.94790, -80.55405",
-      sample: true }
+      photo: "images/richard-dick-gross-2026-10-22.jpg" }
   ],
 
   // Photo gallery (gallery.html). Put photos in the images/gallery folder, then add a line:
