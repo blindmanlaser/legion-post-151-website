@@ -38,7 +38,7 @@ window.SITE = {
     { day: 0, item: "Kitchen Closed", price: "", note: "The bar is open noon – 9 pm." },
     { day: 1, item: "Burger Monday", price: "", note: "Featuring a special themed burger." },
     { day: 2, item: "Taco Tuesday", price: "", note: "" },
-    { day: 3, item: "Wing Night", price: "$0.60 wings", note: "" },
+    { day: 3, item: "Wing Night", price: "$0.60 wings", note: "Dine-In Only" },
     { day: 4, item: "Pizza & Stromboli Night", price: "", note: "4 – 7 pm, until sold out" },
     { day: 5, item: "Dinner Special", price: "", note: "" },
     { day: 6, item: "Dinner Special", price: "", note: "" }
