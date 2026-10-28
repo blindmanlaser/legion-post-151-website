@@ -16,7 +16,7 @@ window.SITE = {
   facebook: "https://www.facebook.com/p/American-Legion-Post-151-Conneaut-OH-61566798598965/",
 
   // Building / social room hours. Day 0 = Sunday ... 6 = Saturday.
-  // Times use 24-hour "HH:MM". A close time past midnight (like 01:00) is fine.
+  // Times use 24-hour "HH:MM". Use "24:00" (or "00:00") for midnight. A close time past midnight (like 01:00) is fine.
   hours: [
     { day: 0, label: "Sunday",    open: "12:00", close: "21:00" },
     { day: 1, label: "Monday",    open: "12:00", close: "22:00" },
@@ -35,7 +35,7 @@ window.SITE = {
 
   // Daily specials, one per weekday. Leave "item" empty to show "Ask your bartender".
   specials: [
-    { day: 0, item: "Kitchen Closed", price: "", note: "The bar is open noon – 10 pm." },
+    { day: 0, item: "Kitchen Closed", price: "", note: "The bar is open noon – 9 pm." },
     { day: 1, item: "Burger Monday", price: "", note: "Featuring a special themed burger." },
     { day: 2, item: "Taco Tuesday", price: "", note: "" },
     { day: 3, item: "Wing Night", price: "$0.60 wings", note: "" },

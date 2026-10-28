@@ -12,7 +12,7 @@ window.buildSentinel = function (S, d, img, forEmail, wide) {
   const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   const DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   const now = new Date(), today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  const fmtTime = (hhmm) => { let [h, m] = hhmm.split(":").map(Number); if (!h && !m) return "midnight"; const ap = h >= 12 ? "pm" : "am"; h = h % 12 || 12; return m ? `${h}:${String(m).padStart(2, "0")} ${ap}` : (h === 12 && ap === "pm" ? "noon" : `${h} ${ap}`); };
+  const fmtTime = (hhmm) => { let [h, m] = hhmm.split(":").map(Number); if (h % 24 === 0 && !m) return "midnight"; const ap = h >= 12 ? "pm" : "am"; h = h % 12 || 12; return m ? `${h}:${String(m).padStart(2, "0")} ${ap}` : (h === 12 && ap === "pm" ? "noon" : `${h} ${ap}`); };
   const parseDate = (s) => { const [y, m, dd] = s.split("-").map(Number); return new Date(y, m - 1, dd); };
 
   const row = (inner, pad = "28px 24px 0") => `<tr><td style="padding:${pad};">${inner}</td></tr>`;
