@@ -78,7 +78,7 @@
   // Home page cards
   const sp = S.specials.find((x) => x.day === today) || {};
   set("home-special", (el) => {
-    el.innerHTML = sp.item ? `<strong>${esc(sp.item)}</strong>${sp.price ? ` · ${esc(sp.price)}` : ""}` : "Ask your bartender about today's special.";
+    el.innerHTML = sp.item ? `<strong>${esc(sp.item)}</strong>${sp.price ? ` · ${esc(sp.price)}` : ""}${sp.note ? `<span class="fine card-note">${esc(sp.note)}</span>` : ""}` : "Ask your bartender about today's special.";
   });
   set("home-next", (el) => {
     const next = [...upcoming.map((e) => ({ d: e.d, title: e.title, time: e.time })),
