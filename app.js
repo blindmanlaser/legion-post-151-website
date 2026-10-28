@@ -15,7 +15,7 @@
   const toMin = (hhmm) => { const [h, m] = hhmm.split(":").map(Number); return h * 60 + m; };
   const fmtTime = (hhmm) => {
     let [h, m] = hhmm.split(":").map(Number);
-    if (h === 0 && m === 0) return "Midnight";
+    if (h % 24 === 0 && m === 0) return "Midnight"; // "00:00" or "24:00"
     const ap = h >= 12 ? "pm" : "am";
     h = h % 12 || 12;
     return m ? `${h}:${String(m).padStart(2, "0")} ${ap}` : `${h} ${ap}`;
@@ -267,7 +267,7 @@
       url: location.origin + "/", telephone: S.phone, email: S.email || undefined,
       logo: location.origin + "/images/emblems/legion.png", image: location.origin + "/images/og-image.jpg",
       address: { "@type": "PostalAddress", streetAddress: S.address.split(",")[0], addressLocality: "Conneaut", addressRegion: "OH", postalCode: "44030", addressCountry: "US" },
-      openingHoursSpecification: S.hours.filter((h) => h.open).map((h) => ({ "@type": "OpeningHoursSpecification", dayOfWeek: h.label, opens: h.open, closes: h.close })),
+      openingHoursSpecification: S.hours.filter((h) => h.open).map((h) => ({ "@type": "OpeningHoursSpecification", dayOfWeek: h.label, opens: h.open, closes: h.close === "24:00" ? "23:59" : h.close })),
       sameAs: S.facebook ? [S.facebook] : undefined
     };
     const tag = document.createElement("script");
