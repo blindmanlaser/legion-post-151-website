@@ -276,6 +276,8 @@ window.SITE = {
   // Photo gallery (gallery.html). Put photos in the images/gallery folder, then add a line:
   // { file: "images/gallery/fish-fry.jpg", caption: "Fish fry, Lent 2026" },
   gallery: [
+    { file: "images/gallery/img-2181-2026-11-02.jpg", caption: "Big in Japan in Action!" },
+    { file: "images/gallery/img-2178-2026-11-02.jpg", caption: "The Lovely Bartenders" },
     { file: "images/gallery/hometown-hero-banner-01.jpg" },
     { file: "images/gallery/hometown-hero-banner-02.jpg" },
     { file: "images/gallery/hometown-hero-banner-03.jpg" },
