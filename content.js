@@ -325,19 +325,19 @@ window.SITE = {
 
   // Draft of the next Sentinel, written in the site editor's "Write The Sentinel" tab.
   sentinelDraft: {
-    issue: "November 1, 2026",
+    issue: "November 2, 2026",
     preheader: "Legion Post 151: The Sentinel",
     coverImage: "",
     coverCaption: "Halloween Party",
     commanderMessage: "I would like to Thank everyone for their help with the Halloween Decorating.",
     commanderSign: "Kirk Jennings, Commander, Cowle Post 151",
     spotlightTitle: "The Halloween Party!!",
-    spotlightBody: "The Halloween Party and The Band \"Big in Japan\" was a great time!!\nThe Winners of the Costume Contest was ?????\nThe Winner of the Mini Queen of Hearts was ????\nThank you to all the People that helped make this a true success.\nThank you to the Bartenders and Staff for making it a fun time for everyone.",
+    spotlightBody: "The Halloween Party and The Band \"Big in Japan\" was a great time!!\nThank you to all the People that helped make this a true success.\nThank you to the Bartenders and Staff for making it a fun time for everyone.",
     includeHours: true,
     includeEvents: true,
     eventDays: "14",
     includeSpecials: true,
-    kitchenNews: "Monday's Burger Special - Breakfast Burger - Egg, Bacon, and American Cheese\nTaco Tuesday - 3 Soft/Hard Tacos for $4.00\nWednesday - $0.60 Wing Night\nThursday - Pizza and Stromboli Night\nFriday - Dinner Special - Surf and Turf\nSaturday - Dinner Special - BBQ Chicken w/ Corn and Corn Bread",
+    kitchenNews: "",
     includeHeroes: true,
     auxNews: "",
     sonsNews: "",
