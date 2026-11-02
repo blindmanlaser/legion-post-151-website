@@ -128,9 +128,6 @@ window.SITE = {
   // Announcements show at the top of the Home and Events pages. Newest first.
   // "link" is optional and adds a "Learn more" link.
   announcements: [
-    { title: "Halloween Party - Oct. 31st",
-      body: "Come out and see \"Big in Japan\". There will be Costume Contest and Prizes!!",
-      link: "events.html" },
     { title: "Hometown Hero Flags",
       body: "Honor a Conneaut veteran with a tribute flag displayed Memorial Day through Veterans Day.",
       link: "hometown-heroes.html" }
