@@ -117,7 +117,7 @@
       <div class="label">Today · ${DAYS[today]}</div>
       <div class="item">Kitchen Closed Today</div>
       ${why ? `<div>${esc(why)}</div>` : ""}
-      <div>The bar is open. No daily special today.</div>`;
+      <div>The bar is open.</div>`;
       return;
     }
     el.innerHTML = `
@@ -132,8 +132,9 @@
       // This week's date for this weekday (today through 6 days out)
       const date = new Date(startOfToday); date.setDate(date.getDate() + ((d - today + 7) % 7));
       const shut = closedOn(date).length;
+      if (shut) return `<li class="${d === today ? "today" : ""}"><div class="day">${DAYS[d]}</div>
+        <div class="sp-item kitchen-closed-text">Kitchen Closed</div><div class="fine">${MONTHS[date.getMonth()]} ${date.getDate()}</div></li>`;
       return `<li class="${d === today ? "today" : ""}"><div class="day">${DAYS[d]}</div>
-        ${shut ? `<div class="kc-flag">Kitchen closed ${MONTHS[date.getMonth()]} ${date.getDate()}</div>` : ""}
         <div class="sp-item">${s.item ? esc(s.item) : '<span class="placeholder">Coming soon</span>'}</div>
         ${s.price ? `<div class="sp-price">${esc(s.price)}</div>` : ""}${s.note ? `<div class="fine">${esc(s.note)}</div>` : ""}</li>`;
     }).join("");
