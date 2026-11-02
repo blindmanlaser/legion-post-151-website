@@ -30,6 +30,15 @@
   const upcoming = S.events.map((e) => ({ ...e, d: parseDate(e.date) }))
     .filter((e) => e.d >= startOfToday).sort((a, b) => a.d - b.d);
 
+  // Days the kitchen is closed: events with "Kitchen closed this day" checked
+  const ymd = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+  const closures = S.events.filter((e) => e.kitchenClosed && e.date).map((e) => ({ date: e.date, reason: e.title }))
+    .map((c) => ({ ...c, d: parseDate(c.date) })).filter((c) => c.d >= startOfToday).sort((a, b) => a.d - b.d);
+  const closedOn = (d) => closures.filter((c) => c.date === ymd(d));
+  const closedReason = (list) => list.map((c) => c.reason).filter(Boolean).join(" · ");
+  const closedToday = closedOn(now);
+  const fmtDay = (d) => `${DAYS[d.getDay()]}, ${MONTHS[d.getMonth()]} ${d.getDate()}`;
+
   // Next date for each recurring "Nth weekday of the month" meeting
   const nthWeekday = (y, m, week, wd) => { const first = new Date(y, m, 1); return new Date(y, m, 1 + ((wd - first.getDay() + 7) % 7) + (week - 1) * 7); };
   const meetings = S.meetings.map((mt) => {
@@ -78,12 +87,17 @@
   // Home page cards
   const sp = S.specials.find((x) => x.day === today) || {};
   set("home-special", (el) => {
+    if (closedToday.length) {
+      const why = closedReason(closedToday);
+      el.innerHTML = `<strong class="kitchen-closed-text">Kitchen Closed Today</strong>${why ? `<span class="fine card-note">${esc(why)}</span>` : ""}<span class="fine card-note">The bar is open.</span>`;
+      return;
+    }
     el.innerHTML = sp.item ? `<strong>${esc(sp.item)}</strong>${sp.price ? ` · ${esc(sp.price)}` : ""}${sp.note ? `<span class="fine card-note">${esc(sp.note)}</span>` : ""}` : "Ask your bartender about today's special.";
   });
   set("home-next", (el) => {
     const next = [...upcoming.map((e) => ({ d: e.d, title: e.title, time: e.time })),
                   ...meetings.map((m) => ({ d: m.d, title: m.group, time: m.time }))].sort((a, b) => a.d - b.d)[0];
-    el.innerHTML = next ? `<strong>${esc(next.title)}</strong><br>${DAYS[next.d.getDay()]}, ${MONTHS[next.d.getMonth()]} ${next.d.getDate()} · ${esc(next.time)}` : "Check back soon.";
+    el.innerHTML = next ? `<strong>${esc(next.title)}</strong><br>${DAYS[next.d.getDay()]}, ${MONTHS[next.d.getMonth()]} ${next.d.getDate()}${next.time ? ` · ${esc(next.time)}` : ""}` : "Check back soon.";
   });
   set("home-visit", (el) => {
     el.innerHTML = `<strong>Today: ${hoursText(hoursFor(today))}</strong><br>${esc(S.address)}`;
@@ -96,6 +110,16 @@
 
   // Specials
   set("today-special", (el) => {
+    if (closedToday.length) {
+      const why = closedReason(closedToday);
+      el.classList.add("closed");
+      el.innerHTML = `
+      <div class="label">Today · ${DAYS[today]}</div>
+      <div class="item">Kitchen Closed Today</div>
+      ${why ? `<div>${esc(why)}</div>` : ""}
+      <div>The bar is open. No daily special today.</div>`;
+      return;
+    }
     el.innerHTML = `
       <div class="label">Today's Special · ${DAYS[today]}</div>
       <div class="item">${sp.item ? esc(sp.item) : "Ask your bartender about today's special"}</div>
@@ -105,10 +129,26 @@
   set("week-specials", (el) => {
     el.innerHTML = WEEK.map((d) => {
       const s = S.specials.find((x) => x.day === d) || {};
+      // This week's date for this weekday (today through 6 days out)
+      const date = new Date(startOfToday); date.setDate(date.getDate() + ((d - today + 7) % 7));
+      const shut = closedOn(date).length;
       return `<li class="${d === today ? "today" : ""}"><div class="day">${DAYS[d]}</div>
+        ${shut ? `<div class="kc-flag">Kitchen closed ${MONTHS[date.getMonth()]} ${date.getDate()}</div>` : ""}
         <div class="sp-item">${s.item ? esc(s.item) : '<span class="placeholder">Coming soon</span>'}</div>
         ${s.price ? `<div class="sp-price">${esc(s.price)}</div>` : ""}${s.note ? `<div class="fine">${esc(s.note)}</div>` : ""}</li>`;
     }).join("");
+  });
+
+  // Upcoming kitchen-closed days (Menu page). Hidden when there are none.
+  set("kitchen-closures", (el) => {
+    const soon = closures.filter((c) => c.d - startOfToday < 60 * 864e5);
+    if (!soon.length) return;
+    el.hidden = false;
+    const byDay = [];
+    soon.forEach((c) => { const last = byDay[byDay.length - 1]; if (last && last.date === c.date) { if (c.reason) last.reasons.push(c.reason); } else byDay.push({ ...c, reasons: c.reason ? [c.reason] : [] }); });
+    el.innerHTML = `<strong>Kitchen Closed</strong><ul>${byDay.map((c) =>
+      `<li><span class="kc-date">${fmtDay(c.d)}</span>${c.reasons.length ? ` · ${esc(c.reasons.join(" · "))}` : ""}</li>`).join("")}</ul>
+      <p class="fine">The bar stays open on these days.</p>`;
   });
 
   // Kitchen hours + menu
@@ -142,6 +182,7 @@
           <div class="title">${esc(e.title)}</div>
           <div class="meta">${DAYS[e.d.getDay()]}, ${MONTHS[e.d.getMonth()]} ${e.d.getDate()}${e.time ? " · " + esc(e.time) : ""}</div>
           ${e.host ? `<div class="meta">${esc(e.host)}</div>` : ""}
+          ${e.kitchenClosed ? `<div class="kc-flag">Kitchen closed this day</div>` : ""}
           ${e.image ? `<img class="event-img" src="${esc(e.image)}" alt="${esc(e.title)}" loading="lazy">` : ""}
           ${e.body ? `<p>${esc(e.body)}</p>` : ""}
           ${e.tickets ? `<p class="tickets">${esc(e.tickets)}</p>` : ""}

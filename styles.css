@@ -112,6 +112,14 @@ h3 { color: var(--navy); text-transform: uppercase; font-size: 1.25rem; margin: 
 .today-card .label { color: var(--gold); font-family: "Oswald", sans-serif; text-transform: uppercase; letter-spacing: .15em; font-size: .9rem; }
 .today-card .item { font-family: "Oswald", sans-serif; font-size: 1.8rem; margin: 6px 0; }
 .today-card .price { color: var(--gold); font-weight: 600; }
+.today-card.closed { background: var(--red-dark); border-left-color: var(--gold); }
+.kitchen-closures { background: #fdf0f1; border: 1px solid var(--red); border-left: 8px solid var(--red); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 20px; }
+.kitchen-closures strong { font-family: "Oswald", sans-serif; text-transform: uppercase; letter-spacing: .08em; color: var(--red-dark); }
+.kitchen-closures ul { margin: 8px 0; padding-left: 20px; }
+.kitchen-closures .kc-date { font-weight: 600; }
+.kitchen-closures p { margin: 0; }
+.kc-flag { display: inline-block; background: var(--red); color: var(--white); font-size: .78rem; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; border-radius: 4px; padding: 2px 8px; margin: 4px 0; }
+.kitchen-closed-text { color: var(--red); }
 .week-specials { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; }
 .week-specials li { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 14px; }
 .week-specials li.today { border-color: var(--red); box-shadow: inset 0 0 0 1px var(--red); }

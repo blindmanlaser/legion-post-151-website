@@ -20,9 +20,10 @@
       blank: { title: "", body: "", link: "" },
       fields: [["title", "Headline"], ["body", "Text", "textarea"], ["link", "Link (optional, like events.html)"]] },
     { key: "events", label: "Events", type: "list", sortBy: "date",
-      help: "One-time events. Past events hide on their own, so you never have to delete them. Listed by date when you save.",
-      blank: { date: "", time: "", title: "", host: "", image: "", body: "", tickets: "" },
+      help: "One-time events. Past events hide on their own, so you never have to delete them. Listed by date when you save. Check \"Kitchen closed this day\" and that day the Home and Menu pages show Kitchen Closed instead of the special, and the Menu page lists it ahead of time.",
+      blank: { date: "", time: "", title: "", host: "", image: "", body: "", tickets: "", kitchenClosed: false },
       fields: [["date", "Date", "date"], ["time", "Time (like 7:00 pm)"], ["title", "Event name"], ["host", "Hosted by (optional)"],
+        ["kitchenClosed", "Kitchen closed this day (shows on the Home and Menu pages)", "check"],
         ["body", "Description", "textarea"], ["tickets", "Tickets / how to sign up (optional)"], ["image", "Flyer or photo (optional)", "image"]] },
     { key: "inMemoriam", label: "In Memoriam", type: "list",
       help: "Members who have passed, newest first.",
@@ -153,7 +154,7 @@
   }
   // Drop empty optional fields so content.js stays tidy (specials keep all their fields).
   const tidy = (key, v) => Array.isArray(v) && key !== "specials"
-    ? v.map((r) => (r && typeof r === "object" ? Object.fromEntries(Object.entries(r).filter(([, x]) => x !== "")) : r))
+    ? v.map((r) => (r && typeof r === "object" ? Object.fromEntries(Object.entries(r).filter(([, x]) => x !== "" && x !== false)) : r))
     : v;
 
   // ---------- Files ----------
