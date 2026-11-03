@@ -244,6 +244,17 @@ h3 { color: var(--navy); text-transform: uppercase; font-size: 1.25rem; margin: 
 .event-img { display: block; width: 100%; max-width: 420px; border-radius: var(--radius); margin: 12px 0; }
 .event-body p { margin: 8px 0; }
 .tickets { font-weight: 600; color: var(--red); }
+.event-signup { margin: 4px 0 8px; }
+
+/* Event sign-up (signup.html) */
+.su-event { max-width: 760px; margin-bottom: 24px; }
+.su-event .meta { font-weight: 600; color: var(--navy); margin: 0 0 8px; }
+.su-event .event-img { max-width: 360px; }
+.su-num { max-width: 140px; }
+.su-kid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 12px; align-items: end; }
+.su-kid label { margin-bottom: 10px; }
+@media (max-width: 600px) { .su-kid { grid-template-columns: 1fr 1fr; } .su-kid label:first-child { grid-column: 1 / -1; } }
+.su-back { margin-top: 20px; }
 .announcement a { color: var(--navy); font-weight: 600; }
 
 /* Hometown Heroes */
@@ -284,7 +295,7 @@ h3 { color: var(--navy); text-transform: uppercase; font-size: 1.25rem; margin: 
 .order-form fieldset { border: 1px solid var(--line); border-radius: var(--radius); background: var(--white); padding: 20px; margin: 0 0 20px; }
 .order-form legend { font-family: "Oswald", sans-serif; text-transform: uppercase; color: var(--navy); font-size: 1.1rem; padding: 0 8px; }
 .order-form label { display: block; font-weight: 600; margin-bottom: 14px; }
-.order-form input[type=text], .order-form input[type=date], .order-form input[type=time], .order-form input[type=password], .order-form input[type=email], .order-form input[type=tel], .order-form select, .order-form textarea, .order-form input[type=file] {
+.order-form input[type=text], .order-form input[type=number], .order-form input[type=date], .order-form input[type=time], .order-form input[type=password], .order-form input[type=email], .order-form input[type=tel], .order-form select, .order-form textarea, .order-form input[type=file] {
   display: block; width: 100%; margin-top: 6px; font: inherit; font-weight: 400; padding: 10px 12px; border: 1px solid #b9b2a0; border-radius: 6px; background: #fff; color: var(--ink); }
 .order-form input:focus, .order-form select:focus, .order-form textarea:focus { outline: 2px solid var(--navy); outline-offset: 1px; }
 .order-form .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }

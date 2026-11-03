@@ -365,7 +365,10 @@ window.SITE = {
     sentinelThanks: "You're signed up! The Sentinel will come to your inbox.",
     performSubject: "Thanks for your interest in playing at Post 151",
     performBody: "Hello {name},\n\nThank you for telling us about {act}. Our entertainment committee will review it and contact you about dates that fit.\n\nAmerican Legion Cowle Post 151\n272 Broad St, Conneaut, OH 44030",
-    performThanks: "Thank you! Your information has been sent to our entertainment committee, and someone will be in touch."
+    performThanks: "Thank you! Your information has been sent to our entertainment committee, and someone will be in touch.",
+    signupSubject: "You're signed up: {event}",
+    signupBody: "Hello {name},\n\nThank you for signing up for {event} ({date}) at American Legion Post 151. We look forward to seeing you!\n\nIf your plans change, please call the Post at 440-593-2205.\n\nAmerican Legion Cowle Post 151\n272 Broad St, Conneaut, OH 44030",
+    signupThanks: "Thank you! You're signed up for {event}. See you there!"
   },
 
   // Post history (post-history.html), oldest first. A row with no year is an intro paragraph at the top.

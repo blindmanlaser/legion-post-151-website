@@ -8,6 +8,12 @@
   const $ = (id) => document.getElementById(id);
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
+  // Post mailboxes an event's online sign-up can go to. Keep in sync with $MAILBOXES in signup.php.
+  const MAILBOXES = ["bar-manager", "kitchen-manager", "hall-manager", "entertainment", "info", "commander", "first-vice", "second-vice",
+    "finance", "adjutant", "chaplain", "sal-commander", "sal-adjutant", "aux-president", "aux-treasurer", "aux-membership",
+    "aux-secretary", "hero-banners", "sentinel", "media", "webadmin"];
+  const SIGNUP_OPTIONS = [["", "No online sign-up"], ...MAILBOXES.map((m) => [m, `${m}@conneautlegionpost151.org`])];
+
   // What the editor can change. "list" sections are arrays of rows; "object" is one set of fields.
   // fixed: rows can't be added or removed. New rows always go at the top.
   const SECTIONS = [
@@ -20,11 +26,14 @@
       blank: { title: "", body: "", link: "" },
       fields: [["title", "Headline"], ["body", "Text", "textarea"], ["link", "Link (optional, like events.html)"]] },
     { key: "events", label: "Events", type: "list", sortBy: "date",
-      help: "One-time events. Past events hide on their own, so you never have to delete them. Listed by date when you save. Check \"Kitchen closed this day\" and that day the Home and Menu pages show Kitchen Closed instead of the special, and the Menu page lists it ahead of time.",
-      blank: { date: "", time: "", title: "", host: "", image: "", body: "", tickets: "", kitchenClosed: false },
+      help: "One-time events. Past events hide on their own, so you never have to delete them. Listed by date when you save. Check \"Kitchen closed this day\" and that day the Home and Menu pages show Kitchen Closed instead of the special, and the Menu page lists it ahead of time. Pick a mailbox under \"Online sign-up goes to\" and the event gets a Sign Up Online button; each sign-up is emailed to that mailbox.",
+      blank: { date: "", time: "", title: "", host: "", image: "", body: "", tickets: "", kitchenClosed: false, signup: "", signupKids: false },
       fields: [["date", "Date", "date"], ["time", "Time (like 7:00 pm)"], ["title", "Event name"], ["host", "Hosted by (optional)"],
         ["kitchenClosed", "Kitchen closed this day (shows on the Home and Menu pages)", "check"],
-        ["body", "Description", "textarea"], ["tickets", "Tickets / how to sign up (optional)"], ["image", "Flyer or photo (optional)", "image"]] },
+        ["body", "Description", "textarea"], ["tickets", "Tickets / how to sign up (optional)"],
+        ["signup", "Online sign-up goes to", "select", SIGNUP_OPTIONS],
+        ["signupKids", "Kids event: the sign-up asks for each child's name, age and boy or girl", "check"],
+        ["image", "Flyer or photo (optional)", "image"]] },
     { key: "inMemoriam", label: "In Memoriam", type: "list",
       help: "Members who have passed, newest first.",
       blank: { name: "", branch: "", service: "", date: "" },
@@ -77,14 +86,16 @@
         ["includeOfficers", "Include the officer lists", "check"],
         ["memberNotice", "Member notice (optional, like dues reminders)", "textarea"]] },
     { key: "formEmails", label: "Form Emails", type: "object",
-      help: "The emails the website sends back to people who fill out a form, and the thank-you messages they see on screen. {name} becomes the person's name, {veteran} the veteran's name, {date} the service date, {topic} the contact topic and {act} the performer's act name. Leave an email's text empty to stop sending that email.",
+      help: "The emails the website sends back to people who fill out a form, and the thank-you messages they see on screen. {name} becomes the person's name, {veteran} the veteran's name, {date} the service date, {topic} the contact topic and {act} the performer's act name, {event} the event name. Leave an email's text empty to stop sending that email.",
       fields: [["orderSubject", "Hometown Hero order: email subject"], ["orderBody", "Hometown Hero order: email text", "textarea"],
         ["contactSubject", "Send Us a Message: email subject"], ["contactBody", "Send Us a Message: email text", "textarea"],
         ["honorsSubject", "Funeral honors: email subject"], ["honorsBody", "Funeral honors: email text", "textarea"],
         ["contactThanks", "Send Us a Message: on-screen thank you", "textarea"], ["honorsThanks", "Funeral honors: on-screen thank you", "textarea"],
         ["sentinelThanks", "Sentinel sign-up: on-screen thank you", "textarea"],
         ["performSubject", "Perform at the Post: email subject"], ["performBody", "Perform at the Post: email text", "textarea"],
-        ["performThanks", "Perform at the Post: on-screen thank you", "textarea"]] },
+        ["performThanks", "Perform at the Post: on-screen thank you", "textarea"],
+        ["signupSubject", "Event sign-up: email subject"], ["signupBody", "Event sign-up: email text", "textarea"],
+        ["signupThanks", "Event sign-up: on-screen thank you", "textarea"]] },
     { key: "hallRental", label: "Hall Rental", type: "object",
       help: "Leave any of these empty to show \"Call for details\".",
       fields: [["price", "Rental price (like $30 per hour)"], ["booking", "Due at booking (like $30 due when you book)"], ["capacity", "Capacity (number of guests)"], ["note", "Note under the details", "textarea"]] },
@@ -252,7 +263,7 @@
   function status(msg, bad) { const s = $("ed-status"); s.textContent = msg; s.className = "form-alert" + (bad ? "" : " ok"); s.hidden = !msg; }
   function markDirty() { dirty.add(open); $("ed-save").disabled = false; $("ed-save-note").textContent = "You have unsaved changes."; }
 
-  function fieldHtml(sec, r, idx, [name, label, kind]) {
+  function fieldHtml(sec, r, idx, [name, label, kind, options]) {
     const v = r[name] ?? "";
     const id = `f-${idx}-${name}`;
     if (kind === "image" || kind === "pdf") {
@@ -268,6 +279,8 @@
         <div class="ed-row-actions ed-spot"><button type="button" class="btn btn-small btn-red" data-locate="${idx}" data-field="${name}">Use my location</button>
         ${v ? `<a class="btn btn-small btn-ghost" href="https://www.openstreetmap.org/?mlat=${encodeURIComponent(lat)}&mlon=${encodeURIComponent(lng)}#map=19/${encodeURIComponent(lat)}/${encodeURIComponent(lng)}" target="_blank" rel="noopener">Check on map</a>` : ""}</div>`;
     }
+    if (kind === "select") return `<label for="${id}">${esc(label)}<select id="${id}" data-idx="${idx}" data-field="${name}">
+      ${options.map(([val, text]) => `<option value="${esc(val)}" ${val === v ? "selected" : ""}>${esc(text)}</option>`).join("")}</select></label>`;
     if (kind === "check") return `<label class="ed-check"><input type="checkbox" data-idx="${idx}" data-field="${name}" ${v ? "checked" : ""}> ${esc(label)}</label>`;
     const input = kind === "textarea"
       ? `<textarea id="${id}" rows="${/Body$/.test(name) ? 10 : 3}" data-idx="${idx}" data-field="${name}">${esc(v)}</textarea>`
