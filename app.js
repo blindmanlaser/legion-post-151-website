@@ -30,6 +30,13 @@
   const upcoming = S.events.map((e) => ({ ...e, d: parseDate(e.date) }))
     .filter((e) => e.d >= startOfToday).sort((a, b) => a.d - b.d);
 
+  // Stable id for an event's sign-up link: date plus the title in lowercase words
+  const eventId = (e) => `${e.date}-${String(e.title || "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`;
+
+  // Online sign-up is open until the end of its "sign up by" day (or the event day)
+  const signupOpen = (e) => !!e.signup && (!e.signupBy || parseDate(e.signupBy) >= startOfToday);
+  const fmtLong = (s) => { const d = parseDate(s); return `${DAYS[d.getDay()]}, ${["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][d.getMonth()]} ${d.getDate()}`; };
+
   // Days the kitchen is closed: events with "Kitchen closed this day" checked
   const ymd = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
   const closures = S.events.filter((e) => e.kitchenClosed && e.date).map((e) => ({ date: e.date, reason: e.title }))
@@ -187,6 +194,7 @@
           ${e.image ? `<img class="event-img" src="${esc(e.image)}" alt="${esc(e.title)}" loading="lazy">` : ""}
           ${e.body ? `<p>${esc(e.body)}</p>` : ""}
           ${e.tickets ? `<p class="tickets">${esc(e.tickets)}</p>` : ""}
+          ${signupOpen(e) ? `<p class="event-signup"><a class="btn btn-red" href="signup.html?event=${encodeURIComponent(eventId(e))}">Sign Up Online</a>${e.signupBy ? ` <span class="fine">Sign up by ${esc(fmtLong(e.signupBy))}</span>` : ""}</p>` : ""}
         </div></li>`).join("")
       : '<li><span class="placeholder">No events posted right now. Check back soon!</span></li>';
   });
@@ -290,6 +298,81 @@
     if (code && MESSAGES[code]) show(MESSAGES[code], code === "sent");
     if (/github\.io$/.test(location.hostname)) show(`This is a preview copy of the site. Please call the Post at ${S.phone}.`);
     form.addEventListener("submit", () => { const btn = $("perform-submit"); btn.disabled = true; btn.textContent = "Sending…"; });
+  });
+
+  // Event sign-up page (signup.html?event=<id>). Events opt in with "Online sign-up goes to" in the editor.
+  set("su-form", (form) => {
+    const alertBox = $("su-alert");
+    const show = (msg, ok) => { alertBox.textContent = msg; alertBox.className = "form-alert" + (ok ? " ok" : ""); alertBox.hidden = false; };
+    const params = new URLSearchParams(location.search);
+    const id = params.get("event") || "";
+    const ev = upcoming.find((e) => eventId(e) === id);
+    const code = params.get("su");
+    const MESSAGES = {
+      sent: ((S.formEmails || {}).signupThanks || "Thank you! You're signed up for {event}. See you there!").replace(/\{event\}/g, ev ? ev.title : "the event"),
+      missing: "Please fill in every required box, then try again.",
+      email: "Please check your email address, or leave it empty, and try again.",
+      kids: "Please list each child with their age and boy or girl.",
+      age: `Sorry, this party is for children ages 0 to ${ev && ev.kidsMaxAge ? ev.kidsMaxAge : 17}.`,
+      member: "Please give the name of the Legion, Sons or Auxiliary member.",
+      closed: "Sorry, sign-ups for this event are closed. Please call the Post.",
+      failed: `Sorry, something went wrong. Please try again, or call the Post at ${S.phone} to sign up.`
+    };
+    if (!ev || !signupOpen(ev)) {
+      $("su-event").innerHTML = `<p>${code === "sent" ? "" : "Online sign-up for this event has closed or isn't available. "}See the <a href="events.html">Events page</a>, or call the Post at <a href="${tel}">${esc(S.phone)}</a>.</p>`;
+      if (code === "sent") show(MESSAGES.sent, true);
+      return;
+    }
+    document.title = `Sign Up: ${ev.title} · American Legion Post 151`;
+    $("su-title").textContent = ev.title;
+    const when = `${fmtDay(ev.d)}${ev.time ? " · " + ev.time : ""}`;
+    $("su-event").innerHTML = `<p class="meta">${esc(when)}</p>
+      ${ev.host ? `<p class="meta">${esc(ev.host)}</p>` : ""}
+      ${ev.image ? `<img class="event-img" src="${esc(ev.image)}" alt="${esc(ev.title)}">` : ""}
+      ${ev.body ? `<p>${esc(ev.body)}</p>` : ""}
+      ${ev.signupBy ? `<p class="tickets">Sign-ups must be in by ${esc(fmtLong(ev.signupBy))}.</p>` : ""}`;
+    $("su-event-id").value = id;
+    $("su-event-title").value = ev.title;
+    $("su-event-when").value = when;
+    $("su-to").value = ev.signup;
+    $("su-by").value = ev.signupBy || ev.date;
+    $("su-max-age").value = ev.signupKids && parseInt(ev.kidsMaxAge, 10) >= 0 ? parseInt(ev.kidsMaxAge, 10) : "";
+    form.hidden = false;
+
+    if (ev.signupKids) {
+      $("su-who-legend").textContent = "Parent or Guardian";
+      $("su-name-label").textContent = "Parent or guardian's name";
+      $("su-adults-label").textContent = "How many adults are coming?";
+      const memberBox = form.querySelector("[name=member]");
+      memberBox.required = true;
+      memberBox.placeholder = "like John Smith, Legion (grandfather)";
+      $("su-member-label").innerHTML = 'Member\'s name (parent or grandparent) <span class="req">*</span>';
+      const maxAge = parseInt(ev.kidsMaxAge, 10);
+      $("su-kids-help").textContent = `List each child coming to the party${maxAge >= 0 ? `, ages 0 to ${maxAge}` : ""}.`;
+      $("su-notes-label").textContent = "Allergies, special needs or anything else we should know";
+      const box = $("su-kids"), rows = $("su-kid-rows"), MAX = 10;
+      const addKid = () => {
+        const n = rows.children.length;
+        if (n >= MAX) return;
+        rows.insertAdjacentHTML("beforeend", `<div class="su-kid">
+          <label>Child's name${n === 0 ? ' <span class="req">*</span>' : ""}<input type="text" name="kid_name[]" maxlength="60" ${n === 0 ? "required" : ""}></label>
+          <label>Age${n === 0 ? ' <span class="req">*</span>' : ""}<input type="number" name="kid_age[]" min="0" max="${maxAge >= 0 ? maxAge : 17}" step="1" inputmode="numeric" ${n === 0 ? "required" : ""}></label>
+          <label>Boy or girl${n === 0 ? ' <span class="req">*</span>' : ""}<select name="kid_gender[]" ${n === 0 ? "required" : ""}><option value="">Choose</option><option>Boy</option><option>Girl</option></select></label>
+        </div>`);
+        if (rows.children.length >= MAX) $("su-add-kid").hidden = true;
+      };
+      addKid(); addKid();
+      $("su-add-kid").addEventListener("click", addKid);
+      box.hidden = false; box.disabled = false;
+    }
+
+    if (code && MESSAGES[code]) show(MESSAGES[code], code === "sent");
+    if (code === "sent") { // hide the form so nobody signs up twice by accident
+      form.hidden = true;
+      $("su-event").insertAdjacentHTML("beforeend", `<p><a class="btn btn-red" href="signup.html?event=${encodeURIComponent(id)}">Sign up another ${ev.signupKids ? "family" : "person"}</a></p>`);
+    }
+    if (/github\.io$/.test(location.hostname)) show(`This is a preview copy of the site. Please call the Post at ${S.phone} to sign up.`);
+    form.addEventListener("submit", () => { const btn = $("su-submit"); btn.disabled = true; btn.textContent = "Sending…"; });
   });
 
   // Post history timeline. Rows without a year are intro paragraphs at the top.

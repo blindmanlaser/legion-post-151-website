@@ -168,7 +168,16 @@ window.SITE = {
     { date: "2026-11-26",
       title: "HAPPY THANKSGIVING!!!!!!",
       image: "images/happy-thanksgiving-2026-11-02.jpg",
-      body: "The Post will be Closed for Thanksgiving.\nGod bless everyone and Have a Happy Thanksgiving!!!" }
+      body: "The Post will be Closed for Thanksgiving.\nGod bless everyone and Have a Happy Thanksgiving!!!" },
+    { date: "2026-12-13",
+      time: "11:00 am – 1:00 pm",
+      title: "Children's Christmas Party",
+      body: "Open to all members' children and grandchildren, ages 0 to 12.",
+      tickets: "You can also sign up on the sheet at the Post.",
+      signup: "bar-manager",
+      signupBy: "2026-12-01",
+      signupKids: true,
+      kidsMaxAge: "12" }
   ],
 
   // Recurring meetings. week = which Tuesday etc. of the month (1-4), weekday 0-6.
@@ -365,7 +374,10 @@ window.SITE = {
     sentinelThanks: "You're signed up! The Sentinel will come to your inbox.",
     performSubject: "Thanks for your interest in playing at Post 151",
     performBody: "Hello {name},\n\nThank you for telling us about {act}. Our entertainment committee will review it and contact you about dates that fit.\n\nAmerican Legion Cowle Post 151\n272 Broad St, Conneaut, OH 44030",
-    performThanks: "Thank you! Your information has been sent to our entertainment committee, and someone will be in touch."
+    performThanks: "Thank you! Your information has been sent to our entertainment committee, and someone will be in touch.",
+    signupSubject: "You're signed up: {event}",
+    signupBody: "Hello {name},\n\nThank you for signing up for {event} ({date}) at American Legion Post 151. We look forward to seeing you!\n\nIf your plans change, please call the Post at 440-593-2205.\n\nAmerican Legion Cowle Post 151\n272 Broad St, Conneaut, OH 44030",
+    signupThanks: "Thank you! You're signed up for {event}. See you there!"
   },
 
   // Post history (post-history.html), oldest first. A row with no year is an intro paragraph at the top.
