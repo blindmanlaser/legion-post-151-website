@@ -43,13 +43,13 @@ if (!in_array($box, $MAILBOXES, true)) back('failed');
 $to = $box . '@' . $DOMAIN;
 
 $f = [];
-foreach (['event_title' => 120, 'event_when' => 80, 'name' => 80, 'phone' => 30, 'email' => 120, 'member' => 80, 'adults' => 3,
+foreach (['event_title' => 120, 'event_when' => 80, 'name' => 80, 'email' => 120, 'member' => 80, 'adults' => 3,
           'signup_by' => 10, 'max_age' => 2] as $k => $max) {
   $f[$k] = field($k, $max);
 }
 $notes = mb_substr(trim(str_replace("\r\n", "\n", (string)($_POST['notes'] ?? ''))), 0, 1500);
 
-foreach (['event_title', 'name', 'phone'] as $k) if ($f[$k] === '') back('missing');
+foreach (['event_title', 'name'] as $k) if ($f[$k] === '') back('missing');
 if ($f['adults'] !== '' && !preg_match('/^\d{1,2}$/', $f['adults'])) back('missing');
 
 // Sign-ups close at the end of the "sign up by" day.
@@ -87,7 +87,6 @@ $lines = [
   '',
   ($isKids ? 'PARENT / GUARDIAN' : 'WHO'),
   'Name:    ' . $f['name'],
-  'Phone:   ' . $f['phone'],
   'Email:   ' . ($f['email'] !== '' ? $f['email'] : '(none given)'),
   'Member:  ' . ($f['member'] !== '' ? $f['member'] : '(none given)'),
   ($isKids ? 'Adults coming: ' : 'People coming: ') . ($f['adults'] !== '' ? $f['adults'] : '(not given)'),
