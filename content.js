@@ -168,7 +168,16 @@ window.SITE = {
     { date: "2026-11-26",
       title: "HAPPY THANKSGIVING!!!!!!",
       image: "images/happy-thanksgiving-2026-11-02.jpg",
-      body: "The Post will be Closed for Thanksgiving.\nGod bless everyone and Have a Happy Thanksgiving!!!" }
+      body: "The Post will be Closed for Thanksgiving.\nGod bless everyone and Have a Happy Thanksgiving!!!" },
+    { date: "2026-12-13",
+      time: "11:00 am – 1:00 pm",
+      title: "Children's Christmas Party",
+      body: "Open to all members' children and grandchildren, ages 0 to 12.",
+      tickets: "You can also sign up on the sheet at the Post.",
+      signup: "bar-manager",
+      signupBy: "2026-12-01",
+      signupKids: true,
+      kidsMaxAge: "12" }
   ],
 
   // Recurring meetings. week = which Tuesday etc. of the month (1-4), weekday 0-6.

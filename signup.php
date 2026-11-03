@@ -43,13 +43,18 @@ if (!in_array($box, $MAILBOXES, true)) back('failed');
 $to = $box . '@' . $DOMAIN;
 
 $f = [];
-foreach (['event_title' => 120, 'event_when' => 80, 'name' => 80, 'phone' => 30, 'email' => 120, 'member' => 80, 'adults' => 3] as $k => $max) {
+foreach (['event_title' => 120, 'event_when' => 80, 'name' => 80, 'phone' => 30, 'email' => 120, 'member' => 80, 'adults' => 3,
+          'signup_by' => 10, 'max_age' => 2] as $k => $max) {
   $f[$k] = field($k, $max);
 }
 $notes = mb_substr(trim(str_replace("\r\n", "\n", (string)($_POST['notes'] ?? ''))), 0, 1500);
 
 foreach (['event_title', 'name', 'phone'] as $k) if ($f[$k] === '') back('missing');
-if (!preg_match('/^\d{1,2}$/', $f['adults'])) back('missing');
+if ($f['adults'] !== '' && !preg_match('/^\d{1,2}$/', $f['adults'])) back('missing');
+
+// Sign-ups close at the end of the "sign up by" day.
+if (preg_match('/^\d{4}-\d{2}-\d{2}$/', $f['signup_by']) && date('Y-m-d') > $f['signup_by']) back('closed');
+$maxAge = preg_match('/^\d{1,2}$/', $f['max_age']) ? (int)$f['max_age'] : 17;
 if ($f['email'] !== '' && !filter_var($f['email'], FILTER_VALIDATE_EMAIL)) back('email');
 
 // Children (only on kids events). Rows left empty are skipped.
@@ -63,10 +68,12 @@ for ($i = 0; $i < min(count($names), $MAX_KIDS); $i++) {
   $a = clean(is_string($ages[$i] ?? '') ? ($ages[$i] ?? '') : '', 3);
   $g = clean(is_string($genders[$i] ?? '') ? ($genders[$i] ?? '') : '', 10);
   if ($n === '' && $a === '') continue;
-  if ($n === '' || !preg_match('/^\d{1,2}$/', $a)) back('kids');
-  $kids[] = [$n, $a, in_array($g, ['Boy', 'Girl'], true) ? $g : ''];
+  if ($n === '' || !preg_match('/^\d{1,2}$/', $a) || !in_array($g, ['Boy', 'Girl'], true)) back('kids');
+  if ((int)$a > $maxAge) back('age');
+  $kids[] = [$n, $a, $g];
 }
 if ($isKids && !$kids) back('kids');
+if ($isKids && $f['member'] === '') back('member');
 
 $host = preg_replace(['/:\d+$/', '/^www\./'], '', strtolower($_SERVER['HTTP_HOST'] ?? 'localhost'));
 $host = preg_replace('/[^a-z0-9.\-]/', '', $host);
@@ -83,13 +90,13 @@ $lines = [
   'Phone:   ' . $f['phone'],
   'Email:   ' . ($f['email'] !== '' ? $f['email'] : '(none given)'),
   'Member:  ' . ($f['member'] !== '' ? $f['member'] : '(none given)'),
-  ($isKids ? 'Adults coming: ' : 'People coming: ') . $f['adults'],
+  ($isKids ? 'Adults coming: ' : 'People coming: ') . ($f['adults'] !== '' ? $f['adults'] : '(not given)'),
 ];
 if ($isKids) {
   $lines[] = '';
   $lines[] = 'CHILDREN (' . count($kids) . ')';
   foreach ($kids as $j => [$n, $a, $g]) {
-    $lines[] = ($j + 1) . '. ' . $n . ', age ' . $a . ($g !== '' ? ', ' . $g : '');
+    $lines[] = ($j + 1) . '. ' . $n . ', age ' . $a . ', ' . $g;
   }
 }
 $lines[] = '';

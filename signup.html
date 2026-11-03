@@ -70,6 +70,8 @@
           <input type="hidden" name="event_title" id="su-event-title">
           <input type="hidden" name="event_when" id="su-event-when">
           <input type="hidden" name="to" id="su-to">
+          <input type="hidden" name="signup_by" id="su-by">
+          <input type="hidden" name="max_age" id="su-max-age">
           <fieldset>
             <legend id="su-who-legend">Your Information</legend>
             <div class="row">
@@ -81,15 +83,15 @@
             <label>Email <span class="opt">(optional, for a confirmation)</span>
               <input type="email" name="email" maxlength="120" autocomplete="email"></label>
             <div class="row">
-              <label>Legion, Sons or Auxiliary member in your family <span class="opt">(optional)</span>
+              <label><span id="su-member-label">Legion, Sons or Auxiliary member in your family <span class="opt">(optional)</span></span>
                 <input type="text" name="member" maxlength="80" placeholder="like John Smith, Legion"></label>
-              <label><span id="su-adults-label">How many people are coming?</span> <span class="req">*</span>
-                <input type="number" name="adults" required min="0" max="50" step="1" inputmode="numeric" class="su-num"></label>
+              <label><span id="su-adults-label">How many people are coming?</span> <span class="opt">(optional)</span>
+                <input type="number" name="adults" min="0" max="50" step="1" inputmode="numeric" class="su-num"></label>
             </div>
           </fieldset>
           <fieldset id="su-kids" hidden disabled>
             <legend>Children</legend>
-            <p class="fine">List each child coming to the party.</p>
+            <p class="fine" id="su-kids-help">List each child coming to the party.</p>
             <div id="su-kid-rows"></div>
             <button type="button" class="btn btn-small btn-ghost" id="su-add-kid">+ Add another child</button>
           </fieldset>
