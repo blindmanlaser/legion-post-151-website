@@ -40,8 +40,8 @@ window.SITE = {
     { day: 2, item: "Taco Tuesday", price: "", note: "" },
     { day: 3, item: "Wing Night", price: "$0.60 wings", note: "Dine-In Only" },
     { day: 4, item: "Pizza & Stromboli Night", price: "", note: "4 – 7 pm, until sold out" },
-    { day: 5, item: "Dinner Special", price: "$13.00", note: "Grilled Salmon Dinner w/ Mashed Potatoes, Corn, & Salad" },
-    { day: 6, item: "Dinner Special", price: "$20.00", note: "Flat Iron Sirloin Steak Dinner w/ Baked Potato, Green Beans, & Salad" }
+    { day: 5, item: "Dinner Special", price: "$14.00", note: "Fried Cod Dinner w/ Mac and Cheese & Salad" },
+    { day: 6, item: "Dinner Special", price: "$30.00", note: "Prime Rib Dinner w/ Baked Potato, Green Beans & Salad" }
   ],
 
   // Menu sections. Items look like:
