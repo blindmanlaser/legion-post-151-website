@@ -133,10 +133,7 @@ window.SITE = {
   announcements: [
     { title: "Children's Christmas Party",
       body: "Sun Dec. 13,2026 11am - 1pm Sign-up by Tues Dec. 1st\nSanta, Gifts, and Treats await the Kids",
-      link: "signup.html?event=2026-12-13-children-s-christmas-party" },
-    { title: "Hometown Hero Flags",
-      body: "Honor a Conneaut veteran with a tribute flag displayed Memorial Day through Veterans Day.",
-      link: "hometown-heroes.html" }
+      link: "signup.html?event=2026-12-13-children-s-christmas-party" }
   ],
 
   // One-time events. Dates are "YYYY-MM-DD". Past events hide automatically.
